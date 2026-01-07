@@ -3,6 +3,10 @@ export default class Ship {
     #hits = 0;
 
     constructor(length) {
+        if (length <= 0) {
+            throw new RangeError('Length must be a positive integer');
+        }
+
         this.#length = length;
     }
 
