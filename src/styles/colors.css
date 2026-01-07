@@ -1,0 +1,10 @@
+html {
+  --black: #000;
+  --dark-gray: #181818;
+  --gray: #383838;
+  --light-gray: #555;
+  --white: #ccc;
+
+  --color-bg-primary: var(--dark-gray);
+  --color-text-primary: var(--white);
+}
