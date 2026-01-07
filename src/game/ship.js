@@ -10,6 +10,10 @@ export default class Ship {
         return this.#length;
     }
 
+    get sunk() {
+        return this.#hits >= this.#length;
+    }
+
     hit() {
         this.#hits++;
     }
