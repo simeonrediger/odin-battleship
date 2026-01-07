@@ -1,5 +1,6 @@
 export default class Ship {
     #length;
+    #hits = 0;
 
     constructor(length) {
         this.#length = length;
@@ -7,5 +8,9 @@ export default class Ship {
 
     get length() {
         return this.#length;
+    }
+
+    hit() {
+        this.#hits++;
     }
 }
