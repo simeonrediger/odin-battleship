@@ -1,10 +1,40 @@
 import { create2dArray } from '../shared/utils.js';
 
 export default class Board {
+    static directions = Object.freeze({
+        UP: 'UP',
+        DOWN: 'DOWN',
+        LEFT: 'LEFT',
+        RIGHT: 'RIGHT',
+    });
+
     #grid;
 
     constructor(size) {
         this.#createGrid(size);
+    }
+
+    placeShip(ship, x, y, direction) {
+        const shipCoordinates = [];
+
+        for (let i = 0; i < ship.length; i++) {
+            const coordinate = this.#getCoordinate(x, y);
+
+            if (!coordinate) {
+                throw new RangeError(
+                    `Coordinate is out of bounds: (${x}, ${y})`,
+                );
+            }
+
+            if (coordinate.occupant) {
+                throw new Error(`Coordinate is occupied: (${x}, ${y})`);
+            }
+
+            shipCoordinates.push(coordinate);
+            [x, y] = this.#getAdjacentCoordinate(x, y, direction);
+        }
+
+        shipCoordinates.forEach(coordinate => (coordinate.occupant = ship));
     }
 
     #createGrid(size) {
@@ -13,5 +43,32 @@ export default class Board {
 
     #createCoordinate() {
         return { occupant: null, attacked: false };
+    }
+
+    #getCoordinate(x, y) {
+        const row = this.#grid.length - 1 - y;
+        const column = x;
+        return this.#grid[row]?.[column];
+    }
+
+    #getAdjacentCoordinate(x, y, direction) {
+        switch (direction) {
+            case Board.directions.UP:
+                y++;
+                break;
+            case Board.directions.DOWN:
+                y--;
+                break;
+            case Board.directions.LEFT:
+                x--;
+                break;
+            case Board.directions.RIGHT:
+                x++;
+                break;
+            default:
+                throw new TypeError('Invalid direction:', direction);
+        }
+
+        return [x, y];
     }
 }
