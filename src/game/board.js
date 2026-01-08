@@ -41,6 +41,20 @@ export default class Board {
         shipCoordinates.forEach(coordinate => (coordinate.occupant = ship));
     }
 
+    hit(x, y) {
+        const coordinate = this.#getCoordinate(x, y);
+
+        if (coordinate.attacked) {
+            throw new Error('Coordinate has already been attacked');
+        }
+
+        coordinate.attacked = true;
+
+        if (coordinate.occupant) {
+            coordinate.occupant.hit();
+        }
+    }
+
     #createGrid(size) {
         this.#grid = create2dArray(size, size, this.#createCoordinate);
     }

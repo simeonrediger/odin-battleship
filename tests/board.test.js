@@ -42,3 +42,31 @@ describe('placeShip()', () => {
         ).toThrow();
     });
 });
+
+describe('hit()', () => {
+    test('accepts attack only if coordinate has not been attacked', () => {
+        const board = new Board(3);
+        expect(() => board.hit(0, 0)).not.toThrow();
+        expect(() => board.hit(0, 0)).toThrow();
+    });
+
+    test('calls ship.hit() only if coordinate has ship', () => {
+        const board = new Board(5);
+        const ship = new Ship(2);
+        board.placeShip(ship, 0, 0, Board.directions.UP, true);
+        ship.hit = jest.fn();
+
+        expect(ship.hit.mock.calls.length).toBe(0);
+        board.hit(0, 2);
+        expect(ship.hit.mock.calls.length).toBe(0);
+        board.hit(1, 0);
+        expect(ship.hit.mock.calls.length).toBe(0);
+        board.hit(1, 1);
+        expect(ship.hit.mock.calls.length).toBe(0);
+
+        board.hit(0, 0);
+        expect(ship.hit.mock.calls.length).toBe(1);
+        board.hit(0, 1);
+        expect(ship.hit.mock.calls.length).toBe(2);
+    });
+});
