@@ -11,6 +11,10 @@ export default class Board {
     #grid;
 
     constructor(size) {
+        if (size < 0) {
+            throw new RangeError('Size must be a non-negative integer');
+        }
+
         this.#createGrid(size);
     }
 

@@ -1,6 +1,17 @@
 import Board from '../src/game/board.js';
 import Ship from '../src/game/ship.js';
 
+describe('only accepts non-negative sizes', () => {
+    test.each([
+        [-1, false],
+        [0, true],
+        [1, true],
+    ])('accepts size %i? %s', (size, shouldAccept) => {
+        const expectation = expect(() => new Board(size));
+        shouldAccept ? expectation.not.toThrow() : expectation.toThrow();
+    });
+});
+
 describe('placeShip()', () => {
     test('only places ship if within bounds', () => {
         const board = new Board(5);
