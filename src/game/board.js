@@ -9,13 +9,16 @@ export default class Board {
     });
 
     #grid;
+    #ships = [];
+    #onDefeat;
 
-    constructor(size) {
+    constructor(size, onDefeat) {
         if (size < 0) {
             throw new RangeError('Size must be a non-negative integer');
         }
 
         this.#createGrid(size);
+        this.#onDefeat = onDefeat;
     }
 
     placeShip(ship, x, y, direction) {
@@ -39,6 +42,7 @@ export default class Board {
         }
 
         shipCoordinates.forEach(coordinate => (coordinate.occupant = ship));
+        this.#ships.push(ship);
     }
 
     hit(x, y) {
@@ -52,6 +56,14 @@ export default class Board {
 
         if (coordinate.occupant) {
             coordinate.occupant.hit();
+        }
+
+        this.#checkDefeat();
+    }
+
+    #checkDefeat() {
+        if (this.#ships.every(ship => ship.sunk)) {
+            this.#onDefeat?.();
         }
     }
 

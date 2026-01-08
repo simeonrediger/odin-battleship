@@ -69,4 +69,20 @@ describe('hit()', () => {
         board.hit(0, 1);
         expect(ship.hit.mock.calls.length).toBe(2);
     });
+
+    test('calls defeat handler only if all ships are sunk', () => {
+        const handleDefeat = jest.fn();
+        const board = new Board(3, handleDefeat);
+        board.placeShip(new Ship(3), 0, 0, Board.directions.UP);
+        board.placeShip(new Ship(2), 1, 1, Board.directions.RIGHT);
+
+        board.hit(0, 0);
+        board.hit(0, 1);
+        expect(handleDefeat.mock.calls.length).toBe(0);
+        board.hit(0, 2);
+        expect(handleDefeat.mock.calls.length).toBe(0);
+        board.hit(1, 1);
+        board.hit(2, 1);
+        expect(handleDefeat.mock.calls.length).toBe(1);
+    });
 });
