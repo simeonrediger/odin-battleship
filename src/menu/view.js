@@ -7,8 +7,12 @@ const player1 = { typeInput: undefined, nameInput: undefined };
 const player2 = { typeInput: undefined, nameInput: undefined };
 let submitButton;
 
-function init(root) {
+let onSubmit;
+
+function init(root, onSubmitHandler) {
+    onSubmit = onSubmitHandler;
     cacheElements(root);
+    bindEvents();
 }
 
 function cacheElements(root) {
@@ -28,6 +32,30 @@ function cacheElements(root) {
         'player2.nameInput': player2.nameInput,
         submitButton,
     });
+}
+
+function bindEvents() {
+    form.addEventListener('submit', handleFormSubmit);
+}
+
+function handleFormSubmit(event) {
+    event.preventDefault();
+    cachePlayerData(player1);
+    cachePlayerData(player2);
+
+    onSubmit({
+        player1Data: { isHuman: player1.isHuman, name: player1.name },
+        player2Data: { isHuman: player2.isHuman, name: player2.name },
+    });
+}
+
+function cachePlayerData(player) {
+    player.isHuman = player.typeInput.value === 'human';
+
+    player.name =
+        player.isHuman && player.nameInput.value.trim()
+            ? player.nameInput.value.trim()
+            : player.nameInput.placeholder;
 }
 
 const menuView = {
