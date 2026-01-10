@@ -19,3 +19,15 @@ describe('create2dArray()', () => {
         expect(object).toEqual(similarObject);
     });
 });
+
+describe('validateElements()', () => {
+    test('only accepts an object with non-nullish values', () => {
+        expect(() =>
+            utils.validateElements({ element1: {}, element2: {} }),
+        ).not.toThrow();
+
+        expect(() =>
+            utils.validateElements({ element1: {}, element2: null }),
+        ).toThrow();
+    });
+});
