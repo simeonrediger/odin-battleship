@@ -1,4 +1,10 @@
 body {
   background-color: var(--color-bg-primary);
   color: var(--color-text-primary);
+  padding: 1rem 2rem;
+}
+
+.main-content {
+  display: flex;
+  height: 45rem;
 }

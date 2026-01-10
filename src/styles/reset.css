@@ -17,7 +17,8 @@ ul {
 
 button,
 input,
-textarea {
+textarea,
+select {
   border: none;
   font-size: 1em;
 }

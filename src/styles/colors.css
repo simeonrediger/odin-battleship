@@ -1,10 +1,22 @@
 html {
   --black: #000;
-  --dark-gray: #181818;
+  --dark-gray-2: #181818;
+  --dark-gray-1: #333;
   --gray: #383838;
-  --light-gray: #555;
+  --light-gray-1: #555;
+  --light-gray-2: #666;
   --white: #ccc;
 
-  --color-bg-primary: var(--dark-gray);
+  --pale-blue: #68f;
+
+  --color-bg-primary: var(--dark-gray-2);
+  --color-bg-secondary: var(--dark-gray-1);
   --color-text-primary: var(--white);
+
+  --color-menu-bg: var(--color-bg-secondary);
+  --color-input-bg: var(--color-bg-primary);
+  --color-input-fg: var(--color-fg-primary);
+  --color-button-1-bg: var(--light-gray-1);
+  --color-button-1-bg-hover: var(--light-gray-2);
+  --color-border-focus: var(--pale-blue);
 }
