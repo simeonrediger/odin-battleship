@@ -11,5 +11,37 @@
     <header>
       <h1>Battleship</h1>
     </header>
+
+    <main>
+      <section>
+        <form>
+          <h2>Who's playing?</h2>
+          <fieldset>
+            <select aria-label="Player type">
+              <option value="human" selected>Human</option>
+              <option value="computer">Computer</option>
+            </select>
+            <input
+              aria-label="Player 1 name"
+              placeholder="Player 1"
+              type="text"
+            />
+          </fieldset>
+          <p>vs.</p>
+          <fieldset>
+            <select aria-label="Player type">
+              <option value="human">Human</option>
+              <option value="computer" selected>Computer</option>
+            </select>
+            <input
+              aria-label="Player 2 name"
+              placeholder="Player 2"
+              type="text"
+            />
+          </fieldset>
+          <button>Start</button>
+        </form>
+      </section>
+    </main>
   </body>
 </html>
