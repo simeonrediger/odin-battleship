@@ -5,10 +5,11 @@ body {
 }
 
 .main-content {
-  display: flex;
-  gap: 2rem;
   height: 40rem;
+
+  display: flex;
   justify-content: center;
+  gap: 2rem;
 }
 
 .menu {
