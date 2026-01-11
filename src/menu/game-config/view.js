@@ -1,3 +1,4 @@
+import '@/shared/styles/utilities.css';
 import './style.css';
 
 import { validateElements } from '@/shared/utils.js';
@@ -13,6 +14,14 @@ function render(root, onSubmitHandler) {
     onSubmit = onSubmitHandler;
     cacheElements(root);
     bindEvents();
+}
+
+function show() {
+    form.classList.remove('hidden');
+}
+
+function hide() {
+    form.classList.add('hidden');
 }
 
 function cacheElements(root) {
@@ -60,6 +69,8 @@ function cachePlayerData(player) {
 
 const gameConfigView = {
     render,
+    show,
+    hide,
 };
 
 export default gameConfigView;
