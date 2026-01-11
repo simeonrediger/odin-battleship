@@ -5,13 +5,13 @@ let onPlayerDataReady;
 
 function init(root, onPlayerDataReadyHandler) {
     onPlayerDataReady = onPlayerDataReadyHandler;
-    gameConfigView.render(root, handleGameConfigSubmit);
-    currentView = gameConfigView;
+    gameConfigView.init(root, handleGameConfigSubmit);
+    render(gameConfigView);
 }
 
-function swapView(view) {
-    currentView.hide();
-    view.show();
+function render(view) {
+    currentView?.hide();
+    view.render();
     currentView = view;
 }
 

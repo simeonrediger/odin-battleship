@@ -10,13 +10,13 @@ let submitButton;
 
 let onSubmit;
 
-function render(root, onSubmitHandler) {
+function init(root, onSubmitHandler) {
     onSubmit = onSubmitHandler;
     cacheElements(root);
     bindEvents();
 }
 
-function show() {
+function render() {
     form.classList.remove('hidden');
 }
 
@@ -68,8 +68,8 @@ function cachePlayerData(player) {
 }
 
 const gameConfigView = {
+    init,
     render,
-    show,
     hide,
 };
 
