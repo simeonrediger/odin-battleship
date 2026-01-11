@@ -7,5 +7,5 @@ import menuController from './menu/controller.js';
 
 const root = document;
 const boardSize = 10;
-menuController.init(root, gameController.handlePlayersReady);
+menuController.init(root, gameController.start);
 gameController.init(root, boardSize);

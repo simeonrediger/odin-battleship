@@ -11,7 +11,7 @@ function init(root, boardSizeArg) {
     gameView.render(root);
 }
 
-function handlePlayersReady({ player1Data, player2Data }) {
+function start({ player1Data, player2Data }) {
     player1 = new Player(
         player1Data.name,
         player1Data.isHuman,
@@ -27,7 +27,7 @@ function handlePlayersReady({ player1Data, player2Data }) {
 
 const controller = {
     init,
-    handlePlayersReady,
+    start,
 };
 
 export default controller;
