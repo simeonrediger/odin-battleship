@@ -3,6 +3,7 @@ import Ship from '../src/game/ship.js';
 
 describe('only accepts non-negative sizes', () => {
     test.each([
+        [undefined, false],
         [-1, false],
         [0, true],
         [1, true],

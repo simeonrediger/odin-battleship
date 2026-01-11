@@ -13,8 +13,9 @@ export default class Board {
     #onDefeat;
 
     constructor(size, onDefeat) {
-        if (size < 0) {
-            throw new RangeError('Size must be a non-negative integer');
+        if (!(size >= 0)) {
+            const errorType = size < 0 ? RangeError : TypeError;
+            throw new errorType('Size must be a non-negative integer');
         }
 
         this.#createGrid(size);
