@@ -6,5 +6,6 @@ import gameController from './game/controller.js';
 import menuController from './menu/controller.js';
 
 const root = document;
+const boardSize = 10;
 menuController.init(root, gameController.handlePlayersReady);
-gameController.init(root);
+gameController.init(root, boardSize);
