@@ -1,5 +1,6 @@
 .board {
   background-color: var(--color-board-bg);
+  border-radius: 1rem;
   flex-shrink: 0;
   width: 40rem;
 }
