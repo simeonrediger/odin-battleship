@@ -1,6 +1,6 @@
 import './style.css';
 
-import { validateElements } from '../shared/utils.js';
+import { validateElements } from '@/shared/utils.js';
 
 let form;
 const player1 = { typeInput: undefined, nameInput: undefined };
@@ -9,7 +9,7 @@ let submitButton;
 
 let onSubmit;
 
-function init(root, onSubmitHandler) {
+function render(root, onSubmitHandler) {
     onSubmit = onSubmitHandler;
     cacheElements(root);
     bindEvents();
@@ -58,8 +58,8 @@ function cachePlayerData(player) {
             : player.nameInput.placeholder;
 }
 
-const menuView = {
-    init,
+const gameConfigView = {
+    render,
 };
 
-export default menuView;
+export default gameConfigView;

@@ -8,3 +8,10 @@ body {
   display: flex;
   height: 45rem;
 }
+
+.menu {
+  background-color: var(--color-menu-bg);
+  border-radius: 1rem;
+  width: 20rem;
+  padding: 0.5rem 1rem;
+}
