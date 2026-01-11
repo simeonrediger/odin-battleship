@@ -6,7 +6,9 @@ body {
 
 .main-content {
   display: flex;
+  gap: 2rem;
   height: 40rem;
+  justify-content: center;
 }
 
 .menu {
