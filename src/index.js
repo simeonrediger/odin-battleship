@@ -6,5 +6,5 @@ import gameController from './game/controller.js';
 import menuController from './menu/controller.js';
 
 const root = document;
-menuController.init(root);
+menuController.init(root, gameController.handlePlayersReady);
 gameController.init(root);

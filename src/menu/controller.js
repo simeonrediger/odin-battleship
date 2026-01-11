@@ -1,10 +1,15 @@
 import gameConfigView from './game-config/view.js';
 
-function init(root) {
+let onPlayersReady;
+
+function init(root, onPlayersReadyHandler) {
+    onPlayersReady = onPlayersReadyHandler;
     gameConfigView.render(root, handleGameConfigSubmit);
 }
 
-function handleGameConfigSubmit({ player1Data, player2Data }) {}
+function handleGameConfigSubmit(playerData) {
+    onPlayersReady(playerData);
+}
 
 const menuController = {
     init,
