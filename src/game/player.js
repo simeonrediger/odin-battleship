@@ -1,11 +1,13 @@
 export default class Player {
     #name;
     #isHuman;
+    #board;
 
-    constructor(name, isHuman) {
+    constructor(name, isHuman, board) {
         this.#validateArgs(name, isHuman);
         this.#name = name;
         this.#isHuman = isHuman;
+        this.#board = board;
     }
 
     #validateArgs(name, isHuman) {
