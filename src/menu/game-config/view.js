@@ -35,10 +35,10 @@ function cacheElements(root) {
 }
 
 function bindEvents() {
-    form.addEventListener('submit', handleFormSubmit);
+    form.addEventListener('submit', handleSubmit);
 }
 
-function handleFormSubmit(event) {
+function handleSubmit(event) {
     event.preventDefault();
     cachePlayerData(player1);
     cachePlayerData(player2);
