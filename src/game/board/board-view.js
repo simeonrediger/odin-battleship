@@ -8,6 +8,7 @@ export default class BoardView {
     #container;
     #size;
     #cellSize;
+
     #getShipCoordinates;
     #shipInBounds;
     #getNearestInBoundsAnchorCoordinate;
