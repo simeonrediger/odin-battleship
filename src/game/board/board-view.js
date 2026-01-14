@@ -50,6 +50,7 @@ export default class BoardView {
     placeShipPreview(x, y, direction, length) {
         Object.assign(this.#shipPreview, { x, y, direction, length });
         const coordinates = this.#getShipCoordinates(x, y, direction, length);
+        this.#removeShipPreview();
 
         for (const [x, y] of coordinates) {
             this.#getCell(x, y).classList.add('ship-preview');
@@ -109,7 +110,6 @@ export default class BoardView {
         }
 
         if (this.#shipInBounds(x, y, direction, length)) {
-            this.#removeShipPreview();
             this.placeShipPreview(x, y, direction, length);
         }
     }
@@ -139,7 +139,6 @@ export default class BoardView {
             length,
         );
 
-        this.#removeShipPreview();
         this.placeShipPreview(x, y, direction, length);
     }
 
