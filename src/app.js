@@ -101,7 +101,7 @@ function handlePlayersSubmit() {
     activePlayer = player1;
     activePlayerViews = views.player1;
     activePlayerElements = dom.player1;
-    promptShipPlacements(player1);
+    enterShipPlacements(player1);
 }
 
 function enterPlayerCreation() {
@@ -111,7 +111,7 @@ function enterPlayerCreation() {
     show(dom.player1.playerCreation, dom.player2.playerCreation);
 }
 
-function promptShipPlacements(player) {
+function enterShipPlacements(player) {
     phase =
         player === player1
             ? phases.SHIP_PLACEMENTS_1
