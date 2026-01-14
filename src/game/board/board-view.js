@@ -78,9 +78,13 @@ export default class BoardView {
 
         switch (event.key) {
             case 'ArrowUp':
+            case 'w':
             case 'ArrowDown':
+            case 's':
             case 'ArrowLeft':
+            case 'a':
             case 'ArrowRight':
+            case 'd':
                 this.#moveShipPreview(event.key);
                 break;
             case 'r':
@@ -94,15 +98,19 @@ export default class BoardView {
 
         switch (key) {
             case 'ArrowUp':
+            case 'w':
                 y++;
                 break;
             case 'ArrowDown':
+            case 's':
                 y--;
                 break;
             case 'ArrowLeft':
+            case 'a':
                 x--;
                 break;
             case 'ArrowRight':
+            case 'd':
                 x++;
                 break;
             default:
