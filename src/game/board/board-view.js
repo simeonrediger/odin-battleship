@@ -1,5 +1,7 @@
 import '@/shared/styles/board.css';
 
+import Ship from '../ship.js';
+
 export default class BoardView {
     eventsEnabled = false;
 
@@ -8,6 +10,7 @@ export default class BoardView {
     #cellSize;
     #getShipCoordinates;
     #shipInBounds;
+    #getNearestInBoundsAnchorCoordinate;
 
     #shipPreview = {
         x: undefined,
@@ -16,12 +19,22 @@ export default class BoardView {
         length: undefined,
     };
 
-    constructor(container, size, cellSize, getShipCoordinates, shipInBounds) {
+    constructor(
+        container,
+        size,
+        cellSize,
+        getShipCoordinates,
+        shipInBounds,
+        getNearestInBoundsAnchorCoordinate,
+    ) {
         this.#container = container;
         this.#size = size;
         this.#cellSize = cellSize;
         this.#getShipCoordinates = getShipCoordinates;
         this.#shipInBounds = shipInBounds;
+        this.#getNearestInBoundsAnchorCoordinate =
+            getNearestInBoundsAnchorCoordinate;
+
         this.#bindEvents();
     }
 
@@ -44,7 +57,7 @@ export default class BoardView {
     }
 
     #bindEvents() {
-        document.addEventListener('keydown', this.#moveShipPreview.bind(this));
+        document.addEventListener('keydown', this.#handleKeyDown.bind(this));
     }
 
     #getCell(x, y) {
@@ -57,14 +70,28 @@ export default class BoardView {
             .forEach(element => element.classList.remove('ship-preview'));
     }
 
-    #moveShipPreview(event) {
+    #handleKeyDown(event) {
         if (!this.eventsEnabled) {
             return;
         }
 
+        switch (event.key) {
+            case 'ArrowUp':
+            case 'ArrowDown':
+            case 'ArrowLeft':
+            case 'ArrowRight':
+                this.#moveShipPreview(event.key);
+                break;
+            case 'r':
+                this.#rotateShipPreview();
+                break;
+        }
+    }
+
+    #moveShipPreview(key) {
         let { x, y, direction, length } = this.#shipPreview;
 
-        switch (event.key) {
+        switch (key) {
             case 'ArrowUp':
                 y++;
                 break;
@@ -85,6 +112,35 @@ export default class BoardView {
             this.#removeShipPreview();
             this.placeShipPreview(x, y, direction, length);
         }
+    }
+
+    #rotateShipPreview() {
+        let { x, y, direction, length } = this.#shipPreview;
+
+        switch (direction) {
+            case Ship.directions.UP:
+                direction = Ship.directions.RIGHT;
+                break;
+            case Ship.directions.RIGHT:
+                direction = Ship.directions.DOWN;
+                break;
+            case Ship.directions.DOWN:
+                direction = Ship.directions.LEFT;
+                break;
+            case Ship.directions.LEFT:
+                direction = Ship.directions.UP;
+                break;
+        }
+
+        [x, y] = this.#getNearestInBoundsAnchorCoordinate(
+            x,
+            y,
+            direction,
+            length,
+        );
+
+        this.#removeShipPreview();
+        this.placeShipPreview(x, y, direction, length);
     }
 
     #createCell(x, y) {

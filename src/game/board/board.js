@@ -89,6 +89,32 @@ export default class Board {
         );
     }
 
+    getNearestInBoundsAnchorCoordinate(x, y, direction, length) {
+        const original = { x, y };
+        const outOfBoundsDelta = { x: 0, y: 0 };
+
+        for (let i = 0; i < length; i++) {
+            if (x < 0 && x < outOfBoundsDelta.x) {
+                outOfBoundsDelta.x = x;
+            } else if (x >= this.#size && x > outOfBoundsDelta.x) {
+                outOfBoundsDelta.x = x - this.#size + 1;
+            }
+
+            if (y < 0 && y < outOfBoundsDelta.y) {
+                outOfBoundsDelta.y = y;
+            } else if (y >= this.#size && y > outOfBoundsDelta.y) {
+                outOfBoundsDelta.y = y - this.#size + 1;
+            }
+
+            [x, y] = this.#getAdjacentCoordinate(x, y, direction);
+        }
+
+        return [
+            original.x - outOfBoundsDelta.x,
+            original.y - outOfBoundsDelta.y,
+        ];
+    }
+
     #coordinateInBounds(x, y) {
         return x >= 0 && x < this.#size && y >= 0 && y < this.#size;
     }
