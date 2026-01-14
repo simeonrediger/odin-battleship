@@ -42,6 +42,7 @@ const views = {
 const dom = {
     announcer: document.querySelector("[data-role='announcer']"),
     player1: {
+        area: document.querySelector("[data-role='board-area-1']"),
         playerCreation: document.querySelector(
             "[data-role='player-1-creation']",
         ),
@@ -51,6 +52,7 @@ const dom = {
         grid: document.querySelector("[data-role='player-1-grid']"),
     },
     player2: {
+        area: document.querySelector("[data-role='board-area-2']"),
         playerCreation: document.querySelector(
             "[data-role='player-2-creation']",
         ),
@@ -89,6 +91,10 @@ function continueGame() {
         case phases.PLAYER_CREATION:
             handlePlayersSubmit();
             return;
+        case phases.SHIP_PLACEMENTS_1:
+            handleShipPlacementsSubmit();
+            enterShipPlacements(player2, 'player2');
+            return;
         default:
             throw new Error(`Invalid phase: ${phase}`);
     }
@@ -101,6 +107,10 @@ function handlePlayersSubmit() {
     enterShipPlacements(player1, 'player1');
 }
 
+function handleShipPlacementsSubmit() {
+    hide(activePlayerElements.board, dom.unplacedShips);
+}
+
 function enterPlayerCreation() {
     phase = phases.PLAYER_CREATION;
     dom.announcer.textContent = "Who's playing?";
@@ -109,6 +119,11 @@ function enterPlayerCreation() {
 }
 
 function enterShipPlacements(player, playerKey) {
+    activePlayerElements?.area.insertBefore(
+        dom.unplacedShips,
+        activePlayerElements.board,
+    );
+
     activePlayer = player;
     activePlayerViews = views[playerKey];
     activePlayerElements = dom[playerKey];
@@ -124,7 +139,10 @@ function enterShipPlacements(player, playerKey) {
         setCellSize(player.board.size);
     }
 
-    createShips(unplacedShips);
+    if (unplacedShips.length === 0) {
+        createShips(unplacedShips);
+    }
+
     dom.unplacedShips.innerHTML = '';
     unplacedShips.forEach(renderUnplacedShip);
     activePlayerViews.board.render();
