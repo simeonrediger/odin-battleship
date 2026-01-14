@@ -132,7 +132,9 @@ function promptShipPlacements(player) {
 }
 
 function handleShipPlacementConfirmation({ x, y, direction, length }) {
-    activePlayer.board.placeShip(new Ship(length, direction), x, y);
+    const ship = new Ship(length, direction);
+    const placedShipData = activePlayer.board.placeShip(ship, x, y);
+    activePlayerViews.board.renderPlacedShip(placedShipData);
 }
 
 function createPlayers() {

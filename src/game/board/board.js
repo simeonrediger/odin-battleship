@@ -47,6 +47,15 @@ export default class Board {
         });
 
         this.#ships.push(ship);
+
+        const placedShipData = {
+            x,
+            y,
+            direction: ship.direction,
+            length: ship.length,
+        };
+
+        return placedShipData;
     }
 
     hit(x, y) {

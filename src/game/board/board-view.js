@@ -60,6 +60,14 @@ export default class BoardView {
         }
     }
 
+    renderPlacedShip({ x, y, direction, length }) {
+        const coordinates = this.#getShipCoordinates(x, y, direction, length);
+
+        for (const [x, y] of coordinates) {
+            this.#getCell(x, y).classList.add('ship-node');
+        }
+    }
+
     #bindEvents() {
         document.addEventListener('keydown', this.#handleKeyDown.bind(this));
     }
