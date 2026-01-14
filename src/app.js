@@ -65,7 +65,7 @@ const dom = {
 
 function init() {
     bindEvents();
-    promptPlayerCreation();
+    enterPlayerCreation();
 }
 
 function bindEvents() {
@@ -104,7 +104,7 @@ function handlePlayersSubmit() {
     promptShipPlacements(player1);
 }
 
-function promptPlayerCreation() {
+function enterPlayerCreation() {
     phase = phases.PLAYER_CREATION;
     dom.announcer.textContent = "Who's playing?";
     dom.continueButton.textContent = 'Ready';
