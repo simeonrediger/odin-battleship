@@ -98,10 +98,7 @@ function handlePlayersSubmit() {
     createPlayers();
     createBoardViews();
     hide(dom.player1.playerCreation, dom.player2.playerCreation);
-    activePlayer = player1;
-    activePlayerViews = views.player1;
-    activePlayerElements = dom.player1;
-    enterShipPlacements(player1);
+    enterShipPlacements(player1, 'player1');
 }
 
 function enterPlayerCreation() {
@@ -111,7 +108,11 @@ function enterPlayerCreation() {
     show(dom.player1.playerCreation, dom.player2.playerCreation);
 }
 
-function enterShipPlacements(player) {
+function enterShipPlacements(player, playerKey) {
+    activePlayer = player;
+    activePlayerViews = views[playerKey];
+    activePlayerElements = dom[playerKey];
+
     phase =
         player === player1
             ? phases.SHIP_PLACEMENTS_1
