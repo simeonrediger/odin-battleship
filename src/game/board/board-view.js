@@ -106,6 +106,7 @@ export default class BoardView {
                 break;
             case ' ':
                 this.#removeShipPreview();
+                this.eventsEnabled = false;
                 this.#onShipPlacementConfirmation(this.#shipPreview);
                 break;
         }
