@@ -10,6 +10,18 @@ export default class Player {
         this.#board = board;
     }
 
+    get name() {
+        return this.#name;
+    }
+
+    get isHuman() {
+        return this.#isHuman;
+    }
+
+    get board() {
+        return this.#board;
+    }
+
     #validateArgs(name, isHuman) {
         if (typeof name !== 'string') {
             throw new TypeError(`Name must be a string. Got ${typeof name}`);

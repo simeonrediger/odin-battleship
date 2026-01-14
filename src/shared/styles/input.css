@@ -1,0 +1,10 @@
+input,
+select {
+  background-color: var(--color-input-bg);
+  border-radius: 0.75rem;
+  color: var(--color-input-fg);
+  font-size: 1.5rem;
+  padding: 0.25rem 0.75rem;
+  text-align: center;
+  max-width: 15rem;
+}

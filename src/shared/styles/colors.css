@@ -5,10 +5,13 @@ html {
   --gray: #383838;
   --light-gray-1: #555;
   --light-gray-2: #666;
+  --light-gray-3: #888;
   --white: #ccc;
 
+  --red: #d33;
   --blue: #33d;
   --pale-blue: #68f;
+  --paler-blue: #46c;
 
   --color-bg-primary: var(--dark-gray-2);
   --color-bg-secondary: var(--dark-gray-1);
@@ -22,4 +25,8 @@ html {
   --color-border-focus: var(--pale-blue);
 
   --color-board-bg: var(--blue);
+  --color-board-border: var(--paler-blue);
+  --color-ship-bg: var(--light-gray-3);
+  --color-ship-outline: var(--white);
+  --color-ship-placing: var(--pale-blue);
 }

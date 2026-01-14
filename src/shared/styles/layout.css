@@ -10,16 +10,38 @@ body {
 }
 
 .main-content {
-  height: 40rem;
-
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   gap: 2rem;
 }
 
-.menu {
-  background-color: var(--color-menu-bg);
-  border-radius: 1rem;
-  width: 20rem;
-  padding: 0.5rem 1rem;
+.announcer {
+  font-size: 1.75rem;
+}
+
+.board-areas {
+  height: 32rem;
+
+  display: flex;
+  gap: 2rem;
+}
+
+.board-area {
+  background-color: var(--color-bg-secondary);
+  border-radius: 2rem;
+  height: 100%;
+  padding: 1rem;
+  width: 32rem;
+}
+
+.unplaced-ships {
+  height: 100%;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
 }

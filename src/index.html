@@ -9,48 +9,55 @@
 
   <body>
     <main class="main-content">
-      <section data-role="menu" class="menu">
-        <form data-form="game-config" class="game-config-form">
-          <h2 class="heading">Who's playing?</h2>
-          <fieldset>
+      <p data-role="announcer" class="announcer"></p>
+      <div class="board-areas">
+        <div data-role="board-area-1" class="board-area">
+          <div data-role="player-1-creation" class="player-creation hidden">
             <select
-              name="player-1-type"
               data-input="player-1-type"
+              class="player-type-input"
               aria-label="Player 1 type"
             >
               <option value="human" selected>Human</option>
               <option value="computer">Computer</option>
             </select>
             <input
-              name="player-1-name"
               data-input="player-1-name"
+              class="player-name-input"
               aria-label="Player 1 name"
               placeholder="Player 1"
-              type="text"
             />
-          </fieldset>
-          <p class="versus">vs.</p>
-          <fieldset>
+          </div>
+          <div data-role="player-1-board" class="board hidden">
+            <div data-role="player-1-grid" class="grid"></div>
+          </div>
+        </div>
+        <div data-role="board-area-2" class="board-area">
+          <div data-role="player-2-creation" class="player-creation hidden">
             <select
-              name="player-2-type"
               data-input="player-2-type"
+              class="player-type-input"
               aria-label="Player 2 type"
             >
               <option value="human">Human</option>
               <option value="computer" selected>Computer</option>
             </select>
             <input
-              name="player-2-name"
               data-input="player-2-name"
+              class="player-name-input"
               aria-label="Player 2 name"
               placeholder="Player 2"
-              type="text"
             />
-          </fieldset>
-          <button data-action="submit-game-config">Start</button>
-        </form>
-      </section>
-      <section data-role="board" class="board"></section>
+          </div>
+          <div data-role="unplaced-ships" class="unplaced-ships hidden"></div>
+          <div data-role="player-2-board" class="board hidden">
+            <div data-role="player-2-grid" class="grid"></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <button data-action="continue" class="continue-button">Continue</button>
+      </div>
     </main>
   </body>
 </html>

@@ -1,0 +1,35 @@
+.ship {
+  cursor: grab;
+  display: flex;
+}
+
+.ship.placing {
+  box-shadow: 0 0 1rem 0.25rem var(--color-ship-placing);
+}
+
+.ship-node {
+  background-color: var(--color-ship-bg);
+  border-radius: 0.25rem;
+  outline: 1px solid var(--color-ship-outline);
+}
+
+.ship-preview {
+  background-color: var(--color-ship-bg);
+  border-radius: 0.25rem;
+}
+
+.face-right {
+  flex-direction: row;
+}
+
+.face-left {
+  flex-direction: row-reverse;
+}
+
+.face-up {
+  flex-direction: column-reverse;
+}
+
+.face-down {
+  flex-direction: column;
+}

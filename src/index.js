@@ -1,11 +1,11 @@
 import '@/shared/styles/reset.css';
 import '@/shared/styles/colors.css';
 import '@/shared/styles/layout.css';
+import '@/shared/styles/utilities.css';
+import '@/shared/styles/button.css';
+import '@/shared/styles/input.css';
+import '@/shared/styles/menu.css';
 
-import gameController from './game/controller.js';
-import menuController from './menu/controller.js';
+import app from './app.js';
 
-const root = document;
-const boardSize = 10;
-menuController.init(root, gameController.start);
-gameController.init(root, boardSize);
+app.init();
