@@ -9,6 +9,7 @@ html {
   --white: #ccc;
 
   --red: #d33;
+  --light-green: #3d3;
   --blue: #33d;
   --pale-blue: #68f;
   --paler-blue: #46c;
@@ -29,4 +30,5 @@ html {
   --color-ship-bg: var(--light-gray-3);
   --color-ship-outline: var(--white);
   --color-ship-placing: var(--pale-blue);
+  --color-ship-valid: var(--light-green);
 }

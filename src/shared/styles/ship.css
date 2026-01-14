@@ -14,7 +14,7 @@
 }
 
 .ship-preview {
-  background-color: var(--color-ship-bg);
+  background-color: var(--color-ship-valid);
   border-radius: 0.25rem;
 }
 
