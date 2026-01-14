@@ -56,7 +56,7 @@ export default class BoardView {
         this.#removeShipPreview();
 
         for (const [x, y] of coordinates) {
-            this.#getCell(x, y).classList.add('ship-preview');
+            this.#getCell(x, y).classList.add('ship-preview-node');
         }
     }
 
@@ -78,8 +78,8 @@ export default class BoardView {
 
     #removeShipPreview() {
         this.#container
-            .querySelectorAll('.ship-preview')
-            .forEach(element => element.classList.remove('ship-preview'));
+            .querySelectorAll('.ship-preview-node')
+            .forEach(element => element.classList.remove('ship-preview-node'));
     }
 
     #handleKeyDown(event) {

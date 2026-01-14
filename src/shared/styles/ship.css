@@ -13,7 +13,7 @@
   outline: 1px solid var(--color-ship-outline);
 }
 
-.ship-preview {
+.ship-preview-node {
   background-color: var(--color-ship-valid);
   border-radius: 0.25rem;
 }
