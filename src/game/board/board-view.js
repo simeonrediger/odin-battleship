@@ -11,6 +11,7 @@ export default class BoardView {
     #getShipCoordinates;
     #shipInBounds;
     #getNearestInBoundsAnchorCoordinate;
+    #onShipPlacementConfirmation;
 
     #shipPreview = {
         x: undefined,
@@ -26,6 +27,7 @@ export default class BoardView {
         getShipCoordinates,
         shipInBounds,
         getNearestInBoundsAnchorCoordinate,
+        onShipPlacementConfirmation,
     ) {
         this.#container = container;
         this.#size = size;
@@ -34,6 +36,7 @@ export default class BoardView {
         this.#shipInBounds = shipInBounds;
         this.#getNearestInBoundsAnchorCoordinate =
             getNearestInBoundsAnchorCoordinate;
+        this.#onShipPlacementConfirmation = onShipPlacementConfirmation;
 
         this.#bindEvents();
     }
@@ -89,6 +92,10 @@ export default class BoardView {
                 break;
             case 'r':
                 this.#rotateShipPreview();
+                break;
+            case ' ':
+                this.#removeShipPreview();
+                this.#onShipPlacementConfirmation(this.#shipPreview);
                 break;
         }
     }

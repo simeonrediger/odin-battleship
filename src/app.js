@@ -26,6 +26,7 @@ const phases = Object.freeze({
 let phase;
 let player1;
 let player2;
+let activePlayer;
 let activePlayerElements;
 let activePlayerViews;
 
@@ -97,6 +98,7 @@ function handlePlayersSubmit() {
     createPlayers();
     createBoardViews();
     hide(dom.player1.playerCreation, dom.player2.playerCreation);
+    activePlayer = player1;
     activePlayerViews = views.player1;
     activePlayerElements = dom.player1;
     promptShipPlacements(player1);
@@ -129,6 +131,10 @@ function promptShipPlacements(player) {
     show(activePlayerElements.board, dom.unplacedShips);
 }
 
+function handleShipPlacementConfirmation({ x, y, direction, length }) {
+    activePlayer.board.placeShip(new Ship(length, direction), x, y);
+}
+
 function createPlayers() {
     player1 = createPlayer(dom.player1);
     player2 = createPlayer(dom.player2);
@@ -158,6 +164,7 @@ function createBoardView(gridElement, board) {
         board.getShipCoordinates.bind(board),
         board.shipInBounds.bind(board),
         board.getNearestInBoundsAnchorCoordinate.bind(board),
+        handleShipPlacementConfirmation,
     );
 }
 
