@@ -59,6 +59,8 @@ export default class BoardView {
         for (const [x, y] of coordinates) {
             this.#getCell(x, y).classList.add('ship-preview-node');
         }
+
+        this.eventsEnabled = true;
     }
 
     renderPlacedShip({ x, y, direction, length }) {
