@@ -132,6 +132,7 @@ function promptShipPlacements(player) {
 }
 
 function handleShipPlacementConfirmation({ x, y, direction, length }) {
+    selectedShipView.remove();
     const ship = new Ship(length, direction);
     const placedShipData = activePlayer.board.placeShip(ship, x, y);
     activePlayerViews.board.renderPlacedShip(placedShipData);
