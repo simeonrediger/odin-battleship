@@ -32,6 +32,11 @@ const current = {
     playerKey: undefined,
 };
 
+const other = {
+    player: undefined,
+    playerKey: undefined,
+};
+
 const views = {
     player1: {
         board: undefined,
@@ -92,15 +97,26 @@ function continueGame() {
     switch (current.phase) {
         case phases.PLAYER_CREATION:
             handlePlayersSubmit();
-            enterShipPlacements(player1, 'player1');
+            setPlayer(player1);
+            enterShipPlacements();
             return;
         case phases.SHIP_PLACEMENTS_1:
             handleShipPlacementsSubmit();
-            enterShipPlacements(player2, 'player2');
+            setPlayer(player2);
+            enterShipPlacements();
             return;
         default:
             throw new Error(`Invalid phase: ${current.phase}`);
     }
+}
+
+function setPlayer(player) {
+    current.player = player;
+    const isPlayer1 = player === player1;
+
+    current.playerKey = isPlayer1 ? 'player1' : 'player2';
+    other.player = isPlayer1 ? player2 : player1;
+    other.playerKey = isPlayer1 ? 'player2' : 'player1';
 }
 
 function handlePlayersSubmit() {
@@ -120,24 +136,21 @@ function enterPlayerCreation() {
     show(dom.player1.playerCreation, dom.player2.playerCreation);
 }
 
-function enterShipPlacements(player, playerKey) {
-    dom[current.playerKey]?.area.insertBefore(
-        dom.unplacedShips,
-        dom[current.playerKey].board,
-    );
-
-    current.player = player;
-    current.playerKey = playerKey;
-
+function enterShipPlacements() {
     current.phase =
-        player === player1
+        current.player === player1
             ? phases.SHIP_PLACEMENTS_1
             : phases.SHIP_PLACEMENTS_2;
 
-    dom.announcer.textContent = `${player.name}, place your fleet!`;
+    dom[other.playerKey].area.insertBefore(
+        dom.unplacedShips,
+        dom[other.playerKey].board,
+    );
+
+    dom.announcer.textContent = `${current.player.name}, place your fleet!`;
 
     if (!cellSize) {
-        setCellSize(player.board.size);
+        setCellSize(current.player.board.size);
     }
 
     if (unplacedShips.length === 0) {
