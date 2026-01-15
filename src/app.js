@@ -138,12 +138,11 @@ function continueGame() {
 
 function setPlayer(player) {
     current.player = player;
-    const isPlayer1 = player === player1;
 
-    current.isPlayer1 = isPlayer1;
-    current.playerKey = isPlayer1 ? 'player1' : 'player2';
-    other.player = isPlayer1 ? player2 : player1;
-    other.playerKey = isPlayer1 ? 'player2' : 'player1';
+    current.isPlayer1 = player === player1;
+    current.playerKey = current.isPlayer1 ? 'player1' : 'player2';
+    other.player = current.isPlayer1 ? player2 : player1;
+    other.playerKey = current.isPlayer1 ? 'player2' : 'player1';
 }
 
 function handlePlayersSubmit() {
