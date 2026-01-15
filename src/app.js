@@ -23,12 +23,14 @@ const phases = Object.freeze({
     SHIP_PLACEMENTS_2: 'SHIP_PLACEMENTS_2',
 });
 
-let phase;
 let player1;
 let player2;
-let activePlayer;
-let activePlayerElements;
-let activePlayerViews;
+
+const current = {
+    phase: undefined,
+    player: undefined,
+    playerKey: undefined,
+};
 
 const views = {
     player1: {
@@ -87,7 +89,7 @@ function handleClick(event) {
 }
 
 function continueGame() {
-    switch (phase) {
+    switch (current.phase) {
         case phases.PLAYER_CREATION:
             handlePlayersSubmit();
             return;
@@ -96,7 +98,7 @@ function continueGame() {
             enterShipPlacements(player2, 'player2');
             return;
         default:
-            throw new Error(`Invalid phase: ${phase}`);
+            throw new Error(`Invalid phase: ${current.phase}`);
     }
 }
 
@@ -108,27 +110,26 @@ function handlePlayersSubmit() {
 }
 
 function handleShipPlacementsSubmit() {
-    hide(activePlayerElements.board, dom.unplacedShips);
+    hide(dom[current.playerKey].board, dom.unplacedShips);
 }
 
 function enterPlayerCreation() {
-    phase = phases.PLAYER_CREATION;
+    current.phase = phases.PLAYER_CREATION;
     dom.announcer.textContent = "Who's playing?";
     dom.continueButton.textContent = 'Ready';
     show(dom.player1.playerCreation, dom.player2.playerCreation);
 }
 
 function enterShipPlacements(player, playerKey) {
-    activePlayerElements?.area.insertBefore(
+    dom[current.playerKey]?.area.insertBefore(
         dom.unplacedShips,
-        activePlayerElements.board,
+        dom[current.playerKey].board,
     );
 
-    activePlayer = player;
-    activePlayerViews = views[playerKey];
-    activePlayerElements = dom[playerKey];
+    current.player = player;
+    current.playerKey = playerKey;
 
-    phase =
+    current.phase =
         player === player1
             ? phases.SHIP_PLACEMENTS_1
             : phases.SHIP_PLACEMENTS_2;
@@ -145,16 +146,16 @@ function enterShipPlacements(player, playerKey) {
 
     dom.unplacedShips.innerHTML = '';
     unplacedShips.forEach(renderUnplacedShip);
-    activePlayerViews.board.render();
-    activePlayerViews.board.eventsEnabled = true;
-    show(activePlayerElements.board, dom.unplacedShips);
+    views[current.playerKey].board.render();
+    views[current.playerKey].board.eventsEnabled = true;
+    show(dom[current.playerKey].board, dom.unplacedShips);
 }
 
 function handleShipPlacementConfirmation({ x, y, direction, length }) {
     selectedShipView.remove();
     const ship = new Ship(length, direction);
-    const placedShipData = activePlayer.board.placeShip(ship, x, y);
-    activePlayerViews.board.renderPlacedShip(placedShipData);
+    const placedShipData = current.player.board.placeShip(ship, x, y);
+    views[current.playerKey].board.renderPlacedShip(placedShipData);
 }
 
 function createPlayers() {
@@ -241,7 +242,7 @@ function handleUnplacedShipsClick(event) {
     shipView.classList.add('placing');
     const x = 3;
     const y = 4;
-    activePlayerViews.board.placeShipPreview(
+    views[current.playerKey].board.placeShipPreview(
         x,
         y,
         shipView.dataset.direction,
