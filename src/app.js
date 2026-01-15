@@ -181,7 +181,9 @@ function enterShipPlacements() {
         dom[other.playerKey].board,
     );
 
-    dom.announcer.textContent = `${current.player.name}, place your fleet!`;
+    let announcement = `${current.player.name}, place your fleet...`;
+    announcement += ` Don't look, ${other.player.name}!`;
+    dom.announcer.textContent = announcement;
 
     if (!cellSize) {
         setCellSize(current.player.board.size);
