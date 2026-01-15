@@ -262,6 +262,15 @@ function tryHit(event) {
 
     if (shipHit) {
         coordinate.classList.add('hit');
+        const sunkShipCoordinates =
+            opponent.player.board.getSunkShipCoordinates(x, y);
+
+        if (sunkShipCoordinates) {
+            sunkShipCoordinates.forEach(([x, y]) => {
+                const cell = views[opponent.playerKey].board.getCell(x, y);
+                cell.classList.add('sunk');
+            });
+        }
     }
 
     coordinate.classList.add('discovered');

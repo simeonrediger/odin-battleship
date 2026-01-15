@@ -153,6 +153,11 @@ export default class Board {
         ];
     }
 
+    getSunkShipCoordinates(x, y) {
+        const ship = this.#getCell(x, y).occupant;
+        return ship && ship.sunk ? this.#getShipCoordinates(ship) : false;
+    }
+
     #coordinateInBounds(x, y) {
         return x >= 0 && x < this.#size && y >= 0 && y < this.#size;
     }
@@ -160,6 +165,14 @@ export default class Board {
     #coordinateOccupied(x, y) {
         const cell = this.#getCell(x, y);
         return Boolean(cell.occupant);
+    }
+
+    #getShipCoordinates(ship) {
+        return this.#grid.flatMap((row, rowIndex) =>
+            Object.entries(row)
+                .filter(([, cell]) => cell.occupant === ship)
+                .map(([x]) => [x, this.#size - 1 - rowIndex]),
+        );
     }
 
     #checkDefeat() {

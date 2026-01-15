@@ -71,7 +71,7 @@ export default class BoardView {
         this.#removeShipPreview();
 
         for (const [x, y] of coordinates) {
-            const cell = this.#getCell(x, y);
+            const cell = this.getCell(x, y);
             cell.classList.add(...classesToAdd);
             cell.classList.remove(...classesToRemove);
         }
@@ -83,16 +83,16 @@ export default class BoardView {
         const coordinates = this.#getShipCoordinates(x, y, direction, length);
 
         for (const [x, y] of coordinates) {
-            this.#getCell(x, y).classList.add('ship-node');
+            this.getCell(x, y).classList.add('ship-node');
         }
+    }
+
+    getCell(x, y) {
+        return this.#container.querySelector(`[data-x='${x}'][data-y='${y}']`);
     }
 
     #bindEvents() {
         document.addEventListener('keydown', this.#handleKeyDown.bind(this));
-    }
-
-    #getCell(x, y) {
-        return this.#container.querySelector(`[data-x='${x}'][data-y='${y}']`);
     }
 
     #removeShipPreview() {

@@ -26,5 +26,8 @@
 }
 
 .coordinate.discovered.hit {
-  background: no-repeat center/90% url('../icons/viewfinder.svg');
+  background-image: url('../icons/viewfinder.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 90%;
 }
