@@ -130,7 +130,7 @@ export default class Board {
 
     #coordinateOccupied(x, y) {
         const cell = this.#getCell(x, y);
-        return cell.occupied;
+        return Boolean(cell.occupant);
     }
 
     #checkDefeat() {
