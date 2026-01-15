@@ -18,6 +18,11 @@
   border-radius: 0.25rem;
 }
 
+.ship-preview-invalid {
+  background-color: var(--color-ship-invalid);
+  border-radius: 0.25rem;
+}
+
 .face-right {
   flex-direction: row;
 }

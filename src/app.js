@@ -186,6 +186,7 @@ function createBoardView(gridElement, board) {
         cellSize,
         board.getShipCoordinates.bind(board),
         board.shipInBounds.bind(board),
+        board.shipOverlaps.bind(board),
         board.getNearestInBoundsAnchorCoordinate.bind(board),
         handleShipPlacementConfirmation,
     );

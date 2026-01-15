@@ -98,6 +98,17 @@ export default class Board {
         );
     }
 
+    shipOverlaps(x, y, direction, length) {
+        const shipCoordinates = this.getShipCoordinates(
+            x,
+            y,
+            direction,
+            length,
+        );
+
+        return shipCoordinates.some(([x, y]) => this.#coordinateOccupied(x, y));
+    }
+
     getNearestInBoundsAnchorCoordinate(x, y, direction, length) {
         const original = { x, y };
         const outOfBoundsDelta = { x: 0, y: 0 };

@@ -11,6 +11,7 @@ export default class BoardView {
 
     #getShipCoordinates;
     #shipInBounds;
+    #shipOverlaps;
     #getNearestInBoundsAnchorCoordinate;
     #onShipPlacementConfirmation;
 
@@ -27,6 +28,7 @@ export default class BoardView {
         cellSize,
         getShipCoordinates,
         shipInBounds,
+        shipOverlaps,
         getNearestInBoundsAnchorCoordinate,
         onShipPlacementConfirmation,
     ) {
@@ -35,6 +37,7 @@ export default class BoardView {
         this.#cellSize = cellSize;
         this.#getShipCoordinates = getShipCoordinates;
         this.#shipInBounds = shipInBounds;
+        this.#shipOverlaps = shipOverlaps;
         this.#getNearestInBoundsAnchorCoordinate =
             getNearestInBoundsAnchorCoordinate;
         this.#onShipPlacementConfirmation = onShipPlacementConfirmation;
@@ -54,10 +57,20 @@ export default class BoardView {
     placeShipPreview(x, y, direction, length) {
         Object.assign(this.#shipPreview, { x, y, direction, length });
         const coordinates = this.#getShipCoordinates(x, y, direction, length);
+        const shipOverlaps = this.#shipOverlaps(x, y, direction, length);
+        const classesToAdd = ['ship-preview-node'];
+        const classesToRemove = [];
+
+        if (shipOverlaps) {
+            classesToAdd.push('ship-preview-invalid');
+        }
+
         this.#removeShipPreview();
 
         for (const [x, y] of coordinates) {
-            this.#getCell(x, y).classList.add('ship-preview-node');
+            const cell = this.#getCell(x, y);
+            cell.classList.add(...classesToAdd);
+            cell.classList.remove(...classesToRemove);
         }
 
         this.eventsEnabled = true;
@@ -81,8 +94,13 @@ export default class BoardView {
 
     #removeShipPreview() {
         this.#container
-            .querySelectorAll('.ship-preview-node')
-            .forEach(element => element.classList.remove('ship-preview-node'));
+            .querySelectorAll('.ship-preview-node, .ship-preview-invalid')
+            .forEach(element =>
+                element.classList.remove(
+                    'ship-preview-node',
+                    'ship-preview-invalid',
+                ),
+            );
     }
 
     #handleKeyDown(event) {

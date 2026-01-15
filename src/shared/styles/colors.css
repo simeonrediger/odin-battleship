@@ -31,4 +31,5 @@ html {
   --color-ship-outline: var(--white);
   --color-ship-placing: var(--pale-blue);
   --color-ship-valid: var(--light-green);
+  --color-ship-invalid: var(--red);
 }
