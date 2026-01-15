@@ -139,6 +139,14 @@ function continueGame() {
             prepareGame();
             enterRound();
             break;
+        case phases.PLAYER_1_ATTACK:
+            setPlayer(player2);
+            enterRound();
+            break;
+        case phases.PLAYER_2_ATTACK:
+            setPlayer(player1);
+            enterRound();
+            break;
         default:
             throw new Error(`Invalid phase: ${current.phase}`);
     }
@@ -255,6 +263,10 @@ function tryHit(event) {
     }
 
     coordinate.classList.add('discovered');
+
+    if (!shipHit) {
+        continueGame();
+    }
 }
 
 function createPlayers() {
