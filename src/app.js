@@ -152,6 +152,7 @@ function handlePlayersSubmit() {
 
 function handleShipPlacementsSubmit() {
     hide(dom[current.playerKey].board, dom.unplacedShips);
+    dom[current.playerKey].grid.classList.add('undiscovered-ship-nodes-hidden');
 }
 
 function enterPlayerCreation() {

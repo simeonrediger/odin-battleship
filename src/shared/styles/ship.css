@@ -23,6 +23,10 @@
   border-radius: 0.25rem;
 }
 
+.undiscovered-ship-nodes-hidden .ship-node {
+  background-color: transparent;
+}
+
 .face-right {
   flex-direction: row;
 }
