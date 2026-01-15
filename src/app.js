@@ -186,6 +186,7 @@ function enterShipPlacements() {
     unplacedShips.forEach(renderUnplacedShip);
     views[current.playerKey].board.render();
     views[current.playerKey].board.eventsEnabled = true;
+    dom.continueButton.textContent = 'Done';
     dom.continueButton.disabled = true;
     show(dom[current.playerKey].board, dom.unplacedShips);
 }
