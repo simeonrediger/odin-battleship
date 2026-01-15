@@ -124,12 +124,12 @@ function continueGame() {
             handlePlayersSubmit();
             setPlayer(player1);
             enterShipPlacements();
-            return;
+            break;
         case phases.SHIP_PLACEMENTS_1:
             handleShipPlacementsSubmit();
             setPlayer(player2);
             enterShipPlacements();
-            return;
+            break;
         default:
             throw new Error(`Invalid phase: ${current.phase}`);
     }
