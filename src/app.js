@@ -31,6 +31,7 @@ const current = {
     phase: undefined,
     player: undefined,
     playerKey: undefined,
+    isPlayer1: undefined,
 };
 
 const other = {
@@ -139,6 +140,7 @@ function setPlayer(player) {
     current.player = player;
     const isPlayer1 = player === player1;
 
+    current.isPlayer1 = isPlayer1;
     current.playerKey = isPlayer1 ? 'player1' : 'player2';
     other.player = isPlayer1 ? player2 : player1;
     other.playerKey = isPlayer1 ? 'player2' : 'player1';
@@ -163,10 +165,9 @@ function enterPlayerCreation() {
 }
 
 function enterShipPlacements() {
-    current.phase =
-        current.player === player1
-            ? phases.SHIP_PLACEMENTS_1
-            : phases.SHIP_PLACEMENTS_2;
+    current.phase = current.isPlayer1
+        ? phases.SHIP_PLACEMENTS_1
+        : phases.SHIP_PLACEMENTS_2;
 
     dom[other.playerKey].area.insertBefore(
         dom.unplacedShips,
