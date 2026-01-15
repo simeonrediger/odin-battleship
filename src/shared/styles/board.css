@@ -6,6 +6,10 @@
   padding: 1rem;
 }
 
+.board.inactive {
+  filter: brightness(50%);
+}
+
 .grid {
   display: grid;
   grid-template-columns: repeat(10, 1fr);

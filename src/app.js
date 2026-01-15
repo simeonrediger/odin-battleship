@@ -223,6 +223,8 @@ function enterRound() {
         : phases.PLAYER_2_ATTACK;
 
     dom.announcer.textContent = `${current.player.name}'s turn`;
+    dom[current.playerKey].board.classList.add('inactive');
+    dom[opponent.playerKey].board.classList.remove('inactive');
 }
 
 function handleShipPlacementConfirmation({ x, y, direction, length }) {
