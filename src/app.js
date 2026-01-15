@@ -203,6 +203,9 @@ function enterShipPlacements() {
 }
 
 function prepareGame() {
+    [dom.player1.grid, dom.player2.grid].forEach(grid =>
+        grid.addEventListener('pointerdown', tryHit),
+    );
     show(dom.player1.board, dom.player2.board);
 }
 
@@ -224,6 +227,34 @@ function handleShipPlacementConfirmation({ x, y, direction, length }) {
     }
 
     views[current.playerKey].board.renderPlacedShip(placedShipData);
+}
+
+function tryHit(event) {
+    const coordinate = event.target.closest('.coordinate');
+    const attacked = coordinate?.classList.contains('attacked');
+    const boardInPlay =
+        dom[other.playerKey].grid.contains(event.target) &&
+        [phases.PLAYER_1_ATTACK, phases.PLAYER_2_ATTACK].includes(
+            current.phase,
+        );
+
+    if (!coordinate || attacked || !boardInPlay) {
+        return;
+    }
+
+    const { x, y } = coordinate.dataset;
+
+    if (other.player.board.coordinateHit(x, y)) {
+        return;
+    }
+
+    const shipHit = other.player.board.hit(x, y);
+
+    if (shipHit) {
+        coordinate.classList.add('hit');
+    }
+
+    coordinate.classList.add('discovered');
 }
 
 function createPlayers() {

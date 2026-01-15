@@ -62,6 +62,11 @@ export default class Board {
         return placedShipData;
     }
 
+    coordinateHit(x, y) {
+        const cell = this.#getCell(x, y);
+        return cell.attacked;
+    }
+
     hit(x, y) {
         const cell = this.#getCell(x, y);
 
@@ -70,12 +75,14 @@ export default class Board {
         }
 
         cell.attacked = true;
+        const shipHit = Boolean(cell.occupant);
 
-        if (cell.occupant) {
+        if (shipHit) {
             cell.occupant.hit();
         }
 
         this.#checkDefeat();
+        return shipHit;
     }
 
     getShipCoordinates(x, y, direction, length) {

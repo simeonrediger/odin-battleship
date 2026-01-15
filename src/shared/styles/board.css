@@ -16,3 +16,11 @@
 .coordinate {
   outline: 1px solid var(--color-board-border);
 }
+
+.coordinate.discovered:not(.hit) {
+  background: no-repeat center/100% url('../icons/x.svg');
+}
+
+.coordinate.discovered.hit {
+  background: no-repeat center/90% url('../icons/viewfinder.svg');
+}
