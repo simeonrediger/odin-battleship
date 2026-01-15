@@ -186,6 +186,7 @@ function enterShipPlacements() {
     unplacedShips.forEach(renderUnplacedShip);
     views[current.playerKey].board.render();
     views[current.playerKey].board.eventsEnabled = true;
+    dom.continueButton.disabled = true;
     show(dom[current.playerKey].board, dom.unplacedShips);
 }
 
@@ -193,6 +194,11 @@ function handleShipPlacementConfirmation({ x, y, direction, length }) {
     selectedShipView.remove();
     const ship = new Ship(length, direction);
     const placedShipData = current.player.board.placeShip(ship, x, y);
+
+    if (current.player.board.shipCount === 5) {
+        dom.continueButton.disabled = false;
+    }
+
     views[current.playerKey].board.renderPlacedShip(placedShipData);
 }
 

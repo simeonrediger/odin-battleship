@@ -21,6 +21,10 @@ export default class Board {
         return this.#size;
     }
 
+    get shipCount() {
+        return this.#ships.length;
+    }
+
     placeShip(ship, x, y) {
         const shipCoordinates = this.getShipCoordinates(
             x,

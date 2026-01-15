@@ -5,3 +5,9 @@
   font-size: 1.75rem;
   padding: 0.375rem 1.5rem;
 }
+
+.continue-button:disabled {
+  cursor: not-allowed;
+  filter: brightness(50%);
+  opacity: 0.5;
+}
