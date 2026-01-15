@@ -36,7 +36,7 @@ const current = {
     isPlayer1: undefined,
 };
 
-const other = {
+const opponent = {
     player: undefined,
     playerKey: undefined,
 };
@@ -149,8 +149,8 @@ function setPlayer(player) {
 
     current.isPlayer1 = player === player1;
     current.playerKey = current.isPlayer1 ? 'player1' : 'player2';
-    other.player = current.isPlayer1 ? player2 : player1;
-    other.playerKey = current.isPlayer1 ? 'player2' : 'player1';
+    opponent.player = current.isPlayer1 ? player2 : player1;
+    opponent.playerKey = current.isPlayer1 ? 'player2' : 'player1';
 }
 
 function handlePlayersSubmit() {
@@ -176,13 +176,13 @@ function enterShipPlacements() {
         ? phases.SHIP_PLACEMENTS_1
         : phases.SHIP_PLACEMENTS_2;
 
-    dom[other.playerKey].area.insertBefore(
+    dom[opponent.playerKey].area.insertBefore(
         dom.unplacedShips,
-        dom[other.playerKey].board,
+        dom[opponent.playerKey].board,
     );
 
     let announcement = `${current.player.name}, place your fleet...`;
-    announcement += ` Don't look, ${other.player.name}!`;
+    announcement += ` Don't look, ${opponent.player.name}!`;
     dom.announcer.textContent = announcement;
 
     if (!cellSize) {
@@ -233,7 +233,7 @@ function tryHit(event) {
     const coordinate = event.target.closest('.coordinate');
     const attacked = coordinate?.classList.contains('attacked');
     const boardInPlay =
-        dom[other.playerKey].grid.contains(event.target) &&
+        dom[opponent.playerKey].grid.contains(event.target) &&
         [phases.PLAYER_1_ATTACK, phases.PLAYER_2_ATTACK].includes(
             current.phase,
         );
@@ -244,11 +244,11 @@ function tryHit(event) {
 
     const { x, y } = coordinate.dataset;
 
-    if (other.player.board.coordinateHit(x, y)) {
+    if (opponent.player.board.coordinateHit(x, y)) {
         return;
     }
 
-    const shipHit = other.player.board.hit(x, y);
+    const shipHit = opponent.player.board.hit(x, y);
 
     if (shipHit) {
         coordinate.classList.add('hit');
