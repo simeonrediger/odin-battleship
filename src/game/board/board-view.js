@@ -12,6 +12,7 @@ export default class BoardView {
     #getShipCoordinates;
     #shipInBounds;
     #shipOverlaps;
+    #shipValid;
     #getNearestInBoundsAnchorCoordinate;
     #onShipPlacementConfirmation;
 
@@ -29,6 +30,7 @@ export default class BoardView {
         getShipCoordinates,
         shipInBounds,
         shipOverlaps,
+        shipValid,
         getNearestInBoundsAnchorCoordinate,
         onShipPlacementConfirmation,
     ) {
@@ -38,6 +40,7 @@ export default class BoardView {
         this.#getShipCoordinates = getShipCoordinates;
         this.#shipInBounds = shipInBounds;
         this.#shipOverlaps = shipOverlaps;
+        this.#shipValid = shipValid;
         this.#getNearestInBoundsAnchorCoordinate =
             getNearestInBoundsAnchorCoordinate;
         this.#onShipPlacementConfirmation = onShipPlacementConfirmation;
@@ -186,6 +189,10 @@ export default class BoardView {
     }
 
     #confirmShipPreview() {
+        if (!this.#shipValid(this.#shipPreview)) {
+            return;
+        }
+
         this.#removeShipPreview();
         this.eventsEnabled = false;
         this.#onShipPlacementConfirmation(this.#shipPreview);

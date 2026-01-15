@@ -109,6 +109,13 @@ export default class Board {
         return shipCoordinates.some(([x, y]) => this.#coordinateOccupied(x, y));
     }
 
+    shipValid({ x, y, direction, length }) {
+        return (
+            this.shipInBounds(x, y, direction, length) &&
+            !this.shipOverlaps(x, y, direction, length)
+        );
+    }
+
     getNearestInBoundsAnchorCoordinate(x, y, direction, length) {
         const original = { x, y };
         const outOfBoundsDelta = { x: 0, y: 0 };
