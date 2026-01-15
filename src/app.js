@@ -22,6 +22,8 @@ const phases = Object.freeze({
     PLAYER_CREATION: 'PLAYER_CREATION',
     SHIP_PLACEMENTS_1: 'SHIP_PLACEMENTS_1',
     SHIP_PLACEMENTS_2: 'SHIP_PLACEMENTS_2',
+    PLAYER_1_ATTACK: 'PLAYER_1_ATTACK',
+    PLAYER_2_ATTACK: 'PLAYER_2_ATTACK',
 });
 
 let player1;
@@ -131,6 +133,12 @@ function continueGame() {
             setPlayer(player2);
             enterShipPlacements();
             break;
+        case phases.SHIP_PLACEMENTS_2:
+            handleShipPlacementsSubmit();
+            setPlayer(player1);
+            prepareGame();
+            enterRound();
+            break;
         default:
             throw new Error(`Invalid phase: ${current.phase}`);
     }
@@ -190,6 +198,18 @@ function enterShipPlacements() {
     dom.continueButton.textContent = 'Done';
     dom.continueButton.disabled = true;
     show(dom[current.playerKey].board, dom.unplacedShips);
+}
+
+function prepareGame() {
+    show(dom.player1.board, dom.player2.board);
+}
+
+function enterRound() {
+    current.phase = current.isPlayer1
+        ? phases.PLAYER_1_ATTACK
+        : phases.PLAYER_2_ATTACK;
+
+    dom.announcer.textContent = `${current.player.name}'s turn`;
 }
 
 function handleShipPlacementConfirmation({ x, y, direction, length }) {
