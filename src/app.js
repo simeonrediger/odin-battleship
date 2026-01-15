@@ -92,6 +92,7 @@ function continueGame() {
     switch (current.phase) {
         case phases.PLAYER_CREATION:
             handlePlayersSubmit();
+            enterShipPlacements(player1, 'player1');
             return;
         case phases.SHIP_PLACEMENTS_1:
             handleShipPlacementsSubmit();
@@ -106,7 +107,6 @@ function handlePlayersSubmit() {
     createPlayers();
     createBoardViews();
     hide(dom.player1.playerCreation, dom.player2.playerCreation);
-    enterShipPlacements(player1, 'player1');
 }
 
 function handleShipPlacementsSubmit() {
