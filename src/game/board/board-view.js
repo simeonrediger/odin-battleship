@@ -105,9 +105,7 @@ export default class BoardView {
                 this.#rotateShipPreview();
                 break;
             case ' ':
-                this.#removeShipPreview();
-                this.eventsEnabled = false;
-                this.#onShipPlacementConfirmation(this.#shipPreview);
+                this.#confirmShipPreview();
                 break;
         }
     }
@@ -167,6 +165,12 @@ export default class BoardView {
         );
 
         this.placeShipPreview(x, y, direction, length);
+    }
+
+    #confirmShipPreview() {
+        this.#removeShipPreview();
+        this.eventsEnabled = false;
+        this.#onShipPlacementConfirmation(this.#shipPreview);
     }
 
     #createCell(x, y) {
