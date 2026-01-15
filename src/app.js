@@ -1,4 +1,5 @@
 import '@/shared/styles/ship.css';
+import '@/shared/styles/utilities.css';
 
 import Board from './game/board/board.js';
 import BoardView from './game/board/board-view.js';
@@ -74,11 +75,21 @@ const dom = {
 
 function init() {
     bindEvents();
+    setNameInputDisplays();
     enterPlayerCreation();
 }
 
 function bindEvents() {
     document.addEventListener('click', handleClick);
+
+    [dom.player1, dom.player2].forEach(playerElements =>
+        playerElements.typeInput.addEventListener('change', () =>
+            setNameInputDisplay(
+                playerElements.typeInput,
+                playerElements.nameInput,
+            ),
+        ),
+    );
 }
 
 function handleClick(event) {
@@ -91,6 +102,20 @@ function handleClick(event) {
 
     selectedShipView?.classList.remove('placing');
     selectedShipView = null;
+}
+
+function setNameInputDisplays() {
+    [dom.player1, dom.player2].forEach(playerElements =>
+        setNameInputDisplay(playerElements.typeInput, playerElements.nameInput),
+    );
+}
+
+function setNameInputDisplay(typeInput, nameInput) {
+    if (typeInput.value === 'human') {
+        nameInput.classList.remove('hidden');
+    } else {
+        nameInput.classList.add('hidden');
+    }
 }
 
 function continueGame() {
