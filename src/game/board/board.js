@@ -5,16 +5,9 @@ export default class Board {
     #size = 10;
     #grid;
     #ships = [];
-    #onDefeat;
-    #reportsDefeat = false;
 
-    constructor(onDefeat) {
+    constructor() {
         this.#createGrid(this.#size);
-
-        if (onDefeat) {
-            this.#onDefeat = onDefeat;
-            this.#reportsDefeat = true;
-        }
     }
 
     get size() {
@@ -23,6 +16,10 @@ export default class Board {
 
     get shipCount() {
         return this.#ships.length;
+    }
+
+    get allShipsSunk() {
+        return this.#ships.every(ship => ship.sunk);
     }
 
     placeShip(ship, x, y) {
@@ -81,7 +78,6 @@ export default class Board {
             cell.occupant.hit();
         }
 
-        this.#checkDefeat();
         return shipHit;
     }
 
@@ -173,12 +169,6 @@ export default class Board {
                 .filter(([, cell]) => cell.occupant === ship)
                 .map(([x]) => [x, this.#size - 1 - rowIndex]),
         );
-    }
-
-    #checkDefeat() {
-        if (this.#reportsDefeat && this.#ships.every(ship => ship.sunk)) {
-            this.#onDefeat();
-        }
     }
 
     #createGrid(size) {
