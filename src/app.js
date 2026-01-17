@@ -270,6 +270,10 @@ function tryHit(event) {
                 const cell = views[opponent.playerKey].board.getCell(x, y);
                 cell.classList.add('sunk');
             });
+
+            if (opponent.player.defeated) {
+                declareWinner(current.player);
+            }
         }
     }
 
@@ -278,6 +282,10 @@ function tryHit(event) {
     if (!shipHit) {
         continueGame();
     }
+}
+
+function declareWinner(player) {
+    dom.announcer.textContent = `${player.name} wins!`;
 }
 
 function createPlayers() {

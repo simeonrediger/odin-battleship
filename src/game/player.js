@@ -22,6 +22,10 @@ export default class Player {
         return this.#board;
     }
 
+    get defeated() {
+        return this.#board.allShipsSunk;
+    }
+
     #validateArgs(name, isHuman) {
         if (typeof name !== 'string') {
             throw new TypeError(`Name must be a string. Got ${typeof name}`);
