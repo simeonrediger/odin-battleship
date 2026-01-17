@@ -24,6 +24,7 @@ const phases = Object.freeze({
     SHIP_PLACEMENTS_2: 'SHIP_PLACEMENTS_2',
     PLAYER_1_ATTACK: 'PLAYER_1_ATTACK',
     PLAYER_2_ATTACK: 'PLAYER_2_ATTACK',
+    GAME_OVER: 'GAME_OVER',
 });
 
 let player1;
@@ -147,6 +148,10 @@ function continueGame() {
             setPlayer(player1);
             enterRound();
             break;
+        case phases.GAME_OVER:
+            handleRestart();
+            enterPlayerCreation();
+            break;
         default:
             throw new Error(`Invalid phase: ${current.phase}`);
     }
@@ -170,6 +175,10 @@ function handlePlayersSubmit() {
 function handleShipPlacementsSubmit() {
     hide(dom[current.playerKey].board, dom.unplacedShips);
     dom[current.playerKey].grid.classList.add('undiscovered-ship-nodes-hidden');
+}
+
+function handleRestart() {
+    hide(dom.player1.board, dom.player2.board);
 }
 
 function enterPlayerCreation() {
@@ -285,7 +294,9 @@ function tryHit(event) {
 }
 
 function declareWinner(player) {
+    current.phase = phases.GAME_OVER;
     dom.announcer.textContent = `${player.name} wins!`;
+    dom.continueButton.textContent = 'Restart';
 }
 
 function createPlayers() {
