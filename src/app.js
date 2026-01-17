@@ -179,6 +179,10 @@ function handleShipPlacementsSubmit() {
 
 function handleRestart() {
     hide(dom.player1.board, dom.player2.board);
+    [dom.player1, dom.player2].forEach(playerElements => {
+        playerElements.grid.classList.remove('undiscovered-ship-nodes-hidden');
+        playerElements.board.classList.remove('inactive');
+    });
 }
 
 function enterPlayerCreation() {
