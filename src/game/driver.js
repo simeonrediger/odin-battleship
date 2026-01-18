@@ -5,6 +5,7 @@ function play(game) {
 
 const driver = {
     play,
+    handleEnterPlayerCreation: () => console.log('Entered player creation'),
 };
 
 export default driver;

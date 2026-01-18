@@ -13,6 +13,14 @@ const current = {
 let player1;
 let player2;
 
+const handlers = {
+    onEnterPlayerCreation: undefined,
+};
+
+function init({ onEnterPlayerCreation }) {
+    handlers.onEnterPlayerCreation = onEnterPlayerCreation;
+}
+
 function start() {
     enterPlayerCreation();
 }
@@ -31,6 +39,7 @@ function submitPlayerCreation(
 
 function enterPlayerCreation() {
     current.phase = phases.PLAYER_CREATION;
+    handlers.onEnterPlayerCreation();
 }
 
 function setPlayer(player) {
@@ -50,6 +59,7 @@ function validatePhase(phase) {
 }
 
 const game = {
+    init,
     start,
     submitPlayerCreation,
 };
