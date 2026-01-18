@@ -13,7 +13,7 @@ const current = {
 let player1;
 let player2;
 
-function init() {
+function start() {
     enterPlayerCreation();
 }
 
@@ -50,7 +50,7 @@ function validatePhase(phase) {
 }
 
 const game = {
-    init,
+    start,
     submitPlayerCreation,
 };
 

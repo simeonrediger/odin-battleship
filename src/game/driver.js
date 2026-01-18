@@ -1,4 +1,5 @@
 function play(game) {
+    game.start();
     game.submitPlayerCreation(true, 'P1', true, 'P2');
 }
 
