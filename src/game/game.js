@@ -7,6 +7,7 @@ const phases = Object.freeze({
 
 const current = {
     phase: undefined,
+    player: undefined,
 };
 
 let player1;
@@ -25,10 +26,15 @@ function submitPlayerCreation(
     validatePhase(phases.PLAYER_CREATION);
     player1 = createPlayer(player1IsHuman, player1Name);
     player2 = createPlayer(player2IsHuman, player2Name);
+    setPlayer(player1);
 }
 
 function enterPlayerCreation() {
     current.phase = phases.PLAYER_CREATION;
+}
+
+function setPlayer(player) {
+    current.player = player;
 }
 
 function createPlayer(isHuman, name) {
