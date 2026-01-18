@@ -3,6 +3,7 @@ import Player from './player.js';
 
 const phases = Object.freeze({
     PLAYER_CREATION: 'PLAYER_CREATION',
+    SHIP_PLACEMENTS_1: 'SHIP_PLACEMENTS_1',
 });
 
 const current = {
@@ -16,11 +17,17 @@ let player2;
 const handlers = {
     onEnterPlayerCreation: undefined,
     onPlayerChange: undefined,
+    onEnterShipPlacements: undefined,
 };
 
-function init({ onEnterPlayerCreation, onPlayerChange }) {
+function init({
+    onEnterPlayerCreation,
+    onPlayerChange,
+    onEnterShipPlacements,
+}) {
     handlers.onEnterPlayerCreation = onEnterPlayerCreation;
     handlers.onPlayerChange = onPlayerChange;
+    handlers.onEnterShipPlacements = onEnterShipPlacements;
 }
 
 function start() {
@@ -37,11 +44,17 @@ function submitPlayerCreation(
     player1 = createPlayer(player1IsHuman, player1Name);
     player2 = createPlayer(player2IsHuman, player2Name);
     setPlayer(player1);
+    enterShipPlacements();
 }
 
 function enterPlayerCreation() {
     current.phase = phases.PLAYER_CREATION;
     handlers.onEnterPlayerCreation();
+}
+
+function enterShipPlacements() {
+    current.phase = phases.SHIP_PLACEMENTS_1;
+    handlers.onEnterShipPlacements();
 }
 
 function setPlayer(player) {
