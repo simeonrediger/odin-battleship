@@ -7,7 +7,8 @@ const driver = {
     play,
     handleEnterPlayerCreation: () => console.log('Entered player creation'),
     handlePlayerChange: name => console.log('Current player:', name),
-    handleEnterShipPlacements: () => console.log('Entered ship placements'),
+    handleEnterShipPlacements: shipIds =>
+        console.log('Entered ship placements. Received:', shipIds),
 };
 
 export default driver;

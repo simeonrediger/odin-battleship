@@ -1,5 +1,6 @@
 import Board from './board/board.js';
 import Player from './player.js';
+import Ship from './ship.js';
 
 const phases = Object.freeze({
     PLAYER_CREATION: 'PLAYER_CREATION',
@@ -8,6 +9,9 @@ const phases = Object.freeze({
 
 let player1;
 let player2;
+
+const shipLengths = Object.freeze([5, 4, 3, 3, 2]);
+let shipsToPlace;
 
 const current = {
     phase: undefined,
@@ -54,7 +58,8 @@ function enterPlayerCreation() {
 
 function enterShipPlacements() {
     current.phase = phases.SHIP_PLACEMENTS_1;
-    handlers.onEnterShipPlacements();
+    shipsToPlace = createShips(shipLengths);
+    handlers.onEnterShipPlacements(shipsToPlace.map(ship => ({ id: ship.id })));
 }
 
 function setPlayer(player) {
@@ -64,6 +69,10 @@ function setPlayer(player) {
 
 function createPlayer(isHuman, name) {
     return new Player(name, isHuman, new Board());
+}
+
+function createShips(shipLengths) {
+    return shipLengths.map(length => new Ship(length, Ship.directions.RIGHT));
 }
 
 function validatePhase(phase) {
