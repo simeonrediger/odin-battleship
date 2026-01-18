@@ -2,12 +2,18 @@ import { create2dArray } from '@/shared/utils.js';
 import Ship from '../ship.js';
 
 export default class Board {
+    #id;
     #size = 10;
     #grid;
     #ships = [];
 
     constructor() {
+        this.#id = crypto.randomUUID();
         this.#createGrid(this.#size);
+    }
+
+    get id() {
+        return this.#id;
     }
 
     get size() {

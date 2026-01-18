@@ -8,6 +8,7 @@ export default class Ship {
 
     direction;
 
+    #id;
     #length;
     #hits = 0;
 
@@ -20,8 +21,13 @@ export default class Ship {
             throw new TypeError(`Invalid direction: ${direction}`);
         }
 
+        this.#id = crypto.randomUUID();
         this.#length = length;
         this.direction = direction;
+    }
+
+    get id() {
+        return this.#id;
     }
 
     get length() {

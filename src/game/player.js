@@ -1,13 +1,19 @@
 export default class Player {
+    #id;
     #name;
     #isHuman;
     #board;
 
     constructor(name, isHuman, board) {
         this.#validateArgs(name, isHuman);
+        this.#id = crypto.randomUUID();
         this.#name = name;
         this.#isHuman = isHuman;
         this.#board = board;
+    }
+
+    get id() {
+        return this.#id;
     }
 
     get name() {
