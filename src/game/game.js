@@ -1,3 +1,6 @@
+import Board from './board/board.js';
+import Player from './player.js';
+
 const phases = Object.freeze({
     PLAYER_CREATION: 'PLAYER_CREATION',
 });
@@ -6,16 +9,43 @@ const current = {
     phase: undefined,
 };
 
+let player1;
+let player2;
+
 function init() {
     enterPlayerCreation();
+}
+
+function submitPlayerCreation(
+    player1IsHuman,
+    player1Name,
+    player2IsHuman,
+    player2Name,
+) {
+    validatePhase(phases.PLAYER_CREATION);
+    player1 = createPlayer(player1IsHuman, player1Name);
+    player2 = createPlayer(player2IsHuman, player2Name);
 }
 
 function enterPlayerCreation() {
     current.phase = phases.PLAYER_CREATION;
 }
 
+function createPlayer(isHuman, name) {
+    return new Player(name, isHuman, new Board());
+}
+
+function validatePhase(phase) {
+    if (current.phase !== phase) {
+        throw new Error(
+            `Action only allowed for ${phase}, not ${current.phase}`,
+        );
+    }
+}
+
 const game = {
     init,
+    submitPlayerCreation,
 };
 
 export default game;
