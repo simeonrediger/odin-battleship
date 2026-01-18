@@ -1,3 +1,7 @@
-const demo = {};
+function play(game) {}
+
+const demo = {
+    play,
+};
 
 export default demo;
