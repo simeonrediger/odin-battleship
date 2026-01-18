@@ -1,5 +1,5 @@
-import demo from './game/demo.js';
+import driver from './game/driver.js';
 import game from './game/game.js';
 
 game.init();
-demo.play(game);
+driver.play(game);

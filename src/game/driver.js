@@ -2,8 +2,8 @@ function play(game) {
     game.submitPlayerCreation(true, 'P1', true, 'P2');
 }
 
-const demo = {
+const driver = {
     play,
 };
 
-export default demo;
+export default driver;
