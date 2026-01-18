@@ -6,13 +6,13 @@ const phases = Object.freeze({
     SHIP_PLACEMENTS_1: 'SHIP_PLACEMENTS_1',
 });
 
+let player1;
+let player2;
+
 const current = {
     phase: undefined,
     player: undefined,
 };
-
-let player1;
-let player2;
 
 const handlers = {
     onEnterPlayerCreation: undefined,
