@@ -6,6 +6,7 @@ function play(game) {
 const driver = {
     play,
     handleEnterPlayerCreation: () => console.log('Entered player creation'),
+    handlePlayerChange: name => console.log('Current player:', name),
 };
 
 export default driver;

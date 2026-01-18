@@ -15,10 +15,12 @@ let player2;
 
 const handlers = {
     onEnterPlayerCreation: undefined,
+    onPlayerChange: undefined,
 };
 
-function init({ onEnterPlayerCreation }) {
+function init({ onEnterPlayerCreation, onPlayerChange }) {
     handlers.onEnterPlayerCreation = onEnterPlayerCreation;
+    handlers.onPlayerChange = onPlayerChange;
 }
 
 function start() {
@@ -44,6 +46,7 @@ function enterPlayerCreation() {
 
 function setPlayer(player) {
     current.player = player;
+    handlers.onPlayerChange(player.name);
 }
 
 function createPlayer(isHuman, name) {
