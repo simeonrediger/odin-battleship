@@ -33,6 +33,7 @@ const handlers = {
 };
 
 function init(handlersObj) {
+    validatePhase(phases.GAME_INACTIVE);
     Object.keys(handlers).forEach(key => (handlers[key] = handlersObj[key]));
 }
 
