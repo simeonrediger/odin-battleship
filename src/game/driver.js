@@ -1,4 +1,5 @@
 let game;
+let gameCompleted = false;
 
 let player = 1;
 let x1 = 0,
@@ -13,6 +14,11 @@ const driver = {
     },
 
     handleEnterPlayerCreation: () => {
+        if (gameCompleted) {
+            console.log('Game restarted');
+            return;
+        }
+
         console.log('Entered player creation');
         game.submitPlayerCreation(true, 'P1', true, 'P2');
     },
@@ -48,7 +54,11 @@ const driver = {
         }
     },
 
-    handleDeclareWinner: name => console.log(`${name} wins`),
+    handleDeclareWinner: name => {
+        console.log(`${name} wins`);
+        gameCompleted = true;
+        game.restart();
+    },
 };
 
 export default driver;

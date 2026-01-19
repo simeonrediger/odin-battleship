@@ -92,6 +92,12 @@ function submitAttack(x, y) {
     enterRound();
 }
 
+function restart() {
+    validatePhase(phases.GAME_OVER);
+    current.phase = phases.GAME_INACTIVE;
+    start();
+}
+
 function enterPlayerCreation() {
     current.phase = phases.PLAYER_CREATION;
     handlers.onEnterPlayerCreation();
@@ -153,6 +159,7 @@ const game = {
     placeShip,
     submitShipPlacements,
     submitAttack,
+    restart,
 };
 
 export default game;
