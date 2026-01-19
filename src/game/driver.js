@@ -20,6 +20,7 @@ const driver = {
         game.placeShip(shipIds[2].id, 4, 5);
         game.placeShip(shipIds[3].id, 4, 6);
         game.placeShip(shipIds[4].id, 4, 7);
+        game.submitShipPlacements();
     },
 };
 

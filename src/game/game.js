@@ -58,13 +58,27 @@ function placeShip(shipId, x, y) {
     current.player.board.placeShip(ship, x, y);
 }
 
+function submitShipPlacements() {
+    validatePhase(phases.SHIP_PLACEMENTS_1, phases.SHIP_PLACEMENTS_2);
+
+    if (current.phase === phases.SHIP_PLACEMENTS_1) {
+        setPlayer(player2);
+        enterShipPlacements();
+    }
+}
+
 function enterPlayerCreation() {
     current.phase = phases.PLAYER_CREATION;
     handlers.onEnterPlayerCreation();
 }
 
 function enterShipPlacements() {
-    current.phase = phases.SHIP_PLACEMENTS_1;
+    if (current.phase !== phases.SHIP_PLACEMENTS_1) {
+        current.phase = phases.SHIP_PLACEMENTS_1;
+    } else {
+        current.phase = phases.SHIP_PLACEMENTS_2;
+    }
+
     shipsToPlace = createShips(shipLengths);
     handlers.onEnterShipPlacements(shipsToPlace.map(ship => ({ id: ship.id })));
 }
@@ -96,6 +110,7 @@ const game = {
     start,
     submitPlayerCreation,
     placeShip,
+    submitShipPlacements,
 };
 
 export default game;
