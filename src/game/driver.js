@@ -22,6 +22,8 @@ const driver = {
         game.placeShip(shipIds[4].id, 4, 7);
         game.submitShipPlacements();
     },
+
+    handleEnterRound: () => console.log('Entered round'),
 };
 
 export default driver;

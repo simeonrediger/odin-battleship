@@ -5,6 +5,7 @@ game.init({
     onEnterPlayerCreation: driver.handleEnterPlayerCreation,
     onPlayerChange: driver.handlePlayerChange,
     onEnterShipPlacements: driver.handleEnterShipPlacements,
+    onEnterRound: driver.handleEnterRound,
 });
 
 driver.play(game);

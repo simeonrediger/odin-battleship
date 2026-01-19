@@ -25,6 +25,7 @@ const handlers = {
     onEnterPlayerCreation: undefined,
     onPlayerChange: undefined,
     onEnterShipPlacements: undefined,
+    onEnterRound: undefined,
 };
 
 function init(handlersObj) {
@@ -88,6 +89,8 @@ function enterRound() {
     } else {
         current.phase = phases.PLAYER_2_ATTACK;
     }
+
+    handlers.onEnterRound();
 }
 
 function setPlayer(player) {
