@@ -6,6 +6,8 @@ const phases = Object.freeze({
     PLAYER_CREATION: 'PLAYER_CREATION',
     SHIP_PLACEMENTS_1: 'SHIP_PLACEMENTS_1',
     SHIP_PLACEMENTS_2: 'SHIP_PLACEMENTS_2',
+    PLAYER_1_ATTACK: 'PLAYER_1_ATTACK',
+    PLAYER_2_ATTACK: 'PLAYER_2_ATTACK',
 });
 
 let player1;
@@ -64,6 +66,9 @@ function submitShipPlacements() {
     if (current.phase === phases.SHIP_PLACEMENTS_1) {
         setPlayer(player2);
         enterShipPlacements();
+    } else {
+        setPlayer(player1);
+        enterRound();
     }
 }
 
@@ -81,6 +86,14 @@ function enterShipPlacements() {
 
     shipsToPlace = createShips(shipLengths);
     handlers.onEnterShipPlacements(shipsToPlace.map(ship => ({ id: ship.id })));
+}
+
+function enterRound() {
+    if (current.phase !== phases.PLAYER_1_ATTACK) {
+        current.phase = phases.PLAYER_1_ATTACK;
+    } else {
+        current.phase = phases.PLAYER_2_ATTACK;
+    }
 }
 
 function setPlayer(player) {
