@@ -27,14 +27,8 @@ const handlers = {
     onEnterShipPlacements: undefined,
 };
 
-function init({
-    onEnterPlayerCreation,
-    onPlayerChange,
-    onEnterShipPlacements,
-}) {
-    handlers.onEnterPlayerCreation = onEnterPlayerCreation;
-    handlers.onPlayerChange = onPlayerChange;
-    handlers.onEnterShipPlacements = onEnterShipPlacements;
+function init(handlersObj) {
+    Object.keys(handlers).forEach(key => (handlers[key] = handlersObj[key]));
 }
 
 function start() {
