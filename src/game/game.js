@@ -3,6 +3,7 @@ import Player from './player.js';
 import Ship from './ship.js';
 
 const phases = Object.freeze({
+    GAME_INACTIVE: 'GAME_INACTIVE',
     PLAYER_CREATION: 'PLAYER_CREATION',
     SHIP_PLACEMENTS_1: 'SHIP_PLACEMENTS_1',
     SHIP_PLACEMENTS_2: 'SHIP_PLACEMENTS_2',
@@ -18,7 +19,7 @@ const shipLengths = Object.freeze([5, 4, 3, 3, 2]);
 let shipsToPlace;
 
 const current = {
-    phase: undefined,
+    phase: phases.GAME_INACTIVE,
     player: undefined,
     opponent: undefined,
 };
@@ -36,6 +37,7 @@ function init(handlersObj) {
 }
 
 function start() {
+    validatePhase(phases.GAME_INACTIVE);
     enterPlayerCreation();
 }
 
