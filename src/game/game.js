@@ -70,9 +70,12 @@ function submitShipPlacements() {
 
 function submitAttack(x, y) {
     validatePhase(phases.PLAYER_1_ATTACK, phases.PLAYER_2_ATTACK);
-    current.opponent.board.hit(x, y);
+    const shipHit = current.opponent.board.hit(x, y);
 
     if (current.opponent.defeated) {
+        return;
+    } else if (shipHit) {
+        enterRound();
         return;
     } else if (current.phase === phases.PLAYER_1_ATTACK) {
         setPlayer(player2);
