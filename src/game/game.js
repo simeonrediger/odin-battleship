@@ -5,6 +5,7 @@ import Ship from './ship.js';
 const phases = Object.freeze({
     PLAYER_CREATION: 'PLAYER_CREATION',
     SHIP_PLACEMENTS_1: 'SHIP_PLACEMENTS_1',
+    SHIP_PLACEMENTS_2: 'SHIP_PLACEMENTS_2',
 });
 
 let player1;
@@ -51,6 +52,12 @@ function submitPlayerCreation(
     enterShipPlacements();
 }
 
+function placeShip(shipId, x, y) {
+    validatePhase(phases.SHIP_PLACEMENTS_1, phases.SHIP_PLACEMENTS_2);
+    const ship = shipsToPlace.find(ship => ship.id === shipId);
+    current.player.board.placeShip(ship, x, y);
+}
+
 function enterPlayerCreation() {
     current.phase = phases.PLAYER_CREATION;
     handlers.onEnterPlayerCreation();
@@ -75,10 +82,11 @@ function createShips(shipLengths) {
     return shipLengths.map(length => new Ship(length, Ship.directions.RIGHT));
 }
 
-function validatePhase(phase) {
-    if (current.phase !== phase) {
+function validatePhase(...validPhases) {
+    if (!validPhases.includes(current.phase)) {
+        const validPhasesList = validPhases.join(', ');
         throw new Error(
-            `Action only allowed for ${phase}, not ${current.phase}`,
+            `Action only allowed for ${validPhasesList}, not ${current.phase}`,
         );
     }
 }
@@ -87,6 +95,7 @@ const game = {
     init,
     start,
     submitPlayerCreation,
+    placeShip,
 };
 
 export default game;

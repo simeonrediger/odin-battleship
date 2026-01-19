@@ -12,8 +12,15 @@ const driver = {
     },
 
     handlePlayerChange: name => console.log('Current player:', name),
-    handleEnterShipPlacements: shipIds =>
-        console.log('Entered ship placements. Received:', shipIds),
+
+    handleEnterShipPlacements: shipIds => {
+        console.log('Entered ship placements. Received:', shipIds);
+        game.placeShip(shipIds[0].id, 4, 3);
+        game.placeShip(shipIds[1].id, 4, 4);
+        game.placeShip(shipIds[2].id, 4, 5);
+        game.placeShip(shipIds[3].id, 4, 6);
+        game.placeShip(shipIds[4].id, 4, 7);
+    },
 };
 
 export default driver;
