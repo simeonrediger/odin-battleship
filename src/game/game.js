@@ -19,6 +19,7 @@ let shipsToPlace;
 const current = {
     phase: undefined,
     player: undefined,
+    opponent: undefined,
 };
 
 const handlers = {
@@ -67,6 +68,21 @@ function submitShipPlacements() {
     }
 }
 
+function submitAttack(x, y) {
+    validatePhase(phases.PLAYER_1_ATTACK, phases.PLAYER_2_ATTACK);
+    current.opponent.board.hit(x, y);
+
+    if (current.opponent.defeated) {
+        return;
+    } else if (current.phase === phases.PLAYER_1_ATTACK) {
+        setPlayer(player2);
+    } else {
+        setPlayer(player1);
+    }
+
+    enterRound();
+}
+
 function enterPlayerCreation() {
     current.phase = phases.PLAYER_CREATION;
     handlers.onEnterPlayerCreation();
@@ -95,6 +111,7 @@ function enterRound() {
 
 function setPlayer(player) {
     current.player = player;
+    current.opponent = player === player1 ? player2 : player1;
     handlers.onPlayerChange(player.name);
 }
 
@@ -121,6 +138,7 @@ const game = {
     submitPlayerCreation,
     placeShip,
     submitShipPlacements,
+    submitAttack,
 };
 
 export default game;
