@@ -47,6 +47,8 @@ const driver = {
             game.submitAttack(x2++, y2);
         }
     },
+
+    handleDeclareWinner: name => console.log(`${name} wins`),
 };
 
 export default driver;

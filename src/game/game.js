@@ -8,6 +8,7 @@ const phases = Object.freeze({
     SHIP_PLACEMENTS_2: 'SHIP_PLACEMENTS_2',
     PLAYER_1_ATTACK: 'PLAYER_1_ATTACK',
     PLAYER_2_ATTACK: 'PLAYER_2_ATTACK',
+    GAME_OVER: 'GAME_OVER',
 });
 
 let player1;
@@ -27,6 +28,7 @@ const handlers = {
     onPlayerChange: undefined,
     onEnterShipPlacements: undefined,
     onEnterRound: undefined,
+    onDeclareWinner: undefined,
 };
 
 function init(handlersObj) {
@@ -73,6 +75,7 @@ function submitAttack(x, y) {
     const shipHit = current.opponent.board.hit(x, y);
 
     if (current.opponent.defeated) {
+        declareWinner(current.player);
         return;
     } else if (shipHit) {
         enterRound();
@@ -110,6 +113,11 @@ function enterRound() {
     }
 
     handlers.onEnterRound();
+}
+
+function declareWinner(winner) {
+    current.phase = phases.GAME_OVER;
+    handlers.onDeclareWinner(winner.name);
 }
 
 function setPlayer(player) {

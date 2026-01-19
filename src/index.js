@@ -6,6 +6,7 @@ game.init({
     onPlayerChange: driver.handlePlayerChange,
     onEnterShipPlacements: driver.handleEnterShipPlacements,
     onEnterRound: driver.handleEnterRound,
+    onDeclareWinner: driver.handleDeclareWinner,
 });
 
 driver.play(game);
