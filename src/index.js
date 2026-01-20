@@ -1,5 +1,5 @@
-import driver from './game/driver.js';
-import game from './game/domains/game/game.js';
+import driver from './driver.js';
+import game from './domains/game/game.js';
 
 game.init({
     onEnterPlayerCreation: driver.handleEnterPlayerCreation,
