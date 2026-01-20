@@ -1,3 +1,5 @@
+import Board from './board/board.js';
+
 export default class Player {
     #id;
     #name;
@@ -5,7 +7,7 @@ export default class Player {
     #board;
 
     constructor(name, isHuman, board) {
-        this.#validateArgs(name, isHuman);
+        this.#validateArgs(name, isHuman, board);
         this.#id = crypto.randomUUID();
         this.#name = name;
         this.#isHuman = isHuman;
@@ -32,7 +34,7 @@ export default class Player {
         return this.#board.allShipsSunk;
     }
 
-    #validateArgs(name, isHuman) {
+    #validateArgs(name, isHuman, board) {
         if (typeof name !== 'string') {
             throw new TypeError(`Name must be a string. Got ${typeof name}`);
         }
@@ -41,6 +43,10 @@ export default class Player {
             throw new TypeError(
                 `isHuman must be a boolean. Got ${typeof isHuman}`,
             );
+        }
+
+        if (!(board instanceof Board)) {
+            throw new TypeError('board must be an instance of Board');
         }
     }
 }
