@@ -1,4 +1,5 @@
-let game;
+import game from './game.js';
+
 let gameCompleted = false;
 
 let player = 1;
@@ -8,8 +9,15 @@ let x1 = 0,
     y2 = 0;
 
 const driver = {
-    play: gameModel => {
-        game = gameModel;
+    play: () => {
+        game.init({
+            onEnterPlayerCreation: driver.handleEnterPlayerCreation,
+            onPlayerChange: driver.handlePlayerChange,
+            onEnterShipPlacements: driver.handleEnterShipPlacements,
+            onEnterRound: driver.handleEnterRound,
+            onDeclareWinner: driver.handleDeclareWinner,
+        });
+
         game.start();
     },
 
