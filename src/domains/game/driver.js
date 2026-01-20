@@ -9,19 +9,19 @@ let x1 = 0,
     y2 = 0;
 
 const driver = {
-    start: () => {
+    start() {
         game.init({
-            onEnterPlayerCreation: driver.handleEnterPlayerCreation,
-            onPlayerChange: driver.handlePlayerChange,
-            onEnterShipPlacements: driver.handleEnterShipPlacements,
-            onEnterRound: driver.handleEnterRound,
-            onDeclareWinner: driver.handleDeclareWinner,
+            onEnterPlayerCreation: this.handleEnterPlayerCreation,
+            onPlayerChange: this.handlePlayerChange,
+            onEnterShipPlacements: this.handleEnterShipPlacements,
+            onEnterRound: this.handleEnterRound,
+            onDeclareWinner: this.handleDeclareWinner,
         });
 
         game.start();
     },
 
-    handleEnterPlayerCreation: () => {
+    handleEnterPlayerCreation() {
         if (gameCompleted) {
             console.log('Game restarted');
             return;
@@ -31,12 +31,12 @@ const driver = {
         game.submitPlayerCreation(true, 'P1', true, 'P2');
     },
 
-    handlePlayerChange: name => {
+    handlePlayerChange(name) {
         console.log('Current player:', name);
         player = name === 'P1' ? 1 : 2;
     },
 
-    handleEnterShipPlacements: shipIds => {
+    handleEnterShipPlacements(shipIds) {
         console.log('Entered ship placements. Received:', shipIds);
         game.placeShip(shipIds[0].id, 4, 3);
         game.placeShip(shipIds[1].id, 4, 4);
@@ -46,7 +46,7 @@ const driver = {
         game.submitShipPlacements();
     },
 
-    handleEnterRound: () => {
+    handleEnterRound() {
         console.log('Entered round');
 
         if (player === 1) {
@@ -62,7 +62,7 @@ const driver = {
         }
     },
 
-    handleDeclareWinner: name => {
+    handleDeclareWinner(name) {
         console.log(`${name} wins`);
         gameCompleted = true;
         game.restart();
