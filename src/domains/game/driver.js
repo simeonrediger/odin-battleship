@@ -9,7 +9,7 @@ let x1 = 0,
     y2 = 0;
 
 const driver = {
-    play: () => {
+    start: () => {
         game.init({
             onEnterPlayerCreation: driver.handleEnterPlayerCreation,
             onPlayerChange: driver.handlePlayerChange,
