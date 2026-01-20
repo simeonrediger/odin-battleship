@@ -1,6 +1,6 @@
-import Board from './board.js';
-import Player from './player.js';
-import Ship from './ship.js';
+import Board from '../board/board.js';
+import Player from '../player.js';
+import Ship from '../ship/ship.js';
 
 const phases = Object.freeze({
     GAME_INACTIVE: 'GAME_INACTIVE',

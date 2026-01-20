@@ -22,11 +22,11 @@
 }
 
 .coordinate.discovered:not(.hit) {
-  background: no-repeat center/100% url('../icons/x.svg');
+  background: no-repeat center/100% url('./icons/x.svg');
 }
 
 .coordinate.discovered.hit {
-  background-image: url('../icons/viewfinder.svg');
+  background-image: url('./icons/viewfinder.svg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: 90%;

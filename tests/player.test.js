@@ -1,4 +1,4 @@
-import Board from '@/game/domains/board.js';
+import Board from '@/game/domains/board/board.js';
 import Player from '@/game/domains/player.js';
 
 test('only accepts string names', () => {
