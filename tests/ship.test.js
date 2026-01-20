@@ -1,4 +1,4 @@
-import Ship from '../src/game/ship.js';
+import Ship from '../src/game/domains/ship.js';
 
 test('only accepts positive lengths', () => {
     expect(() => new Ship(0, Ship.directions.UP)).toThrow();

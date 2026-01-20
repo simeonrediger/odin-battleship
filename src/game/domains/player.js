@@ -1,4 +1,4 @@
-import Board from './board/board.js';
+import Board from './board.js';
 
 export default class Player {
     #id;

@@ -1,5 +1,5 @@
 import { create2dArray } from '@/shared/utils.js';
-import Ship from '../ship.js';
+import Ship from './ship.js';
 
 export default class Board {
     #id;

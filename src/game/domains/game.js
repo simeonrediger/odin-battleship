@@ -1,4 +1,4 @@
-import Board from './board/board.js';
+import Board from './board.js';
 import Player from './player.js';
 import Ship from './ship.js';
 
