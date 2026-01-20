@@ -1,5 +1,5 @@
-import Board from '../src/game/domains/board.js';
-import Ship from '../src/game/domains/ship.js';
+import Board from '@/game/domains/board.js';
+import Ship from '@/game/domains/ship.js';
 
 describe('placeShip()', () => {
     test('only places ship if within bounds', () => {

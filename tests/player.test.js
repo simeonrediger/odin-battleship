@@ -1,5 +1,5 @@
-import Board from '../src/game/domains/board.js';
-import Player from '../src/game/domains/player.js';
+import Board from '@/game/domains/board.js';
+import Player from '@/game/domains/player.js';
 
 test('only accepts string names', () => {
     expect(() => new Player('abc', true, new Board())).not.toThrow();

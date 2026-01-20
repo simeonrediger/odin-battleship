@@ -1,4 +1,4 @@
-import * as utils from '../src/shared/utils.js';
+import * as utils from '@/shared/utils.js';
 
 describe('create2dArray()', () => {
     test('creates 2D array with correct dimensions', () => {
