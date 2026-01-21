@@ -33,7 +33,6 @@ const gameDriver = {
             return;
         }
 
-        console.log('Entered player creation');
         gameView.showPlayerCreation();
         game.submitPlayerCreation(true, 'P1', true, 'P2');
     },
