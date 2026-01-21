@@ -1,3 +1,3 @@
-import driver from './domains/game/driver.js';
+import gameDriver from './domains/game/game-driver.js';
 
-driver.start(document);
+gameDriver.start(document);

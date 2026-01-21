@@ -9,7 +9,7 @@ let x1 = 0,
     x2 = 0,
     y2 = 0;
 
-const driver = {
+const gameDriver = {
     start(root) {
         game.init({
             onEnterPlayerCreation: this.handleEnterPlayerCreation,
@@ -75,4 +75,4 @@ const driver = {
     },
 };
 
-export default driver;
+export default gameDriver;
