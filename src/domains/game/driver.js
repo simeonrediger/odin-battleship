@@ -10,7 +10,7 @@ let x1 = 0,
     y2 = 0;
 
 const driver = {
-    start() {
+    start(root) {
         game.init({
             onEnterPlayerCreation: this.handleEnterPlayerCreation,
             onPlayerChange: this.handlePlayerChange,
@@ -19,7 +19,7 @@ const driver = {
             onDeclareWinner: this.handleDeclareWinner,
         });
 
-        const gameContainer = document.querySelector(
+        const gameContainer = root.querySelector(
             "[data-role='game-container']",
         );
 
