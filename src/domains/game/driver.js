@@ -1,4 +1,5 @@
 import game from './game.js';
+import gameView from './game-view.js';
 
 let gameCompleted = false;
 
@@ -18,6 +19,11 @@ const driver = {
             onDeclareWinner: this.handleDeclareWinner,
         });
 
+        const gameContainer = document.querySelector(
+            "[data-role='game-container']",
+        );
+
+        gameView.init(gameContainer);
         game.start();
     },
 
