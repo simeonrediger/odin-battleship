@@ -1,4 +1,7 @@
 import '@/shared/styles/utilities.css';
+import './styles/button.css';
+import './styles/input.css';
+import './styles/menu.css';
 
 import { validateElements } from '@/shared/utils.js';
 
