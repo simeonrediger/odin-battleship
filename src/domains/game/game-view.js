@@ -38,7 +38,7 @@ function init(containerElement, boardSize, handlersObj) {
     adoptValuesOfCommonKeys(handlers, handlersObj);
     Object.keys(handlers).forEach(key => (handlers[key] = handlersObj[key]));
     bindEvents();
-    createViews(boardSize);
+    initViews(boardSize);
 }
 
 function cacheElements(containerElement) {
@@ -84,7 +84,7 @@ function cacheElements(containerElement) {
     });
 }
 
-function createViews(boardSize) {
+function initViews(boardSize) {
     [player1, player2].forEach(
         player => (player.boardView = new BoardView(player.board, boardSize)),
     );
