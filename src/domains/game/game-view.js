@@ -6,6 +6,7 @@ import './styles/menu.css';
 import { validateElements } from '@/shared/utils.js';
 
 let container;
+let announcer;
 let continueButton;
 
 const player1 = {
@@ -34,6 +35,7 @@ function cacheElements(containerElement) {
     container = containerElement;
     validateElements({ container });
 
+    announcer = container.querySelector("[data-role='announcer']");
     continueButton = container.querySelector("[data-action='continue']");
     player1.creationMenu = container.querySelector(
         "[data-role='player-1-creation']",
@@ -48,6 +50,7 @@ function cacheElements(containerElement) {
     player2.nameInput = container.querySelector("[data-input='player-2-name']");
 
     validateElements({
+        announcer,
         continueButton,
         'player1.creationMenu': player1.creationMenu,
         'player1.typeInput': player1.typeInput,
@@ -72,6 +75,7 @@ function handleContinueClick() {
 }
 
 function showPlayerCreation() {
+    announcer.textContent = "Who's playing?";
     player1.creationMenu.classList.remove('hidden');
     player2.creationMenu.classList.remove('hidden');
 }

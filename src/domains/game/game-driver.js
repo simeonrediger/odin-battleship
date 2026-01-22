@@ -38,7 +38,6 @@ function handleEnterPlayerCreation() {
     }
 
     gameView.showPlayerCreation();
-    game.submitPlayerCreation(true, 'P1', true, 'P2');
 }
 
 function submitPlayerCreation(
