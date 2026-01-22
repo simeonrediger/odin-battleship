@@ -3,8 +3,6 @@ import gameView from './game-view.js';
 
 let continueHandler;
 
-let gameCompleted = false;
-
 let player = 1;
 let x1 = 0,
     y1 = 0,
@@ -31,12 +29,6 @@ function start(root) {
 
 function handleEnterPlayerCreation() {
     continueHandler = submitPlayerCreation;
-
-    if (gameCompleted) {
-        console.log('Game restarted');
-        return;
-    }
-
     gameView.showPlayerCreation();
 }
 
@@ -102,7 +94,6 @@ function handleEnterRound() {
 
 function handleDeclareWinner(name) {
     console.log(`${name} wins`);
-    gameCompleted = true;
     game.restart();
 }
 
