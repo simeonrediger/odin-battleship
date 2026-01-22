@@ -38,6 +38,7 @@ function cacheElements(containerElement) {
 
     announcer = container.querySelector("[data-role='announcer']");
     continueButton = container.querySelector("[data-action='continue']");
+
     player1.creationMenu = container.querySelector(
         "[data-role='player-1-creation']",
     );
