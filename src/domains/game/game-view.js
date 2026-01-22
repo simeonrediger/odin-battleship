@@ -8,7 +8,7 @@ import BoardView from '../board/board-view.js';
 
 let container;
 let announcer;
-let shipsToPlace;
+let shipPlacementsMenuContainer;
 let continueButton;
 
 const player1 = {
@@ -46,7 +46,9 @@ function cacheElements(containerElement) {
     validateElements({ container });
 
     announcer = container.querySelector("[data-role='announcer']");
-    shipsToPlace = container.querySelector("[data-role='ships-to-place']");
+    shipPlacementsMenuContainer = container.querySelector(
+        "[data-role='ship-placements-menu']",
+    );
     continueButton = container.querySelector("[data-action='continue']");
 
     player1.area = container.querySelector("[data-role='player-1-area']");
@@ -67,7 +69,7 @@ function cacheElements(containerElement) {
 
     validateElements({
         announcer,
-        shipsToPlace,
+        shipPlacementsMenuContainer,
         continueButton,
         'player1.area': player1.area,
         'player1.board': player1.board,
@@ -115,7 +117,7 @@ function showShipPlacements(playerName, opponentName, isPlayer1, shipIds) {
 
     const player = isPlayer1 ? player1 : player2;
     const opponent = isPlayer1 ? player2 : player1;
-    opponent.area.insertBefore(shipsToPlace, opponent.board);
+    opponent.area.insertBefore(shipPlacementsMenuContainer, opponent.board);
     player.boardView.render();
 }
 
