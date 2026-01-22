@@ -30,14 +30,14 @@ const player2 = {
     nameInput: undefined,
 };
 
-const handlers = {
+const callbacks = {
     onContinueClick: undefined,
 };
 
-function init(containerElement, boardSize, handlersObj) {
+function init(containerElement, boardSize, callbacksObj) {
     cacheElements(containerElement);
-    adoptValuesOfCommonKeys(handlers, handlersObj);
-    Object.keys(handlers).forEach(key => (handlers[key] = handlersObj[key]));
+    adoptValuesOfCommonKeys(callbacks, callbacksObj);
+    Object.keys(callbacks).forEach(key => (callbacks[key] = callbacksObj[key]));
     bindEvents();
     initViews(boardSize, shipPlacementsMenuContainer);
 }
@@ -98,7 +98,7 @@ function bindEvents() {
 }
 
 function handleContinueClick() {
-    handlers.onContinueClick(
+    callbacks.onContinueClick(
         player1.typeInput.value,
         player1.nameInput.value,
         player2.typeInput.value,
