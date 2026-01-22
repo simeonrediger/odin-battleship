@@ -64,7 +64,8 @@ function handleEnterShipPlacements(shipIds) {
     gameView.showShipPlacements(
         game.currentPlayerName,
         game.currentOpponentName,
-        game.currentPlayerIsPlayer1,
+        game.isPlayer1Turn,
+        game.boardSize,
         shipIds,
     );
 }

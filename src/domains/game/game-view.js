@@ -4,18 +4,26 @@ import './styles/input.css';
 import './styles/layout.css';
 
 import { adoptValuesOfCommonKeys, validateElements } from '@/shared/utils.js';
+import BoardView from '../board/board-view.js';
 
 let container;
 let announcer;
+let shipsToPlace;
 let continueButton;
 
 const player1 = {
+    area: undefined,
+    board: undefined,
+    boardView: undefined,
     creationMenu: undefined,
     typeInput: undefined,
     nameInput: undefined,
 };
 
 const player2 = {
+    area: undefined,
+    board: undefined,
+    boardView: undefined,
     creationMenu: undefined,
     typeInput: undefined,
     nameInput: undefined,
@@ -37,14 +45,19 @@ function cacheElements(containerElement) {
     validateElements({ container });
 
     announcer = container.querySelector("[data-role='announcer']");
+    shipsToPlace = container.querySelector("[data-role='ships-to-place']");
     continueButton = container.querySelector("[data-action='continue']");
 
+    player1.area = container.querySelector("[data-role='player-1-area']");
+    player1.board = container.querySelector("[data-role='player-1-board']");
     player1.creationMenu = container.querySelector(
         "[data-role='player-1-creation']",
     );
     player1.typeInput = container.querySelector("[data-input='player-1-type']");
     player1.nameInput = container.querySelector("[data-input='player-1-name']");
 
+    player2.area = container.querySelector("[data-role='player-2-area']");
+    player2.board = container.querySelector("[data-role='player-2-board']");
     player2.creationMenu = container.querySelector(
         "[data-role='player-2-creation']",
     );
@@ -53,10 +66,15 @@ function cacheElements(containerElement) {
 
     validateElements({
         announcer,
+        shipsToPlace,
         continueButton,
+        'player1.area': player1.area,
+        'player1.board': player1.board,
         'player1.creationMenu': player1.creationMenu,
         'player1.typeInput': player1.typeInput,
         'player1.nameInput': player1.nameInput,
+        'player2.area': player2.area,
+        'player2.board': player2.board,
         'player2.creationMenu': player2.creationMenu,
         'player2.typeInput': player2.typeInput,
         'player2.nameInput': player2.nameInput,
@@ -81,12 +99,25 @@ function showPlayerCreation() {
     show(player1.creationMenu, player2.creationMenu);
 }
 
-function showShipPlacements(playerName, opponentName, isPlayer1, shipIds) {
+function showShipPlacements(
+    playerName,
+    opponentName,
+    isPlayer1,
+    boardSize,
+    shipIds,
+) {
     hide(player1.creationMenu, player2.creationMenu);
 
     announcer.textContent = `
         ${playerName}, place your fleet... ${opponentName}, don't look!
     `.trim();
+
+    const player = isPlayer1 ? player1 : player2;
+    const opponent = isPlayer1 ? player2 : player1;
+    opponent.area.insertBefore(shipsToPlace, opponent.board);
+
+    player.boardView ??= new BoardView(player.board, boardSize);
+    player.boardView.render();
 }
 
 function show(...elements) {
