@@ -80,6 +80,11 @@ function showPlayerCreation() {
     announcer.textContent = "Who's playing?";
     show(player1.creationMenu, player2.creationMenu);
 }
+
+function showShipPlacements(playerName, opponentName, isPlayer1, shipIds) {
+    hide(player1.creationMenu, player2.creationMenu);
+}
+
 function show(...elements) {
     elements.forEach(element => element.classList.remove('hidden'));
 }
@@ -91,6 +96,7 @@ function hide(...elements) {
 const gameView = {
     init,
     showPlayerCreation,
+    showShipPlacements,
 };
 
 export default gameView;

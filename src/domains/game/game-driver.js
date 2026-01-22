@@ -60,7 +60,14 @@ function normalizePlayerName(name, isPlayer1) {
     return name === '' ? fallback : name;
 }
 
-function handleEnterShipPlacements(shipIds) {}
+function handleEnterShipPlacements(shipIds) {
+    gameView.showShipPlacements(
+        game.currentPlayerName,
+        game.currentOpponentName,
+        game.currentPlayerIsPlayer1,
+        shipIds,
+    );
+}
 
 function handleEnterRound() {
     console.log('Entered round');
