@@ -9,7 +9,7 @@ body {
   justify-content: center;
 }
 
-.main-content {
+.game-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
