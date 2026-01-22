@@ -1,6 +1,8 @@
 import game from './game.js';
 import gameView from './game-view.js';
 
+let continueHandler;
+
 let gameCompleted = false;
 
 let player = 1;
@@ -20,11 +22,16 @@ function start(root) {
 
     const gameContainer = root.querySelector("[data-role='game-container']");
 
-    gameView.init(gameContainer);
+    gameView.init(gameContainer, {
+        onContinueClick: (...args) => continueHandler(...args),
+    });
+
     game.start();
 }
 
 function handleEnterPlayerCreation() {
+    continueHandler = submitPlayerCreation;
+
     if (gameCompleted) {
         console.log('Game restarted');
         return;
@@ -32,6 +39,35 @@ function handleEnterPlayerCreation() {
 
     gameView.showPlayerCreation();
     game.submitPlayerCreation(true, 'P1', true, 'P2');
+}
+
+function submitPlayerCreation(
+    player1Type,
+    player1Name,
+    player2Type,
+    player2Name,
+) {
+    const player1IsHuman = playerTypeIsHuman(player1Type);
+    player1Name = normalizePlayerName(player1Name, true);
+    const player2IsHuman = playerTypeIsHuman(player2Type);
+    player2Name = normalizePlayerName(player2Name, false);
+
+    game.submitPlayerCreation(
+        player1IsHuman,
+        player1Name,
+        player2IsHuman,
+        player2Name,
+    );
+}
+
+function playerTypeIsHuman(type) {
+    return type === 'human';
+}
+
+function normalizePlayerName(name, isPlayer1) {
+    const fallback = isPlayer1 ? 'Player 1' : 'Player 2';
+    name = name.trim();
+    return name === '' ? fallback : name;
 }
 
 function handlePlayerChange(name) {
