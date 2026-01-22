@@ -133,7 +133,6 @@ function declareWinner(winner) {
 function setPlayer(player) {
     current.player = player;
     current.opponent = player === player1 ? player2 : player1;
-    handlers.onPlayerChange(player.name);
 }
 
 function createPlayer(isHuman, name) {

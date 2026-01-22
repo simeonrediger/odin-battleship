@@ -12,7 +12,6 @@ let x1 = 0,
 function start(root) {
     game.init({
         onEnterPlayerCreation: handleEnterPlayerCreation,
-        onPlayerChange: handlePlayerChange,
         onEnterShipPlacements: handleEnterShipPlacements,
         onEnterRound: handleEnterRound,
         onDeclareWinner: handleDeclareWinner,
@@ -59,11 +58,6 @@ function normalizePlayerName(name, isPlayer1) {
     const fallback = isPlayer1 ? 'Player 1' : 'Player 2';
     name = name.trim();
     return name === '' ? fallback : name;
-}
-
-function handlePlayerChange(name) {
-    console.log('Current player:', name);
-    player = name === 'P1' ? 1 : 2;
 }
 
 function handleEnterShipPlacements(shipIds) {
