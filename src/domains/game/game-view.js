@@ -6,8 +6,14 @@ import './styles/menu.css';
 import { validateElements } from '@/shared/utils.js';
 
 let container;
-let player1Creation;
-let player2Creation;
+
+const player1 = {
+    creationMenu: undefined,
+};
+
+const player2 = {
+    creationMenu: undefined,
+};
 
 function init(containerElement) {
     cacheElements(containerElement);
@@ -17,18 +23,22 @@ function cacheElements(containerElement) {
     container = containerElement;
     validateElements({ container });
 
-    player1Creation = container.querySelector(
+    player1.creationMenu = container.querySelector(
         "[data-role='player-1-creation']",
     );
-    player2Creation = container.querySelector(
+    player2.creationMenu = container.querySelector(
         "[data-role='player-2-creation']",
     );
-    validateElements({ player1Creation, player2Creation });
+
+    validateElements({
+        'player1.creationMenu': player1.creationMenu,
+        'player2.creationMenu': player2.creationMenu,
+    });
 }
 
 function showPlayerCreation() {
-    player1Creation.classList.remove('hidden');
-    player2Creation.classList.remove('hidden');
+    player1.creationMenu.classList.remove('hidden');
+    player2.creationMenu.classList.remove('hidden');
 }
 
 const gameView = {
