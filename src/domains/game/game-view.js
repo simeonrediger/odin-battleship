@@ -1,6 +1,7 @@
 import '@/shared/styles/utilities.css';
 import './styles/button.css';
 import './styles/input.css';
+import './styles/layout.css';
 import './styles/menu.css';
 
 import { adoptValuesOfCommonKeys, validateElements } from '@/shared/utils.js';
