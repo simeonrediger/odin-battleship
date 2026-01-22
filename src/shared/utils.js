@@ -39,9 +39,9 @@ export function getElementWidth(element, includePadding = true) {
     return width;
 }
 
-export function validateElements(elements) {
+export function validateElements(elements, ElementClass = Element) {
     Object.entries(elements).forEach(([elementName, element]) => {
-        if (!(element instanceof Element)) {
+        if (!(element instanceof ElementClass)) {
             throw new TypeError(`Element not found: ${elementName}`);
         }
     });

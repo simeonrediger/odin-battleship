@@ -21,13 +21,27 @@ describe('create2dArray()', () => {
 });
 
 describe('validateElements()', () => {
+    const MockElement = class {};
+
     test('only accepts an object with non-nullish values', () => {
         expect(() =>
-            utils.validateElements({ element1: {}, element2: {} }),
+            utils.validateElements(
+                {
+                    element1: new MockElement(),
+                    element2: new MockElement(),
+                },
+                MockElement,
+            ),
         ).not.toThrow();
 
         expect(() =>
-            utils.validateElements({ element1: {}, element2: null }),
+            utils.validateElements(
+                {
+                    element1: new MockElement(),
+                    element2: null,
+                },
+                MockElement,
+            ),
         ).toThrow();
     });
 });
