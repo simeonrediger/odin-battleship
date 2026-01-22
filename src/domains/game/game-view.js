@@ -124,6 +124,7 @@ function showShipPlacements(playerName, opponentName, isPlayer1, shipsData) {
     player.boardView.render();
 
     shipPlacementsMenu.renderShips(shipsData, player.boardView.cellSize);
+    show(player.board, shipPlacementsMenuContainer);
 }
 
 function show(...elements) {
