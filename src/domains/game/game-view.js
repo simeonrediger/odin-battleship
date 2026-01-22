@@ -5,6 +5,7 @@ import './styles/layout.css';
 
 import { adoptValuesOfCommonKeys, validateElements } from '@/shared/utils.js';
 import BoardView from '../board/board-view.js';
+import shipPlacementsMenu from './ship-placements-menu.js';
 
 let container;
 let announcer;
@@ -38,7 +39,7 @@ function init(containerElement, boardSize, handlersObj) {
     adoptValuesOfCommonKeys(handlers, handlersObj);
     Object.keys(handlers).forEach(key => (handlers[key] = handlersObj[key]));
     bindEvents();
-    initViews(boardSize);
+    initViews(boardSize, shipPlacementsMenuContainer);
 }
 
 function cacheElements(containerElement) {
@@ -84,10 +85,12 @@ function cacheElements(containerElement) {
     });
 }
 
-function initViews(boardSize) {
+function initViews(boardSize, shipPlacementsMenuContainer) {
     [player1, player2].forEach(
         player => (player.boardView = new BoardView(player.board, boardSize)),
     );
+
+    shipPlacementsMenu.init(shipPlacementsMenuContainer);
 }
 
 function bindEvents() {
