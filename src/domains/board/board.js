@@ -2,22 +2,23 @@ import { create2dArray } from '@/shared/utils.js';
 import Ship from '../ship/ship.js';
 
 export default class Board {
+    static #size = 10;
+
+    static get size() {
+        return Board.#size;
+    }
+
     #id;
-    #size = 10;
     #grid;
     #ships = [];
 
     constructor() {
         this.#id = crypto.randomUUID();
-        this.#createGrid(this.#size);
+        this.#createGrid(Board.#size);
     }
 
     get id() {
         return this.#id;
-    }
-
-    get size() {
-        return this.#size;
     }
 
     get shipCount() {
@@ -136,14 +137,14 @@ export default class Board {
         for (let i = 0; i < length; i++) {
             if (x < 0 && x < outOfBoundsDelta.x) {
                 outOfBoundsDelta.x = x;
-            } else if (x >= this.#size && x > outOfBoundsDelta.x) {
-                outOfBoundsDelta.x = x - this.#size + 1;
+            } else if (x >= Board.#size && x > outOfBoundsDelta.x) {
+                outOfBoundsDelta.x = x - Board.#size + 1;
             }
 
             if (y < 0 && y < outOfBoundsDelta.y) {
                 outOfBoundsDelta.y = y;
-            } else if (y >= this.#size && y > outOfBoundsDelta.y) {
-                outOfBoundsDelta.y = y - this.#size + 1;
+            } else if (y >= Board.#size && y > outOfBoundsDelta.y) {
+                outOfBoundsDelta.y = y - Board.#size + 1;
             }
 
             [x, y] = this.#getAdjacentCoordinate(x, y, direction);
@@ -161,7 +162,7 @@ export default class Board {
     }
 
     #coordinateInBounds(x, y) {
-        return x >= 0 && x < this.#size && y >= 0 && y < this.#size;
+        return x >= 0 && x < Board.#size && y >= 0 && y < Board.#size;
     }
 
     #coordinateOccupied(x, y) {
@@ -173,7 +174,7 @@ export default class Board {
         return this.#grid.flatMap((row, rowIndex) =>
             Object.entries(row)
                 .filter(([, cell]) => cell.occupant === ship)
-                .map(([x]) => [x, this.#size - 1 - rowIndex]),
+                .map(([x]) => [x, Board.#size - 1 - rowIndex]),
         );
     }
 
@@ -186,7 +187,7 @@ export default class Board {
     }
 
     #getCell(x, y) {
-        const row = this.#size - 1 - y;
+        const row = Board.#size - 1 - y;
         const column = x;
         return this.#grid[row]?.[column];
     }
