@@ -112,7 +112,14 @@ function enterShipPlacements() {
     }
 
     shipsToPlace = createShips(shipLengths);
-    handlers.onEnterShipPlacements(shipsToPlace.map(ship => ({ id: ship.id })));
+
+    handlers.onEnterShipPlacements(
+        shipsToPlace.map(ship => ({
+            id: ship.id,
+            length: ship.length,
+            direction: ship.direction,
+        })),
+    );
 }
 
 function enterRound() {

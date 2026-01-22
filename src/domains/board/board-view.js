@@ -23,6 +23,10 @@ export default class BoardView {
         }
     }
 
+    get cellSize() {
+        return this.#cellSize;
+    }
+
     #cacheElements(container) {
         this.#container = container;
         validateElements({ '#container': this.#container });

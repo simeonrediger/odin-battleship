@@ -111,7 +111,7 @@ function showPlayerCreation() {
     show(player1.creationMenu, player2.creationMenu);
 }
 
-function showShipPlacements(playerName, opponentName, isPlayer1, shipIds) {
+function showShipPlacements(playerName, opponentName, isPlayer1, shipsData) {
     hide(player1.creationMenu, player2.creationMenu);
 
     announcer.textContent = `
@@ -122,6 +122,8 @@ function showShipPlacements(playerName, opponentName, isPlayer1, shipIds) {
     const opponent = isPlayer1 ? player2 : player1;
     opponent.area.insertBefore(shipPlacementsMenuContainer, opponent.board);
     player.boardView.render();
+
+    shipPlacementsMenu.renderShips(shipsData, player.boardView.cellSize);
 }
 
 function show(...elements) {

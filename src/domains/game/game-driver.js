@@ -60,12 +60,12 @@ function normalizePlayerName(name, isPlayer1) {
     return name === '' ? fallback : name;
 }
 
-function handleEnterShipPlacements(shipIds) {
+function handleEnterShipPlacements(shipsData) {
     gameView.showShipPlacements(
         game.currentPlayerName,
         game.currentOpponentName,
         game.isPlayer1Turn,
-        shipIds,
+        shipsData,
     );
 }
 
