@@ -19,7 +19,7 @@ function start(root) {
 
     const gameContainer = root.querySelector("[data-role='game-container']");
 
-    gameView.init(gameContainer, {
+    gameView.init(gameContainer, game.boardSize, {
         onContinueClick: (...args) => continueHandler(...args),
     });
 
@@ -65,7 +65,6 @@ function handleEnterShipPlacements(shipIds) {
         game.currentPlayerName,
         game.currentOpponentName,
         game.isPlayer1Turn,
-        game.boardSize,
         shipIds,
     );
 }

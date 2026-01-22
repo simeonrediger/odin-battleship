@@ -33,11 +33,12 @@ const handlers = {
     onContinueClick: undefined,
 };
 
-function init(containerElement, handlersObj) {
+function init(containerElement, boardSize, handlersObj) {
     cacheElements(containerElement);
     adoptValuesOfCommonKeys(handlers, handlersObj);
     Object.keys(handlers).forEach(key => (handlers[key] = handlersObj[key]));
     bindEvents();
+    createViews(boardSize);
 }
 
 function cacheElements(containerElement) {
@@ -81,6 +82,12 @@ function cacheElements(containerElement) {
     });
 }
 
+function createViews(boardSize) {
+    [player1, player2].forEach(
+        player => (player.boardView = new BoardView(player.board, boardSize)),
+    );
+}
+
 function bindEvents() {
     continueButton.addEventListener('click', handleContinueClick);
 }
@@ -99,13 +106,7 @@ function showPlayerCreation() {
     show(player1.creationMenu, player2.creationMenu);
 }
 
-function showShipPlacements(
-    playerName,
-    opponentName,
-    isPlayer1,
-    boardSize,
-    shipIds,
-) {
+function showShipPlacements(playerName, opponentName, isPlayer1, shipIds) {
     hide(player1.creationMenu, player2.creationMenu);
 
     announcer.textContent = `
@@ -115,8 +116,6 @@ function showShipPlacements(
     const player = isPlayer1 ? player1 : player2;
     const opponent = isPlayer1 ? player2 : player1;
     opponent.area.insertBefore(shipsToPlace, opponent.board);
-
-    player.boardView ??= new BoardView(player.board, boardSize);
     player.boardView.render();
 }
 
