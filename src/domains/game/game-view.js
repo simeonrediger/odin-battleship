@@ -3,7 +3,7 @@ import './styles/button.css';
 import './styles/input.css';
 import './styles/menu.css';
 
-import { validateElements } from '@/shared/utils.js';
+import { adoptValuesOfCommonKeys, validateElements } from '@/shared/utils.js';
 
 let container;
 let announcer;
@@ -27,6 +27,7 @@ const handlers = {
 
 function init(containerElement, handlersObj) {
     cacheElements(containerElement);
+    adoptValuesOfCommonKeys(handlers, handlersObj);
     Object.keys(handlers).forEach(key => (handlers[key] = handlersObj[key]));
     bindEvents();
 }

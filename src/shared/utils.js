@@ -1,3 +1,7 @@
+export function adoptValuesOfCommonKeys(targetObj, sourceObj) {
+    Object.keys(targetObj).forEach(key => (targetObj[key] = sourceObj[key]));
+}
+
 export function create2dArray(rows, columns = rows, valueFunc) {
     return new Array(rows)
         .fill()

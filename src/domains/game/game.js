@@ -1,3 +1,4 @@
+import { adoptValuesOfCommonKeys } from '@/shared/utils.js';
 import Board from '../board/board.js';
 import Player from '../player.js';
 import Ship from '../ship/ship.js';
@@ -34,7 +35,7 @@ const handlers = {
 
 function init(handlersObj) {
     validatePhase(phases.GAME_INACTIVE);
-    Object.keys(handlers).forEach(key => (handlers[key] = handlersObj[key]));
+    adoptValuesOfCommonKeys(handlers, handlersObj);
 }
 
 function start() {
