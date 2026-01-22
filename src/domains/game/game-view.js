@@ -78,8 +78,14 @@ function handleContinueClick() {
 
 function showPlayerCreation() {
     announcer.textContent = "Who's playing?";
-    player1.creationMenu.classList.remove('hidden');
-    player2.creationMenu.classList.remove('hidden');
+    show(player1.creationMenu, player2.creationMenu);
+}
+function show(...elements) {
+    elements.forEach(element => element.classList.remove('hidden'));
+}
+
+function hide(...elements) {
+    elements.forEach(element => element.classList.add('hidden'));
 }
 
 const gameView = {
