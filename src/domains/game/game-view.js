@@ -83,6 +83,10 @@ function showPlayerCreation() {
 
 function showShipPlacements(playerName, opponentName, isPlayer1, shipIds) {
     hide(player1.creationMenu, player2.creationMenu);
+
+    announcer.textContent = `
+        ${playerName}, place your fleet... ${opponentName}, don't look!
+    `.trim();
 }
 
 function show(...elements) {
