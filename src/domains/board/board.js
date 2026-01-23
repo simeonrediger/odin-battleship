@@ -183,7 +183,7 @@ export default class Board {
 
     getSunkShipCoordinates(x, y) {
         const ship = this.#getCell(x, y).occupant;
-        return ship && ship.sunk ? this.#getShipCoordinates(ship) : false;
+        return ship && ship.sunk ? this.#getCoordiantesByShip(ship) : false;
     }
 
     #coordinateOccupied(x, y) {
@@ -191,7 +191,7 @@ export default class Board {
         return Boolean(cell.occupant);
     }
 
-    #getShipCoordinates(ship) {
+    #getCoordiantesByShip(ship) {
         return this.#grid.flatMap((row, rowIndex) =>
             Object.entries(row)
                 .filter(([, cell]) => cell.occupant === ship)
