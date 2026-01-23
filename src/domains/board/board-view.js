@@ -53,6 +53,7 @@ export default class BoardView {
             cell.classList.add('ship-preview-node');
         }
 
+        [x, y] = coordinates[0];
         this.#shipPreview = { id, x, y, direction, length };
     }
 
