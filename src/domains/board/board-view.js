@@ -28,16 +28,9 @@ export default class BoardView {
         }
     }
 
-    renderShipPreview(id, direction, length) {
+    renderShipPreviewToCenter(id, direction, length) {
         const [x, y] = this.#getCenteredCoordinatesForShip(direction, length);
-        const coordinates = this.#getShipCoordinates(x, y, direction, length);
-
-        for (const [x, y] of coordinates) {
-            const cell = this.#getCell(x, y);
-            cell.classList.add('ship-preview-node');
-        }
-
-        this.#shipPreview = { id, x, y, direction, length };
+        this.#renderShipPreview(id, x, y, direction, length);
     }
 
     get cellSize() {
@@ -50,6 +43,17 @@ export default class BoardView {
 
         this.#grid = this.#container.querySelector("[data-role$='grid']");
         validateElements({ '#grid': this.#grid });
+    }
+
+    #renderShipPreview(id, x, y, direction, length) {
+        const coordinates = this.#getShipCoordinates(x, y, direction, length);
+
+        for (const [x, y] of coordinates) {
+            const cell = this.#getCell(x, y);
+            cell.classList.add('ship-preview-node');
+        }
+
+        this.#shipPreview = { id, x, y, direction, length };
     }
 
     #getCell(x, y) {

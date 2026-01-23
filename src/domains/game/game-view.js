@@ -117,7 +117,7 @@ function handleContinueClick() {
 
 function handleShipPlacementsMenuClick(id, direction, length) {
     const player = callbacks.isPlayer1Turn() ? player1 : player2;
-    player.boardView.renderShipPreview(id, direction, length);
+    player.boardView.renderShipPreviewToCenter(id, direction, length);
 }
 
 function showPlayerCreation() {
