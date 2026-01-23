@@ -8,6 +8,81 @@ export default class Board {
         return Board.#size;
     }
 
+    static getShipCoordinates(x, y, direction, length) {
+        const coordinates = [];
+
+        for (let i = 0; i < length; i++) {
+            coordinates.push([x, y]);
+            [x, y] = Board.#getAdjacentCoordinate(x, y, direction);
+        }
+
+        return coordinates;
+    }
+
+    static getNearestInBoundsAnchorCoordinate(x, y, direction, length) {
+        const original = { x, y };
+        const outOfBoundsDelta = { x: 0, y: 0 };
+
+        for (let i = 0; i < length; i++) {
+            if (x < 0 && x < outOfBoundsDelta.x) {
+                outOfBoundsDelta.x = x;
+            } else if (x >= Board.#size && x > outOfBoundsDelta.x) {
+                outOfBoundsDelta.x = x - Board.#size + 1;
+            }
+
+            if (y < 0 && y < outOfBoundsDelta.y) {
+                outOfBoundsDelta.y = y;
+            } else if (y >= Board.#size && y > outOfBoundsDelta.y) {
+                outOfBoundsDelta.y = y - Board.#size + 1;
+            }
+
+            [x, y] = Board.#getAdjacentCoordinate(x, y, direction);
+        }
+
+        return [
+            original.x - outOfBoundsDelta.x,
+            original.y - outOfBoundsDelta.y,
+        ];
+    }
+
+    static shipInBounds(x, y, direction, length) {
+        const shipCoordinates = Board.getShipCoordinates(
+            x,
+            y,
+            direction,
+            length,
+        );
+
+        return shipCoordinates.every(([x, y]) =>
+            Board.#coordinateInBounds(x, y),
+        );
+    }
+
+    static #coordinateInBounds(x, y) {
+        return x >= 0 && x < Board.#size && y >= 0 && y < Board.#size;
+    }
+
+    static #getAdjacentCoordinate(x, y, direction) {
+        switch (direction) {
+            case Ship.directions.UP:
+                y++;
+                break;
+            case Ship.directions.DOWN:
+                y--;
+                break;
+            case Ship.directions.LEFT:
+                x--;
+                break;
+            case Ship.directions.RIGHT:
+                x++;
+                break;
+            default:
+                throw new TypeError(`Invalid direction: ${direction}`);
+        }
+
+        return [x, y];
+    }
+
     #id;
     #grid;
     #ships = [];
@@ -30,7 +105,7 @@ export default class Board {
     }
 
     placeShip(ship, x, y) {
-        const shipCoordinates = this.getShipCoordinates(
+        const shipCoordinates = Board.getShipCoordinates(
             x,
             y,
             ship.direction,
@@ -38,7 +113,7 @@ export default class Board {
         );
 
         for (const [x, y] of shipCoordinates) {
-            if (!this.#coordinateInBounds(x, y)) {
+            if (!Board.#coordinateInBounds(x, y)) {
                 throw new RangeError(
                     `Coordinate is out of bounds: (${x}, ${y})`,
                 );
@@ -88,32 +163,8 @@ export default class Board {
         return shipHit;
     }
 
-    getShipCoordinates(x, y, direction, length) {
-        const coordinates = [];
-
-        for (let i = 0; i < length; i++) {
-            coordinates.push([x, y]);
-            [x, y] = this.#getAdjacentCoordinate(x, y, direction);
-        }
-
-        return coordinates;
-    }
-
-    shipInBounds(x, y, direction, length) {
-        const shipCoordinates = this.getShipCoordinates(
-            x,
-            y,
-            direction,
-            length,
-        );
-
-        return shipCoordinates.every(([x, y]) =>
-            this.#coordinateInBounds(x, y),
-        );
-    }
-
     shipOverlaps(x, y, direction, length) {
-        const shipCoordinates = this.getShipCoordinates(
+        const shipCoordinates = Board.getShipCoordinates(
             x,
             y,
             direction,
@@ -125,44 +176,14 @@ export default class Board {
 
     shipValid({ x, y, direction, length }) {
         return (
-            this.shipInBounds(x, y, direction, length) &&
+            Board.shipInBounds(x, y, direction, length) &&
             !this.shipOverlaps(x, y, direction, length)
         );
-    }
-
-    getNearestInBoundsAnchorCoordinate(x, y, direction, length) {
-        const original = { x, y };
-        const outOfBoundsDelta = { x: 0, y: 0 };
-
-        for (let i = 0; i < length; i++) {
-            if (x < 0 && x < outOfBoundsDelta.x) {
-                outOfBoundsDelta.x = x;
-            } else if (x >= Board.#size && x > outOfBoundsDelta.x) {
-                outOfBoundsDelta.x = x - Board.#size + 1;
-            }
-
-            if (y < 0 && y < outOfBoundsDelta.y) {
-                outOfBoundsDelta.y = y;
-            } else if (y >= Board.#size && y > outOfBoundsDelta.y) {
-                outOfBoundsDelta.y = y - Board.#size + 1;
-            }
-
-            [x, y] = this.#getAdjacentCoordinate(x, y, direction);
-        }
-
-        return [
-            original.x - outOfBoundsDelta.x,
-            original.y - outOfBoundsDelta.y,
-        ];
     }
 
     getSunkShipCoordinates(x, y) {
         const ship = this.#getCell(x, y).occupant;
         return ship && ship.sunk ? this.#getShipCoordinates(ship) : false;
-    }
-
-    #coordinateInBounds(x, y) {
-        return x >= 0 && x < Board.#size && y >= 0 && y < Board.#size;
     }
 
     #coordinateOccupied(x, y) {
@@ -190,26 +211,5 @@ export default class Board {
         const row = Board.#size - 1 - y;
         const column = x;
         return this.#grid[row]?.[column];
-    }
-
-    #getAdjacentCoordinate(x, y, direction) {
-        switch (direction) {
-            case Ship.directions.UP:
-                y++;
-                break;
-            case Ship.directions.DOWN:
-                y--;
-                break;
-            case Ship.directions.LEFT:
-                x--;
-                break;
-            case Ship.directions.RIGHT:
-                x++;
-                break;
-            default:
-                throw new TypeError(`Invalid direction: ${direction}`);
-        }
-
-        return [x, y];
     }
 }
