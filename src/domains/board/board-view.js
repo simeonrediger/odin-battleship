@@ -1,17 +1,22 @@
 import './board.css';
 
 import { getContentWidth, validateElements } from '@/shared/utils.js';
+import Ship from '../ship/ship.js';
 
 export default class BoardView {
     #container;
     #grid;
     #gridSize;
     #cellSize;
+    #getShipCoordinates;
 
-    constructor(container, gridSize) {
+    #shipPreview;
+
+    constructor(container, gridSize, getShipCoordinates) {
         this.#cacheElements(container);
         this.#gridSize = gridSize;
         this.#cellSize = this.#getCellSize(container, gridSize);
+        this.#getShipCoordinates = getShipCoordinates;
     }
 
     render() {
@@ -21,6 +26,18 @@ export default class BoardView {
             const cell = this.#createCell(x, y);
             this.#grid.append(cell);
         }
+    }
+
+    renderShipPreview(id, direction, length) {
+        const [x, y] = this.#getCenteredCoordinatesForShip(direction, length);
+        const coordinates = this.#getShipCoordinates(x, y, direction, length);
+
+        for (const [x, y] of coordinates) {
+            const cell = this.#getCell(x, y);
+            cell.classList.add('ship-preview-node');
+        }
+
+        this.#shipPreview = { id, x, y, direction, length };
     }
 
     get cellSize() {
@@ -33,6 +50,10 @@ export default class BoardView {
 
         this.#grid = this.#container.querySelector("[data-role$='grid']");
         validateElements({ '#grid': this.#grid });
+    }
+
+    #getCell(x, y) {
+        return this.#grid.querySelector(`[data-x='${x}'][data-y='${y}']`);
     }
 
     #getCellSize(container, gridSize) {
@@ -49,5 +70,27 @@ export default class BoardView {
         cell.style.width = this.#cellSize;
         cell.style.height = this.#cellSize;
         return cell;
+    }
+
+    #getCenteredCoordinatesForShip(direction, length) {
+        let x, y;
+
+        switch (direction) {
+            case Ship.directions.UP:
+                y = (this.#gridSize - length) / 2;
+                break;
+            case Ship.directions.DOWN:
+                y = (this.#gridSize + length) / 2;
+                break;
+            case Ship.directions.LEFT:
+                x = (this.#gridSize + length) / 2;
+                break;
+            case Ship.directions.RIGHT:
+                x = (this.#gridSize - length) / 2;
+                break;
+        }
+
+        [x, y] = [x, y].map(n => Math.floor(n ?? (this.#gridSize - 1) / 2));
+        return [x, y];
     }
 }

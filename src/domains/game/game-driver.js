@@ -21,6 +21,8 @@ function start(root) {
 
     gameView.init(gameContainer, game.boardSize, {
         onContinueClick: (...args) => continueHandler(...args),
+        getShipCoordinates: game.getShipCoordinates,
+        isPlayer1Turn: () => game.isPlayer1Turn,
     });
 
     game.start();

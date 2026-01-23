@@ -32,6 +32,8 @@ const player2 = {
 
 const callbacks = {
     onContinueClick: undefined,
+    getShipCoordinates: undefined,
+    isPlayer1Turn: undefined,
 };
 
 function init(containerElement, boardSize, callbacksObj) {
@@ -87,10 +89,17 @@ function cacheElements(containerElement) {
 
 function initViews(boardSize, shipPlacementsMenuContainer) {
     [player1, player2].forEach(
-        player => (player.boardView = new BoardView(player.board, boardSize)),
+        player =>
+            (player.boardView = new BoardView(
+                player.board,
+                boardSize,
+                callbacks.getShipCoordinates,
+            )),
     );
 
-    shipPlacementsMenu.init(shipPlacementsMenuContainer);
+    shipPlacementsMenu.init(shipPlacementsMenuContainer, {
+        onShipClick: handleShipPlacementsMenuClick,
+    });
 }
 
 function bindEvents() {
@@ -104,6 +113,11 @@ function handleContinueClick() {
         player2.typeInput.value,
         player2.nameInput.value,
     );
+}
+
+function handleShipPlacementsMenuClick(id, direction, length) {
+    const player = callbacks.isPlayer1Turn() ? player1 : player2;
+    player.boardView.renderShipPreview(id, direction, length);
 }
 
 function showPlayerCreation() {

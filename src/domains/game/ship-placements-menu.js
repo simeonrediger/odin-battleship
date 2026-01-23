@@ -1,7 +1,7 @@
 import '../ship/ship.css';
 
 import Ship from '../ship/ship.js';
-import { validateElements } from '@/shared/utils.js';
+import { adoptValuesOfCommonKeys, validateElements } from '@/shared/utils.js';
 
 const directionClasses = Object.freeze({
     [Ship.directions.UP]: 'face-up',
@@ -12,8 +12,14 @@ const directionClasses = Object.freeze({
 
 let container;
 
-function init(containerElement) {
+const handlers = {
+    onShipClick: undefined,
+};
+
+function init(containerElement, handlersObj) {
     cacheElements(containerElement);
+    adoptValuesOfCommonKeys(handlers, handlersObj);
+    bindEvents();
 }
 
 function cacheElements(containerElement) {
@@ -21,10 +27,25 @@ function cacheElements(containerElement) {
     validateElements({ container });
 }
 
+function bindEvents() {
+    container.addEventListener('click', handleClick);
+}
+
 function renderShips(shipsData, shipNodeSize) {
     container.innerHTML = '';
     const ships = shipsData.map(shipData => renderShip(shipData, shipNodeSize));
     container.append(...ships);
+}
+
+function handleClick(event) {
+    const ship = event.target.closest("[data-role='ship']");
+
+    if (!ship) {
+        return;
+    }
+
+    const { id, direction, length } = ship.dataset;
+    handlers.onShipClick(id, direction, length);
 }
 
 function renderShip(shipData, shipNodeSize) {

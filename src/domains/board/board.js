@@ -45,6 +45,18 @@ export default class Board {
         ];
     }
 
+    static getNearestInBoundsShipCoordinates(x, y, direction, length) {
+        [x, y] = Board.getNearestInBoundsAnchorCoordinate(
+            x,
+            y,
+            direction,
+            length,
+        );
+
+        const coordinates = Board.getShipCoordinates(x, y, direction, length);
+        return coordinates;
+    }
+
     static shipInBounds(x, y, direction, length) {
         const shipCoordinates = Board.getShipCoordinates(
             x,

@@ -168,6 +168,8 @@ const game = {
     submitAttack,
     restart,
 
+    getShipCoordinates: Board.getNearestInBoundsShipCoordinates,
+
     get boardSize() {
         return Board.size;
     },
