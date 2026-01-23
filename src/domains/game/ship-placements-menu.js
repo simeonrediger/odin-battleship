@@ -44,6 +44,11 @@ function handleClick(event) {
         return;
     }
 
+    container
+        .querySelectorAll('.placing')
+        .forEach(ship => ship.classList.remove('placing'));
+
+    ship.classList.add('placing');
     const { id, direction, length } = ship.dataset;
     handlers.onShipClick(id, direction, length);
 }
