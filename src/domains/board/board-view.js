@@ -17,6 +17,7 @@ export default class BoardView {
         this.#gridSize = gridSize;
         this.#cellSize = this.#getCellSize(container, gridSize);
         this.#getShipCoordinates = getShipCoordinates;
+        this.#bindEvents();
     }
 
     render() {
@@ -45,8 +46,13 @@ export default class BoardView {
         validateElements({ '#grid': this.#grid });
     }
 
+    #bindEvents() {
+        document.addEventListener('keydown', this.#handleKeyDown.bind(this));
+    }
+
     #renderShipPreview(id, x, y, direction, length) {
         const coordinates = this.#getShipCoordinates(x, y, direction, length);
+        this.#removeShipPreview();
 
         for (const [x, y] of coordinates) {
             const cell = this.#getCell(x, y);
@@ -55,6 +61,58 @@ export default class BoardView {
 
         [x, y] = coordinates[0];
         this.#shipPreview = { id, x, y, direction, length };
+    }
+
+    #removeShipPreview() {
+        this.#grid
+            .querySelectorAll('.ship-preview-node')
+            .forEach(cell => cell.classList.remove('ship-preview-node'));
+    }
+
+    #handleKeyDown(event) {
+        if (!this.#shipPreview) {
+            return;
+        }
+
+        switch (event.key) {
+            case 'ArrowUp':
+            case 'w':
+            case 'ArrowDown':
+            case 's':
+            case 'ArrowLeft':
+            case 'a':
+            case 'ArrowRight':
+            case 'd':
+                this.#moveShipPreview(event.key);
+                break;
+        }
+    }
+
+    #moveShipPreview(key) {
+        let { id, x, y, direction, length } = this.#shipPreview;
+
+        switch (key) {
+            case 'ArrowUp':
+            case 'w':
+                y++;
+                break;
+            case 'ArrowDown':
+            case 's':
+                y--;
+                break;
+            case 'ArrowLeft':
+            case 'a':
+                x--;
+                break;
+            case 'ArrowRight':
+            case 'd':
+                x++;
+                break;
+            default:
+                return;
+        }
+
+        this.#renderShipPreview(id, x, y, direction, length);
     }
 
     #getCell(x, y) {
