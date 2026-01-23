@@ -50,7 +50,7 @@ function handleClick(event) {
 
     ship.classList.add('placing');
     const { id, direction, length } = ship.dataset;
-    handlers.onShipClick(id, direction, length);
+    handlers.onShipClick(id, direction, +length);
 }
 
 function renderShip(shipData, shipNodeSize) {
