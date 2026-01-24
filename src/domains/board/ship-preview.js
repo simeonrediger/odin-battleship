@@ -1,5 +1,7 @@
 import '../ship/ship.css';
 
+import Ship from '../ship/ship.js';
+
 export default class ShipPreview {
     #getShipCoordinates;
     #getCell;
@@ -56,6 +58,9 @@ export default class ShipPreview {
             case 'd':
                 this.#move(event.key);
                 break;
+            case 'r':
+                this.#rotate();
+                break;
         }
     }
 
@@ -91,6 +96,27 @@ export default class ShipPreview {
         }
 
         this.render(this.#id, x, y, this.#direction, this.#length);
+    }
+
+    #rotate() {
+        let direction;
+
+        switch (this.#direction) {
+            case Ship.directions.UP:
+                direction = Ship.directions.RIGHT;
+                break;
+            case Ship.directions.RIGHT:
+                direction = Ship.directions.DOWN;
+                break;
+            case Ship.directions.DOWN:
+                direction = Ship.directions.LEFT;
+                break;
+            case Ship.directions.LEFT:
+                direction = Ship.directions.UP;
+                break;
+        }
+
+        this.render(this.#id, this.#x, this.#y, direction, this.#length);
     }
 
     #setValues(id, x, y, direction, length) {
