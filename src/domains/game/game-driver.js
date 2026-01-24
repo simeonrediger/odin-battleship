@@ -23,6 +23,8 @@ function start(root) {
         onContinueClick: (...args) => continueHandler(...args),
         getShipCoordinates: game.getShipCoordinates,
         isPlayer1Turn: () => game.isPlayer1Turn,
+        shipValid: game.shipValid,
+        onShipPreviewSubmit: submitShipPreview,
     });
 
     game.start();
@@ -69,6 +71,10 @@ function handleEnterShipPlacements(shipsData) {
         game.isPlayer1Turn,
         shipsData,
     );
+}
+
+function submitShipPreview(id, x, y, direction) {
+    return game.placeShip(id, x, y, direction);
 }
 
 function handleEnterRound() {

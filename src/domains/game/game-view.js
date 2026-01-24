@@ -34,6 +34,8 @@ const callbacks = {
     onContinueClick: undefined,
     getShipCoordinates: undefined,
     isPlayer1Turn: undefined,
+    shipValid: undefined,
+    onShipPreviewSubmit: undefined,
 };
 
 function init(containerElement, boardSize, callbacksObj) {
@@ -94,6 +96,8 @@ function initViews(boardSize, shipPlacementsMenuContainer) {
                 player.board,
                 boardSize,
                 callbacks.getShipCoordinates,
+                callbacks.shipValid,
+                callbacks.onShipPreviewSubmit,
             )),
     );
 

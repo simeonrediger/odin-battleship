@@ -6,6 +6,8 @@ export default class ShipPreview {
     #getShipCoordinates;
     #getCell;
     #gridQuerySelectorAll;
+    #valid;
+    #onSubmit;
 
     #active;
     #id;
@@ -14,10 +16,18 @@ export default class ShipPreview {
     #direction;
     #length;
 
-    constructor(getShipCoordinates, getCell, gridQuerySelectorAll) {
+    constructor(
+        getShipCoordinates,
+        getCell,
+        gridQuerySelectorAll,
+        valid,
+        onSubmit,
+    ) {
         this.#getShipCoordinates = getShipCoordinates;
         this.#getCell = getCell;
         this.#gridQuerySelectorAll = gridQuerySelectorAll;
+        this.#valid = valid;
+        this.#onSubmit = onSubmit;
         this.#bindEvents();
     }
 
@@ -29,9 +39,15 @@ export default class ShipPreview {
         const coordinates = this.#getShipCoordinates(x, y, direction, length);
         this.#remove();
 
+        const valid = this.#valid(id, x, y, direction);
+
         for (const [x, y] of coordinates) {
             const cell = this.#getCell(x, y);
             cell.classList.add('ship-preview-node');
+
+            if (!valid) {
+                cell.classList.add('ship-preview-invalid');
+            }
         }
 
         [x, y] = coordinates[0];
@@ -61,12 +77,15 @@ export default class ShipPreview {
             case 'r':
                 this.#rotate();
                 break;
+            case ' ':
+                this.#submit();
+                break;
         }
     }
 
     #remove() {
         this.#gridQuerySelectorAll('.ship-preview-node').forEach(cell =>
-            cell.classList.remove('ship-preview-node'),
+            cell.classList.remove('ship-preview-node', 'ship-preview-invalid'),
         );
     }
 
@@ -117,6 +136,11 @@ export default class ShipPreview {
         }
 
         this.render(this.#id, this.#x, this.#y, direction, this.#length);
+    }
+
+    #submit() {
+        this.#remove();
+        this.#onSubmit(this.#id, this.#x, this.#y, this.#direction);
     }
 
     #setValues(id, x, y, direction, length) {

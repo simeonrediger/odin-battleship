@@ -148,6 +148,7 @@ export default class Board {
             y,
             direction: ship.direction,
             length: ship.length,
+            coordinates: shipCoordinates,
         };
 
         return placedShipData;

@@ -59,7 +59,7 @@ function submitPlayerCreation(
 function placeShip(shipId, x, y) {
     validatePhase(phases.SHIP_PLACEMENTS_1, phases.SHIP_PLACEMENTS_2);
     const ship = shipsToPlace.find(ship => ship.id === shipId);
-    current.player.board.placeShip(ship, x, y);
+    return current.player.board.placeShip(ship, x, y);
 }
 
 function submitShipPlacements() {
@@ -169,6 +169,11 @@ const game = {
     restart,
 
     getShipCoordinates: Board.getNearestInBoundsShipCoordinates,
+
+    shipValid(id, x, y, direction) {
+        const length = shipsToPlace.find(ship => ship.id === id).length;
+        return current.player.board.shipValid({ x, y, direction, length });
+    },
 
     get boardSize() {
         return Board.size;
