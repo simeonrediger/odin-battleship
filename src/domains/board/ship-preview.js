@@ -1,3 +1,5 @@
+import '../ship/ship.css';
+
 export default class ShipPreview {
     #getShipCoordinates;
     #getCell;
