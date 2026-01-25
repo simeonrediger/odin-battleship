@@ -37,6 +37,7 @@ export default class ShipPreview {
 
     render(id, x, y, direction, length) {
         const coordinates = this.#getShipCoordinates(x, y, direction, length);
+        [x, y] = coordinates[0];
         this.#remove();
 
         const valid = this.#valid(id, x, y, direction);
@@ -50,7 +51,6 @@ export default class ShipPreview {
             }
         }
 
-        [x, y] = coordinates[0];
         this.#setValues(id, x, y, direction, length);
     }
 
