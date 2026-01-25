@@ -29,6 +29,7 @@ const handlers = {
     onEnterPlayerCreation: undefined,
     onPlayerChange: undefined,
     onEnterShipPlacements: undefined,
+    onAllShipsPlaced: undefined,
     onEnterRound: undefined,
     onDeclareWinner: undefined,
 };
@@ -59,7 +60,14 @@ function submitPlayerCreation(
 function placeShip(shipId, x, y) {
     validatePhase(phases.SHIP_PLACEMENTS_1, phases.SHIP_PLACEMENTS_2);
     const ship = shipsToPlace.find(ship => ship.id === shipId);
-    return current.player.board.placeShip(ship, x, y);
+    const placedShipData = current.player.board.placeShip(ship, x, y);
+    shipsToPlace = shipsToPlace.filter(remainingShip => remainingShip !== ship);
+
+    if (shipsToPlace.length === 0) {
+        handlers.onAllShipsPlaced();
+    }
+
+    return placedShipData;
 }
 
 function submitShipPlacements() {

@@ -13,6 +13,7 @@ function start(root) {
     game.init({
         onEnterPlayerCreation: handleEnterPlayerCreation,
         onEnterShipPlacements: handleEnterShipPlacements,
+        onAllShipsPlaced: gameView.enableContinueButton,
         onEnterRound: handleEnterRound,
         onDeclareWinner: handleDeclareWinner,
     });

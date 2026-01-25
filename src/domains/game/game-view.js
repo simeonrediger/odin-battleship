@@ -148,7 +148,12 @@ function showShipPlacements(playerName, opponentName, isPlayer1, shipsData) {
     player.boardView.render();
 
     shipPlacementsMenu.renderShips(shipsData, player.boardView.cellSize);
+    continueButton.disabled = true;
     show(player.board, shipPlacementsMenuContainer);
+}
+
+function enableContinueButton() {
+    continueButton.disabled = false;
 }
 
 function show(...elements) {
@@ -163,6 +168,7 @@ const gameView = {
     init,
     showPlayerCreation,
     showShipPlacements,
+    enableContinueButton,
 };
 
 export default gameView;
