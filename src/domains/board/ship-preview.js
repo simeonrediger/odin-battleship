@@ -138,6 +138,7 @@ export default class ShipPreview {
     }
 
     #submit() {
+        this.#active = false;
         this.#remove();
         this.#onSubmit(this.#id, this.#x, this.#y, this.#direction);
     }
