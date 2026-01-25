@@ -73,9 +73,15 @@ function renderShip(shipData, shipNodeSize) {
     return ship;
 }
 
+function removeShip(shipId) {
+    const ship = container.querySelector(`[data-id='${shipId}']`);
+    ship.remove();
+}
+
 const shipPlacementsMenu = {
     init,
     renderShips,
+    removeShip,
 };
 
 export default shipPlacementsMenu;

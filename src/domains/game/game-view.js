@@ -97,7 +97,7 @@ function initViews(boardSize, shipPlacementsMenuContainer) {
                 boardSize,
                 callbacks.getShipCoordinates,
                 callbacks.shipValid,
-                callbacks.onShipPreviewSubmit,
+                handleShipPreviewSubmit,
             )),
     );
 
@@ -122,6 +122,12 @@ function handleContinueClick() {
 function handleShipPlacementsMenuClick(id, direction, length) {
     const player = callbacks.isPlayer1Turn() ? player1 : player2;
     player.boardView.renderShipPreviewToCenter(id, direction, length);
+}
+
+function handleShipPreviewSubmit(id, x, y, direction) {
+    const placedShipData = callbacks.onShipPreviewSubmit(id, x, y, direction);
+    shipPlacementsMenu.removeShip(id);
+    return placedShipData;
 }
 
 function showPlayerCreation() {
