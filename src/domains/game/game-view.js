@@ -205,6 +205,7 @@ function showRound(isPlayer1Turn, playerName) {
     opponent.board.classList.remove('inactive');
     opponent.board.setAttribute('data-active', '');
     hideShips();
+    continueButton.textContent = 'Game in progress';
     show(player.board, opponent.board);
 }
 
