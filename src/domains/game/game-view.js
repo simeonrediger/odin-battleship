@@ -148,6 +148,7 @@ function showShipPlacements(playerName, opponentName, isPlayer1, shipsData) {
     player.boardView.render();
 
     shipPlacementsMenu.renderShips(shipsData, player.boardView.cellSize);
+    continueButton.textContent = 'Ready';
     continueButton.disabled = true;
     show(player.board, shipPlacementsMenuContainer);
 }
