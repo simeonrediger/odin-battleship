@@ -116,11 +116,11 @@ export default class Board {
         return this.#ships.every(ship => ship.sunk);
     }
 
-    placeShip(ship, x, y) {
+    placeShip(ship, x, y, direction) {
         const shipCoordinates = Board.getShipCoordinates(
             x,
             y,
-            ship.direction,
+            direction,
             ship.length,
         );
 
@@ -146,7 +146,7 @@ export default class Board {
         const placedShipData = {
             x,
             y,
-            direction: ship.direction,
+            direction,
             length: ship.length,
             coordinates: shipCoordinates,
         };

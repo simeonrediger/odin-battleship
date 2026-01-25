@@ -6,28 +6,28 @@ describe('placeShip()', () => {
         const board = new Board();
 
         expect(() =>
-            board.placeShip(new Ship(4, Ship.directions.UP), 4, 1),
+            board.placeShip(new Ship(4), 4, 1, Ship.directions.UP),
         ).not.toThrow();
 
         expect(() =>
-            board.placeShip(new Ship(3, Ship.directions.LEFT), 1, 3),
+            board.placeShip(new Ship(3), 1, 3, Ship.directions.LEFT),
         ).toThrow();
     });
 
     test('only places ship in vacant coordinates', () => {
         const board = new Board();
-        board.placeShip(new Ship(3, Ship.directions.RIGHT), 1, 1);
+        board.placeShip(new Ship(3), 1, 1, Ship.directions.RIGHT);
 
         expect(() =>
-            board.placeShip(new Ship(2, Ship.directions.LEFT), 2, 2),
+            board.placeShip(new Ship(2), 2, 2, Ship.directions.LEFT),
         ).not.toThrow();
 
         expect(() =>
-            board.placeShip(new Ship(2, Ship.directions.UP), 3, 2),
+            board.placeShip(new Ship(2), 3, 2, Ship.directions.UP),
         ).not.toThrow();
 
         expect(() =>
-            board.place(new Ship(2, Ship.directions.DOWN), 2, 3),
+            board.place(new Ship(2), 2, 3, Ship.directions.DOWN),
         ).toThrow();
     });
 });
@@ -41,8 +41,8 @@ describe('hit()', () => {
 
     test('calls ship.hit() only if coordinate has ship', () => {
         const board = new Board();
-        const ship = new Ship(2, Ship.directions.UP);
-        board.placeShip(ship, 0, 0, true);
+        const ship = new Ship(2);
+        board.placeShip(ship, 0, 0, Ship.directions.UP);
         ship.hit = jest.fn();
 
         expect(ship.hit.mock.calls.length).toBe(0);

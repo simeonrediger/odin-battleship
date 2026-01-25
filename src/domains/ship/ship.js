@@ -6,24 +6,17 @@ export default class Ship {
         RIGHT: 'RIGHT',
     });
 
-    direction;
-
     #id;
     #length;
     #hits = 0;
 
-    constructor(length, direction) {
+    constructor(length) {
         if (length <= 0) {
             throw new RangeError('Length must be a positive integer');
         }
 
-        if (!Object.values(Ship.directions).includes(direction)) {
-            throw new TypeError(`Invalid direction: ${direction}`);
-        }
-
         this.#id = crypto.randomUUID();
         this.#length = length;
-        this.direction = direction;
     }
 
     get id() {
