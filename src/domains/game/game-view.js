@@ -111,6 +111,8 @@ function bindEvents() {
 }
 
 function handleContinueClick() {
+    let player;
+
     switch (callbacks.onContinueClick) {
         case gameView.submitPlayerCreation:
             gameView.submitPlayerCreation(
@@ -121,6 +123,8 @@ function handleContinueClick() {
             );
             break;
         case gameView.submitShipPlacements:
+            player = callbacks.isPlayer1Turn ? player1 : player2;
+            hide(player.board, shipPlacementsMenuContainer);
             gameView.submitShipPlacements();
             break;
         case gameView.restartGame:
