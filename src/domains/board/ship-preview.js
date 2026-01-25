@@ -38,9 +38,8 @@ export default class ShipPreview {
     render(id, x, y, direction, length) {
         const coordinates = this.#getShipCoordinates(x, y, direction, length);
         [x, y] = coordinates[0];
-        this.#remove();
-
         const valid = this.#valid(id, x, y, direction);
+        this.#remove();
 
         for (const [x, y] of coordinates) {
             const cell = this.#getCell(x, y);
