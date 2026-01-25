@@ -32,6 +32,7 @@ const handlers = {
     onAllShipsPlaced: undefined,
     onEnterRound: undefined,
     onDeclareWinner: undefined,
+    onAttack: undefined,
 };
 
 function init(handlersObj) {
@@ -84,21 +85,31 @@ function submitShipPlacements() {
 
 function submitAttack(x, y) {
     validatePhase(phases.PLAYER_1_ATTACK, phases.PLAYER_2_ATTACK);
-    const shipHit = current.opponent.board.hit(x, y);
 
-    if (current.opponent.defeated) {
-        declareWinner(current.player);
+    if (current.opponent.board.coordinateHit(x, y)) {
         return;
-    } else if (shipHit) {
+    }
+
+    const shipHit = current.opponent.board.hit(x, y);
+    handlers.onAttack(current.player === player1, shipHit, x, y);
+
+    if (shipHit) {
+        if (current.opponent.defeated) {
+            declareWinner(current.player);
+            return;
+        }
+    } else {
+        switchAttacker();
         enterRound();
-        return;
-    } else if (current.phase === phases.PLAYER_1_ATTACK) {
+    }
+}
+
+function switchAttacker() {
+    if (current.phase === phases.PLAYER_1_ATTACK) {
         setPlayer(player2);
     } else {
         setPlayer(player1);
     }
-
-    enterRound();
 }
 
 function restart() {

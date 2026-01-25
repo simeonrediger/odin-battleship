@@ -9,6 +9,7 @@ import shipPlacementsMenu from './ship-placements-menu.js';
 
 let container;
 let announcer;
+let playerAreas;
 let shipPlacementsMenuContainer;
 let continueButton;
 
@@ -36,6 +37,7 @@ const callbacks = {
     isPlayer1Turn: undefined,
     shipValid: undefined,
     onShipPreviewSubmit: undefined,
+    onSubmitAttack: undefined,
 };
 
 function init(containerElement, boardSize, callbacksObj) {
@@ -51,6 +53,7 @@ function cacheElements(containerElement) {
     validateElements({ container });
 
     announcer = container.querySelector("[data-role='announcer']");
+    playerAreas = container.querySelector("[data-role='player-areas']");
     shipPlacementsMenuContainer = container.querySelector(
         "[data-role='ship-placements-menu']",
     );
@@ -74,6 +77,7 @@ function cacheElements(containerElement) {
 
     validateElements({
         announcer,
+        playerAreas,
         shipPlacementsMenuContainer,
         continueButton,
         'player1.area': player1.area,
@@ -108,6 +112,7 @@ function initViews(boardSize, shipPlacementsMenuContainer) {
 
 function bindEvents() {
     continueButton.addEventListener('click', handleContinueClick);
+    playerAreas.addEventListener('click', handlePlayerAreasClick);
 }
 
 function handleContinueClick() {
@@ -133,6 +138,18 @@ function handleContinueClick() {
     }
 }
 
+function handlePlayerAreasClick(event) {
+    const activeBoard = event.target.closest(
+        "[data-active][data-role$='board']",
+    );
+
+    const cell = BoardView.getClosestCell(event.target);
+
+    if (activeBoard && cell) {
+        handleAttackClick(cell);
+    }
+}
+
 function handleShipPlacementsMenuClick(id, direction, length) {
     const player = callbacks.isPlayer1Turn() ? player1 : player2;
     player.boardView.renderShipPreviewToCenter(id, direction, length);
@@ -142,6 +159,12 @@ function handleShipPreviewSubmit(id, x, y, direction) {
     const placedShipData = callbacks.onShipPreviewSubmit(id, x, y, direction);
     shipPlacementsMenu.removeShip(id);
     return placedShipData;
+}
+
+function handleAttackClick(cell) {
+    const x = +cell.dataset.x;
+    const y = +cell.dataset.y;
+    callbacks.onSubmitAttack(x, y);
 }
 
 function showPlayerCreation() {
@@ -176,10 +199,17 @@ function enableContinueButton() {
 function showRound(isPlayer1Turn) {
     const player = isPlayer1Turn ? player1 : player2;
     const opponent = isPlayer1Turn ? player2 : player1;
+    player.board.removeAttribute('data-active');
     player.board.classList.add('inactive');
     opponent.board.classList.remove('inactive');
+    opponent.board.setAttribute('data-active', '');
     hideShips();
     show(player.board, opponent.board);
+}
+
+function renderAttack(isPlayer1Turn, shipHit, x, y) {
+    const opponent = isPlayer1Turn ? player2 : player1;
+    opponent.boardView.renderAttack(shipHit, x, y);
 }
 
 function hideShips() {
@@ -202,6 +232,7 @@ const gameView = {
     showShipPlacements,
     enableContinueButton,
     showRound,
+    renderAttack,
 
     submitPlayerCreation: undefined,
     submitShipPlacements: undefined,

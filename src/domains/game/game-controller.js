@@ -8,6 +8,7 @@ function start(root) {
         onAllShipsPlaced: gameView.enableContinueButton,
         onEnterRound: handleEnterRound,
         onDeclareWinner: handleDeclareWinner,
+        onAttack: gameView.renderAttack,
     });
 
     const gameContainer = root.querySelector("[data-role='game-container']");
@@ -17,6 +18,7 @@ function start(root) {
         isPlayer1Turn: () => game.isPlayer1Turn,
         shipValid: game.shipValid,
         onShipPreviewSubmit: submitShipPreview,
+        onSubmitAttack: game.submitAttack,
     });
 
     gameView.submitPlayerCreation = submitPlayerCreation;

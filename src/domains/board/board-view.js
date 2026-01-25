@@ -5,6 +5,10 @@ import Ship from '../ship/ship.js';
 import ShipPreview from './ship-preview.js';
 
 export default class BoardView {
+    static getClosestCell(element) {
+        return element.closest('.coordinate');
+    }
+
     #container;
     #grid;
     #gridSize;
@@ -45,6 +49,15 @@ export default class BoardView {
     renderShipPreviewToCenter(id, direction, length) {
         const [x, y] = this.#getCenteredCoordinatesForShip(direction, length);
         this.#shipPreview.render(id, x, y, direction, length);
+    }
+
+    renderAttack(shipHit, x, y) {
+        const cell = this.#getCell(x, y);
+        cell.classList.add('discovered');
+
+        if (shipHit) {
+            cell.classList.add('hit');
+        }
     }
 
     get cellSize() {
