@@ -10,7 +10,6 @@
 .ship-node {
   background-color: var(--color-ship-bg);
   border-radius: 0.25rem;
-  outline: 1px solid var(--color-ship-outline);
 }
 
 .ship-preview-node {
