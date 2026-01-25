@@ -178,7 +178,14 @@ function showRound(isPlayer1Turn) {
     const opponent = isPlayer1Turn ? player2 : player1;
     player.board.classList.add('inactive');
     opponent.board.classList.remove('inactive');
+    hideShips();
     show(player.board, opponent.board);
+}
+
+function hideShips() {
+    [player1, player2].forEach(player =>
+        player.board.classList.add('undiscovered-ship-nodes-hidden'),
+    );
 }
 
 function show(...elements) {
