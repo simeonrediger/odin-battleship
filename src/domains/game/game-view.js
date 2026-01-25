@@ -210,9 +210,13 @@ function showRound(isPlayer1Turn, playerName) {
     show(player.board, opponent.board);
 }
 
-function renderAttack(isPlayer1Turn, shipHit, x, y) {
+function renderAttack(isPlayer1Turn, shipHit, x, y, sunkShipCoordinates) {
     const opponent = isPlayer1Turn ? player2 : player1;
     opponent.boardView.renderAttack(shipHit, x, y);
+
+    if (sunkShipCoordinates) {
+        opponent.boardView.renderSunkShip(sunkShipCoordinates);
+    }
 }
 
 function handleWin(name) {

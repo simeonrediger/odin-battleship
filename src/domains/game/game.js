@@ -96,7 +96,14 @@ function submitAttack(x, y) {
     }
 
     const shipHit = current.opponent.board.hit(x, y);
-    handlers.onAttack(current.player === player1, shipHit, x, y);
+
+    handlers.onAttack(
+        current.player === player1,
+        shipHit,
+        x,
+        y,
+        current.opponent.board.getSunkShipCoordinates(x, y),
+    );
 
     if (shipHit) {
         if (current.opponent.defeated) {

@@ -60,6 +60,13 @@ export default class BoardView {
         }
     }
 
+    renderSunkShip(coordinates) {
+        for (const [x, y] of coordinates) {
+            const cell = this.#getCell(x, y);
+            cell.classList.add('sunk');
+        }
+    }
+
     reset() {
         this.#grid.innerHTML = '';
     }
