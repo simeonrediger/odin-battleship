@@ -132,8 +132,8 @@ function handleContinueClick() {
             hide(player.board, shipPlacementsMenuContainer);
             gameView.submitShipPlacements();
             break;
-        case gameView.restartGame:
-            gameView.restartGame();
+        case handleRestartClick:
+            handleRestartClick();
             break;
     }
 }
@@ -215,6 +215,28 @@ function renderAttack(isPlayer1Turn, shipHit, x, y) {
     opponent.boardView.renderAttack(shipHit, x, y);
 }
 
+function handleWin(name) {
+    announcer.textContent = `${name} wins!`;
+    continueButton.textContent = 'Restart';
+    callbacks.onContinueClick = handleRestartClick;
+    continueButton.disabled = false;
+}
+
+function handleRestartClick() {
+    hide(player1.board, player2.board);
+
+    [player1, player2].forEach(player => {
+        player.board.classList.remove(
+            'undiscovered-ship-nodes-hidden',
+            'inactive',
+        );
+        player.board.removeAttribute('data-active');
+        player.boardView.reset();
+    });
+
+    gameView.restartGame();
+}
+
 function hideShips() {
     [player1, player2].forEach(player =>
         player.board.classList.add('undiscovered-ship-nodes-hidden'),
@@ -236,6 +258,7 @@ const gameView = {
     enableContinueButton,
     showRound,
     renderAttack,
+    handleWin,
 
     submitPlayerCreation: undefined,
     submitShipPlacements: undefined,

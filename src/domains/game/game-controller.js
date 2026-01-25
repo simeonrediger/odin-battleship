@@ -78,7 +78,9 @@ function handleEnterRound(isPlayer1Turn, playerName) {
     gameView.showRound(isPlayer1Turn, playerName);
 }
 
-function handleDeclareWinner(name) {}
+function handleDeclareWinner(name) {
+    gameView.handleWin(name);
+}
 
 const gameController = {
     start,

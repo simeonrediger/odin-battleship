@@ -60,6 +60,10 @@ export default class BoardView {
         }
     }
 
+    reset() {
+        this.#grid.innerHTML = '';
+    }
+
     get cellSize() {
         return this.#cellSize;
     }
