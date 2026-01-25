@@ -2,6 +2,6 @@ import './shared/styles/reset.css';
 import './shared/styles/colors.css';
 import './shared/styles/layout.css';
 
-import gameDriver from './domains/game/game-driver.js';
+import gameController from './domains/game/game-controller.js';
 
-gameDriver.start(document);
+gameController.start(document);

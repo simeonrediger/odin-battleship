@@ -76,8 +76,8 @@ function handleEnterRound() {}
 
 function handleDeclareWinner(name) {}
 
-const gameDriver = {
+const gameController = {
     start,
 };
 
-export default gameDriver;
+export default gameController;
