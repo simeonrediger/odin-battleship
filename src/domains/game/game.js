@@ -148,7 +148,7 @@ function enterRound() {
         current.phase = phases.PLAYER_2_ATTACK;
     }
 
-    handlers.onEnterRound(current.player === player1);
+    handlers.onEnterRound(current.player === player1, current.player.name);
 }
 
 function declareWinner(winner) {

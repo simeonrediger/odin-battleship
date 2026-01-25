@@ -74,8 +74,8 @@ function submitShipPreview(id, x, y, direction) {
     return game.placeShip(id, x, y, direction);
 }
 
-function handleEnterRound(isPlayer1Turn) {
-    gameView.showRound(isPlayer1Turn);
+function handleEnterRound(isPlayer1Turn, playerName) {
+    gameView.showRound(isPlayer1Turn, playerName);
 }
 
 function handleDeclareWinner(name) {}

@@ -196,7 +196,8 @@ function enableContinueButton() {
     continueButton.disabled = false;
 }
 
-function showRound(isPlayer1Turn) {
+function showRound(isPlayer1Turn, playerName) {
+    announcer.textContent = `${playerName}'s turn`;
     const player = isPlayer1Turn ? player1 : player2;
     const opponent = isPlayer1Turn ? player2 : player1;
     player.board.removeAttribute('data-active');
