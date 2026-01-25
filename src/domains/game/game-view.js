@@ -169,6 +169,8 @@ function handleAttackClick(cell) {
 
 function showPlayerCreation() {
     announcer.textContent = "Who's playing?";
+    continueButton.textContent = 'Play';
+    continueButton.disabled = false;
     callbacks.onContinueClick = gameView.submitPlayerCreation;
     show(player1.creationMenu, player2.creationMenu);
 }
