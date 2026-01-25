@@ -1,12 +1,6 @@
 import game from './game.js';
 import gameView from './game-view.js';
 
-let player = 1;
-let x1 = 0,
-    y1 = 0,
-    x2 = 0,
-    y2 = 0;
-
 function start(root) {
     game.init({
         onEnterPlayerCreation: handleEnterPlayerCreation,
@@ -78,26 +72,9 @@ function submitShipPreview(id, x, y, direction) {
     return game.placeShip(id, x, y, direction);
 }
 
-function handleEnterRound() {
-    console.log('Entered round');
+function handleEnterRound() {}
 
-    if (player === 1) {
-        y1 = x1 < 10 ? y1 : y1 + 1;
-        x1 = x1 < 10 ? x1 : 0;
-        console.log(`Submitting attack to (${x1}, ${y1})`);
-        game.submitAttack(x1++, y1);
-    } else {
-        y2 = x2 < 10 ? y2 : y2 + 1;
-        x2 = x2 < 10 ? x2 : 0;
-        console.log(`Submitting attack to (${x2}, ${y2})`);
-        game.submitAttack(x2++, y2);
-    }
-}
-
-function handleDeclareWinner(name) {
-    console.log(`${name} wins`);
-    game.restart();
-}
+function handleDeclareWinner(name) {}
 
 const gameDriver = {
     start,
