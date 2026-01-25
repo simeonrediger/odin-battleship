@@ -173,6 +173,14 @@ function enableContinueButton() {
     continueButton.disabled = false;
 }
 
+function showRound(isPlayer1Turn) {
+    const player = isPlayer1Turn ? player1 : player2;
+    const opponent = isPlayer1Turn ? player2 : player1;
+    player.board.classList.add('inactive');
+    opponent.board.classList.remove('inactive');
+    show(player.board, opponent.board);
+}
+
 function show(...elements) {
     elements.forEach(element => element.classList.remove('hidden'));
 }
@@ -186,6 +194,7 @@ const gameView = {
     showPlayerCreation,
     showShipPlacements,
     enableContinueButton,
+    showRound,
 
     submitPlayerCreation: undefined,
     submitShipPlacements: undefined,
