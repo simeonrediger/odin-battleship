@@ -1,8 +1,6 @@
 import game from './game.js';
 import gameView from './game-view.js';
 
-let continueHandler;
-
 let player = 1;
 let x1 = 0,
     y1 = 0,
@@ -21,18 +19,20 @@ function start(root) {
     const gameContainer = root.querySelector("[data-role='game-container']");
 
     gameView.init(gameContainer, game.boardSize, {
-        onContinueClick: (...args) => continueHandler(...args),
         getShipCoordinates: game.getShipCoordinates,
         isPlayer1Turn: () => game.isPlayer1Turn,
         shipValid: game.shipValid,
         onShipPreviewSubmit: submitShipPreview,
     });
 
+    gameView.submitPlayerCreation = submitPlayerCreation;
+    gameView.submitShipPlacements = game.submitShipPlacements;
+    gameView.restartGame = game.restart;
+
     game.start();
 }
 
 function handleEnterPlayerCreation() {
-    continueHandler = submitPlayerCreation;
     gameView.showPlayerCreation();
 }
 

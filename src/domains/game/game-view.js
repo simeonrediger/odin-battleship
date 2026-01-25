@@ -111,12 +111,22 @@ function bindEvents() {
 }
 
 function handleContinueClick() {
-    callbacks.onContinueClick(
-        player1.typeInput.value,
-        player1.nameInput.value,
-        player2.typeInput.value,
-        player2.nameInput.value,
-    );
+    switch (callbacks.onContinueClick) {
+        case gameView.submitPlayerCreation:
+            gameView.submitPlayerCreation(
+                player1.typeInput.value,
+                player1.nameInput.value,
+                player2.typeInput.value,
+                player2.nameInput.value,
+            );
+            break;
+        case gameView.submitShipPlacements:
+            gameView.submitShipPlacements();
+            break;
+        case gameView.restartGame:
+            gameView.restartGame();
+            break;
+    }
 }
 
 function handleShipPlacementsMenuClick(id, direction, length) {
@@ -132,6 +142,7 @@ function handleShipPreviewSubmit(id, x, y, direction) {
 
 function showPlayerCreation() {
     announcer.textContent = "Who's playing?";
+    callbacks.onContinueClick = gameView.submitPlayerCreation;
     show(player1.creationMenu, player2.creationMenu);
 }
 
@@ -150,6 +161,7 @@ function showShipPlacements(playerName, opponentName, isPlayer1, shipsData) {
     shipPlacementsMenu.renderShips(shipsData, player.boardView.cellSize);
     continueButton.textContent = 'Ready';
     continueButton.disabled = true;
+    callbacks.onContinueClick = gameView.submitShipPlacements;
     show(player.board, shipPlacementsMenuContainer);
 }
 
@@ -170,6 +182,10 @@ const gameView = {
     showPlayerCreation,
     showShipPlacements,
     enableContinueButton,
+
+    submitPlayerCreation: undefined,
+    submitShipPlacements: undefined,
+    restartGame: undefined,
 };
 
 export default gameView;
