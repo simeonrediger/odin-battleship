@@ -141,7 +141,7 @@ function enterShipPlacements() {
         shipsToPlace.map(ship => ({
             id: ship.id,
             length: ship.length,
-            direction: ship.direction,
+            direction: Ship.directions.RIGHT,
         })),
     );
 }
