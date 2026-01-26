@@ -119,6 +119,7 @@ function bindEvents() {
     playerAreas.addEventListener('click', handlePlayerAreasClick);
 
     eventBus.on(events.ENTERED_PLAYER_CREATION, showPlayerCreation);
+    eventBus.on(events.ENTERED_SHIP_PLACEMENTS, showShipPlacements);
 }
 
 function handleContinueClick() {
@@ -181,15 +182,20 @@ function showPlayerCreation() {
     show(player1.creationMenu, player2.creationMenu);
 }
 
-function showShipPlacements(playerName, opponentName, isPlayer1, shipsData) {
+function showShipPlacements({
+    playerName,
+    opponentName,
+    isPlayer1Turn,
+    shipsData,
+}) {
     hide(player1.creationMenu, player2.creationMenu);
 
     announcer.textContent = `
         ${playerName}, place your fleet... ${opponentName}, don't look!
     `.trim();
 
-    const player = isPlayer1 ? player1 : player2;
-    const opponent = isPlayer1 ? player2 : player1;
+    const player = isPlayer1Turn ? player1 : player2;
+    const opponent = isPlayer1Turn ? player2 : player1;
     opponent.area.insertBefore(shipPlacementsMenuContainer, opponent.board);
     player.boardView.render();
 
@@ -265,7 +271,6 @@ function hide(...elements) {
 
 const gameView = {
     init,
-    showShipPlacements,
     enableContinueButton,
     showRound,
     renderAttack,

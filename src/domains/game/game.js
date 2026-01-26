@@ -30,7 +30,6 @@ let eventBus;
 
 const handlers = {
     onPlayerChange: undefined,
-    onEnterShipPlacements: undefined,
     onAllShipsPlaced: undefined,
     onEnterRound: undefined,
     onDeclareWinner: undefined,
@@ -147,13 +146,16 @@ function enterShipPlacements() {
 
     shipsToPlace = createShips(shipLengths);
 
-    handlers.onEnterShipPlacements(
-        shipsToPlace.map(ship => ({
+    eventBus.emit(events.ENTERED_SHIP_PLACEMENTS, {
+        playerName: current.player.name,
+        opponentName: current.opponent.name,
+        isPlayer1Turn: current.player === player1,
+        shipsData: shipsToPlace.map(ship => ({
             id: ship.id,
             length: ship.length,
             direction: Ship.directions.RIGHT,
         })),
-    );
+    });
 }
 
 function enterRound() {

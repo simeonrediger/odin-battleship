@@ -4,7 +4,6 @@ import gameView from './game-view.js';
 
 function start(root) {
     game.init(eventBus, {
-        onEnterShipPlacements: handleEnterShipPlacements,
         onAllShipsPlaced: gameView.enableContinueButton,
         onEnterRound: handleEnterRound,
         onDeclareWinner: handleDeclareWinner,
@@ -55,15 +54,6 @@ function normalizePlayerName(name, isPlayer1) {
     const fallback = isPlayer1 ? 'Player 1' : 'Player 2';
     name = name.trim();
     return name === '' ? fallback : name;
-}
-
-function handleEnterShipPlacements(shipsData) {
-    gameView.showShipPlacements(
-        game.currentPlayerName,
-        game.currentOpponentName,
-        game.isPlayer1Turn,
-        shipsData,
-    );
 }
 
 function submitShipPreview(id, x, y, direction) {
