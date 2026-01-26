@@ -120,6 +120,7 @@ function bindEvents() {
 
     eventBus.on(events.ENTERED_PLAYER_CREATION, showPlayerCreation);
     eventBus.on(events.ENTERED_SHIP_PLACEMENTS, showShipPlacements);
+    eventBus.on(events.ALL_SHIPS_PLACED, enableContinueButton);
 }
 
 function handleContinueClick() {
@@ -271,7 +272,6 @@ function hide(...elements) {
 
 const gameView = {
     init,
-    enableContinueButton,
     showRound,
     renderAttack,
     handleWin,

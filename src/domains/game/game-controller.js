@@ -4,7 +4,6 @@ import gameView from './game-view.js';
 
 function start(root) {
     game.init(eventBus, {
-        onAllShipsPlaced: gameView.enableContinueButton,
         onEnterRound: handleEnterRound,
         onDeclareWinner: handleDeclareWinner,
         onAttack: gameView.renderAttack,

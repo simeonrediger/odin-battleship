@@ -30,7 +30,6 @@ let eventBus;
 
 const handlers = {
     onPlayerChange: undefined,
-    onAllShipsPlaced: undefined,
     onEnterRound: undefined,
     onDeclareWinner: undefined,
     onAttack: undefined,
@@ -73,7 +72,7 @@ function placeShip(shipId, x, y, direction) {
     shipsToPlace = shipsToPlace.filter(remainingShip => remainingShip !== ship);
 
     if (shipsToPlace.length === 0) {
-        handlers.onAllShipsPlaced();
+        eventBus.emit(events.ALL_SHIPS_PLACED);
     }
 
     return placedShipData;

@@ -21,3 +21,8 @@ export const ENTERED_PLAYER_CREATION = 'ENTERED_PLAYER_CREATION';
  * @see {@link EnteredShipPlacementsDetail}
  */
 export const ENTERED_SHIP_PLACEMENTS = 'ENTERED_SHIP_PLACEMENTS';
+
+/**
+ * @description Emitted once all ships have been placed during ship placements.
+ */
+export const ALL_SHIPS_PLACED = 'ALL_SHIPS_PLACED';
