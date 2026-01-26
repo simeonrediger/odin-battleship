@@ -6,7 +6,6 @@ function start(root) {
     const gameContainer = root.querySelector("[data-role='game-container']");
 
     gameView.init(gameContainer, game.boardSize, {
-        getShipCoordinates: game.getShipCoordinates,
         isPlayer1Turn: () => game.isPlayer1Turn,
         shipValid: game.shipValid,
         onSubmitAttack: game.submitAttack,

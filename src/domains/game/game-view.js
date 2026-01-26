@@ -38,7 +38,6 @@ const player2 = {
 
 const callbacks = {
     onContinueClick: undefined,
-    getShipCoordinates: undefined,
     isPlayer1Turn: undefined,
     shipValid: undefined,
     onSubmitAttack: undefined,
@@ -103,7 +102,6 @@ function initViews(boardSize, shipPlacementsMenuContainer) {
             (player.boardView = new BoardView(
                 player.board,
                 boardSize,
-                callbacks.getShipCoordinates,
                 callbacks.shipValid,
             )),
     );

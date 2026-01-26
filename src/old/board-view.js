@@ -1,5 +1,6 @@
 import '@/shared/styles/board.css';
 
+import gameSelectors from '../game/game-selectors.js';
 import Ship from '../ship.js';
 
 export default class BoardView {
@@ -9,7 +10,6 @@ export default class BoardView {
     #size;
     #cellSize;
 
-    #getShipCoordinates;
     #shipInBounds;
     #shipOverlaps;
     #shipValid;
@@ -27,7 +27,6 @@ export default class BoardView {
         container,
         size,
         cellSize,
-        getShipCoordinates,
         shipInBounds,
         shipOverlaps,
         shipValid,
@@ -37,7 +36,6 @@ export default class BoardView {
         this.#container = container;
         this.#size = size;
         this.#cellSize = cellSize;
-        this.#getShipCoordinates = getShipCoordinates;
         this.#shipInBounds = shipInBounds;
         this.#shipOverlaps = shipOverlaps;
         this.#shipValid = shipValid;
@@ -59,7 +57,14 @@ export default class BoardView {
 
     placeShipPreview(x, y, direction, length) {
         Object.assign(this.#shipPreview, { x, y, direction, length });
-        const coordinates = this.#getShipCoordinates(x, y, direction, length);
+
+        const coordinates = gameSelectors.getShipCoordinates(
+            x,
+            y,
+            direction,
+            length,
+        );
+
         const shipOverlaps = this.#shipOverlaps(x, y, direction, length);
         const classesToAdd = ['ship-preview-node'];
         const classesToRemove = [];
@@ -80,7 +85,12 @@ export default class BoardView {
     }
 
     renderPlacedShip({ x, y, direction, length }) {
-        const coordinates = this.#getShipCoordinates(x, y, direction, length);
+        const coordinates = gameSelectors.getShipCoordinates(
+            x,
+            y,
+            direction,
+            length,
+        );
 
         for (const [x, y] of coordinates) {
             this.getCell(x, y).classList.add('ship-node');

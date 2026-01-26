@@ -15,13 +15,12 @@ export default class BoardView {
     #cellSize;
     #shipPreview;
 
-    constructor(container, gridSize, getShipCoordinates, shipValid) {
+    constructor(container, gridSize, shipValid) {
         this.#cacheElements(container);
         this.#gridSize = gridSize;
         this.#cellSize = this.#getCellSize(container, gridSize);
 
         this.#shipPreview = new ShipPreview(
-            getShipCoordinates,
             this.#getCell.bind(this),
             selector => this.#grid.querySelectorAll(selector),
             shipValid,

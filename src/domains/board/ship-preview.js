@@ -2,10 +2,10 @@ import '../ship/ship.css';
 
 import eventBus from '../game/event-bus.js';
 import * as events from '../game/events.js';
+import gameSelectors from '../game/game-selectors.js';
 import Ship from '../ship/ship.js';
 
 export default class ShipPreview {
-    #getShipCoordinates;
     #getCell;
     #gridQuerySelectorAll;
     #valid;
@@ -17,8 +17,7 @@ export default class ShipPreview {
     #direction;
     #length;
 
-    constructor(getShipCoordinates, getCell, gridQuerySelectorAll, valid) {
-        this.#getShipCoordinates = getShipCoordinates;
+    constructor(getCell, gridQuerySelectorAll, valid) {
         this.#getCell = getCell;
         this.#gridQuerySelectorAll = gridQuerySelectorAll;
         this.#valid = valid;
@@ -30,7 +29,13 @@ export default class ShipPreview {
     }
 
     render(id, x, y, direction, length) {
-        const coordinates = this.#getShipCoordinates(x, y, direction, length);
+        const coordinates = gameSelectors.getShipCoordinates(
+            x,
+            y,
+            direction,
+            length,
+        );
+
         [x, y] = coordinates[0];
         const valid = this.#valid(id, x, y, direction);
         this.#remove();
