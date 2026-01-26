@@ -26,8 +26,9 @@
  * @property {number} x - The x component of the attacked coordinate.
  * @property {number} y - The y component of the attacked coordinate.
  * @property {boolean} shipHit - true ↔ A ship was hit by the attack.
- * @property {Object} sunkShipCoordinates - An array of [x, y] coordinates
- *      occupied by a sunk ship. false ↔ The attack did not sink a ship.
+ * @property {Array<number>|boolean} sunkShipCoordinates - An array of [x, y]
+ *      coordinates occupied by a sunk ship. false ↔ The attack did not sink a
+ *      ship.
  */
 
 // Event names
