@@ -1,5 +1,6 @@
 import { adoptValuesOfCommonKeys } from '@/shared/utils.js';
 import Board from '../board/board.js';
+import * as events from './events.js';
 import Player from '../player.js';
 import Ship from '../ship/ship.js';
 
@@ -28,7 +29,6 @@ const current = {
 let eventBus;
 
 const handlers = {
-    onEnterPlayerCreation: undefined,
     onPlayerChange: undefined,
     onEnterShipPlacements: undefined,
     onAllShipsPlaced: undefined,
@@ -135,7 +135,7 @@ function restart() {
 
 function enterPlayerCreation() {
     current.phase = phases.PLAYER_CREATION;
-    handlers.onEnterPlayerCreation();
+    eventBus.emit(events.ENTERED_PLAYER_CREATION);
 }
 
 function enterShipPlacements() {

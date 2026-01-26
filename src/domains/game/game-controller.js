@@ -4,7 +4,6 @@ import gameView from './game-view.js';
 
 function start(root) {
     game.init(eventBus, {
-        onEnterPlayerCreation: handleEnterPlayerCreation,
         onEnterShipPlacements: handleEnterShipPlacements,
         onAllShipsPlaced: gameView.enableContinueButton,
         onEnterRound: handleEnterRound,
@@ -27,10 +26,6 @@ function start(root) {
     gameView.restartGame = game.restart;
 
     game.start();
-}
-
-function handleEnterPlayerCreation() {
-    gameView.showPlayerCreation();
 }
 
 function submitPlayerCreation(

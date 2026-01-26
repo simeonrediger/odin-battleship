@@ -5,6 +5,7 @@ import './styles/layout.css';
 
 import { adoptValuesOfCommonKeys, validateElements } from '@/shared/utils.js';
 import BoardView from '../board/board-view.js';
+import * as events from './events.js';
 import shipPlacementsMenu from './ship-placements-menu.js';
 
 let container;
@@ -31,6 +32,8 @@ const player2 = {
     nameInput: undefined,
 };
 
+let eventBus;
+
 const callbacks = {
     onContinueClick: undefined,
     getShipCoordinates: undefined,
@@ -40,8 +43,9 @@ const callbacks = {
     onSubmitAttack: undefined,
 };
 
-function init(containerElement, boardSize, callbacksObj) {
+function init(containerElement, boardSize, eventBusObj, callbacksObj) {
     cacheElements(containerElement);
+    eventBus = eventBusObj;
     adoptValuesOfCommonKeys(callbacks, callbacksObj);
     Object.keys(callbacks).forEach(key => (callbacks[key] = callbacksObj[key]));
     bindEvents();
@@ -113,6 +117,8 @@ function initViews(boardSize, shipPlacementsMenuContainer) {
 function bindEvents() {
     continueButton.addEventListener('click', handleContinueClick);
     playerAreas.addEventListener('click', handlePlayerAreasClick);
+
+    eventBus.on(events.ENTERED_PLAYER_CREATION, showPlayerCreation);
 }
 
 function handleContinueClick() {
@@ -259,7 +265,6 @@ function hide(...elements) {
 
 const gameView = {
     init,
-    showPlayerCreation,
     showShipPlacements,
     enableContinueButton,
     showRound,
