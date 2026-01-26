@@ -15,6 +15,11 @@
  * @property {string} playerName - Name of the current player.
  */
 
+/**
+ * @typedef {Object} GameWonDetail
+ * @property {string} winnerName - Name of the winning player.
+ */
+
 // Event names
 
 /**
@@ -38,3 +43,9 @@ export const ALL_SHIPS_PLACED = 'ALL_SHIPS_PLACED';
  * @see {@link EnteredRoundDetail}
  */
 export const ENTERED_ROUND = 'ENTERED_ROUND';
+
+/**
+ * @description Emitted once a player has won the game.
+ * @see {@link GameWonDetail}
+ */
+export const GAME_WON = 'GAME_WON';

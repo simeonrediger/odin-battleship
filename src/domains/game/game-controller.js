@@ -4,7 +4,6 @@ import gameView from './game-view.js';
 
 function start(root) {
     game.init(eventBus, {
-        onDeclareWinner: handleDeclareWinner,
         onAttack: gameView.renderAttack,
     });
 
@@ -56,10 +55,6 @@ function normalizePlayerName(name, isPlayer1) {
 
 function submitShipPreview(id, x, y, direction) {
     return game.placeShip(id, x, y, direction);
-}
-
-function handleDeclareWinner(name) {
-    gameView.handleWin(name);
 }
 
 const gameController = {

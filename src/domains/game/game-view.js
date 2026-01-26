@@ -122,6 +122,7 @@ function bindEvents() {
     eventBus.on(events.ENTERED_SHIP_PLACEMENTS, showShipPlacements);
     eventBus.on(events.ALL_SHIPS_PLACED, enableContinueButton);
     eventBus.on(events.ENTERED_ROUND, showRound);
+    eventBus.on(events.GAME_WON, handleWin);
 }
 
 function handleContinueClick() {
@@ -235,8 +236,8 @@ function renderAttack(isPlayer1Turn, shipHit, x, y, sunkShipCoordinates) {
     }
 }
 
-function handleWin(name) {
-    announcer.textContent = `${name} wins!`;
+function handleWin({ winnerName }) {
+    announcer.textContent = `${winnerName} wins!`;
     continueButton.textContent = 'Restart';
     callbacks.onContinueClick = handleRestartClick;
     continueButton.disabled = false;
@@ -274,7 +275,6 @@ function hide(...elements) {
 const gameView = {
     init,
     renderAttack,
-    handleWin,
 
     submitPlayerCreation: undefined,
     submitShipPlacements: undefined,

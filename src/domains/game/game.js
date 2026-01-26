@@ -30,7 +30,6 @@ let eventBus;
 
 const handlers = {
     onPlayerChange: undefined,
-    onDeclareWinner: undefined,
     onAttack: undefined,
 };
 
@@ -172,7 +171,7 @@ function enterRound() {
 
 function declareWinner(winner) {
     current.phase = phases.GAME_OVER;
-    handlers.onDeclareWinner(winner.name);
+    eventBus.emit(events.GAME_WON, { winnerName: winner.name });
 }
 
 function setPlayer(player) {
