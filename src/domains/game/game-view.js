@@ -5,6 +5,7 @@ import './styles/layout.css';
 
 import { adoptValuesOfCommonKeys, validateElements } from '@/shared/utils.js';
 import BoardView from '../board/board-view.js';
+import eventBus from '../game/event-bus.js';
 import * as events from './events.js';
 import shipPlacementsMenu from './ship-placements-menu.js';
 
@@ -35,8 +36,6 @@ const player2 = {
     nameInput: undefined,
 };
 
-let eventBus;
-
 const callbacks = {
     onContinueClick: undefined,
     getShipCoordinates: undefined,
@@ -46,9 +45,8 @@ const callbacks = {
     onSubmitAttack: undefined,
 };
 
-function init(containerElement, boardSize, eventBusObj, callbacksObj) {
+function init(containerElement, boardSize, callbacksObj) {
     cacheElements(containerElement);
-    eventBus = eventBusObj;
     adoptValuesOfCommonKeys(callbacks, callbacksObj);
     Object.keys(callbacks).forEach(key => (callbacks[key] = callbacksObj[key]));
     bindEvents();

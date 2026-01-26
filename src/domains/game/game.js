@@ -1,4 +1,5 @@
 import Board from '../board/board.js';
+import eventBus from './event-bus.js';
 import * as events from './events.js';
 import Player from '../player.js';
 import Ship from '../ship/ship.js';
@@ -24,12 +25,6 @@ const current = {
     player: undefined,
     opponent: undefined,
 };
-
-let eventBus;
-
-function init(eventBusObj) {
-    eventBus = eventBusObj;
-}
 
 function start() {
     validatePhase(phases.GAME_INACTIVE);
@@ -196,7 +191,6 @@ function validatePhase(...validPhases) {
 }
 
 const game = {
-    init,
     start,
     submitPlayerCreation,
     placeShip,
