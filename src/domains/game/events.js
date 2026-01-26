@@ -13,13 +13,11 @@
 
 /**
  * @description Emitted upon entering the player creation phase.
- * @event ENTERED_PLAYER_CREATION
  */
 export const ENTERED_PLAYER_CREATION = 'ENTERED_PLAYER_CREATION';
 
 /**
  * @description Emitted upon entering a ship placements phase.
- * @event ENTERED_SHIP_PLACEMENTS
  * @see {@link EnteredShipPlacementsDetail}
  */
 export const ENTERED_SHIP_PLACEMENTS = 'ENTERED_SHIP_PLACEMENTS';
