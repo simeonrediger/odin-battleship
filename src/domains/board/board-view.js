@@ -51,19 +51,16 @@ export default class BoardView {
         this.#shipPreview.render(id, x, y, direction, length);
     }
 
-    renderAttack(shipHit, x, y) {
+    renderAttack({ x, y, shipHit, sunkShipCoordinates }) {
         const cell = this.#getCell(x, y);
         cell.classList.add('discovered');
 
         if (shipHit) {
             cell.classList.add('hit');
         }
-    }
 
-    renderSunkShip(coordinates) {
-        for (const [x, y] of coordinates) {
-            const cell = this.#getCell(x, y);
-            cell.classList.add('sunk');
+        if (sunkShipCoordinates) {
+            this.#renderSunkShip(sunkShipCoordinates);
         }
     }
 
@@ -81,6 +78,13 @@ export default class BoardView {
 
         this.#grid = this.#container.querySelector("[data-role$='grid']");
         validateElements({ '#grid': this.#grid });
+    }
+
+    #renderSunkShip(shipCoordinates) {
+        for (const [x, y] of shipCoordinates) {
+            const cell = this.#getCell(x, y);
+            cell.classList.add('sunk');
+        }
     }
 
     #getCell(x, y) {

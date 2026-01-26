@@ -122,6 +122,7 @@ function bindEvents() {
     eventBus.on(events.ENTERED_SHIP_PLACEMENTS, showShipPlacements);
     eventBus.on(events.ALL_SHIPS_PLACED, enableContinueButton);
     eventBus.on(events.ENTERED_ROUND, showRound);
+    eventBus.on(events.BOARD_ATTACKED, handleBoardAttacked);
     eventBus.on(events.GAME_WON, handleWin);
 }
 
@@ -227,13 +228,15 @@ function showRound({ isPlayer1Turn, playerName }) {
     show(player.board, opponent.board);
 }
 
-function renderAttack(isPlayer1Turn, shipHit, x, y, sunkShipCoordinates) {
+function handleBoardAttacked({
+    isPlayer1Turn,
+    x,
+    y,
+    shipHit,
+    sunkShipCoordinates,
+}) {
     const opponent = isPlayer1Turn ? player2 : player1;
-    opponent.boardView.renderAttack(shipHit, x, y);
-
-    if (sunkShipCoordinates) {
-        opponent.boardView.renderSunkShip(sunkShipCoordinates);
-    }
+    opponent.boardView.renderAttack({ x, y, shipHit, sunkShipCoordinates });
 }
 
 function handleWin({ winnerName }) {
@@ -274,7 +277,6 @@ function hide(...elements) {
 
 const gameView = {
     init,
-    renderAttack,
 
     submitPlayerCreation: undefined,
     submitShipPlacements: undefined,

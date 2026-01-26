@@ -1,4 +1,3 @@
-import { adoptValuesOfCommonKeys } from '@/shared/utils.js';
 import Board from '../board/board.js';
 import * as events from './events.js';
 import Player from '../player.js';
@@ -30,13 +29,10 @@ let eventBus;
 
 const handlers = {
     onPlayerChange: undefined,
-    onAttack: undefined,
 };
 
-function init(eventBusObj, handlersObj) {
+function init(eventBusObj) {
     eventBus = eventBusObj;
-    validatePhase(phases.GAME_INACTIVE);
-    adoptValuesOfCommonKeys(handlers, handlersObj);
 }
 
 function start() {
@@ -97,13 +93,16 @@ function submitAttack(x, y) {
 
     const shipHit = current.opponent.board.hit(x, y);
 
-    handlers.onAttack(
-        current.player === player1,
-        shipHit,
+    eventBus.emit(events.BOARD_ATTACKED, {
+        isPlayer1Turn: current.player === player1,
         x,
         y,
-        current.opponent.board.getSunkShipCoordinates(x, y),
-    );
+        shipHit,
+        sunkShipCoordinates: current.opponent.board.getSunkShipCoordinates(
+            x,
+            y,
+        ),
+    });
 
     if (shipHit) {
         if (current.opponent.defeated) {
@@ -202,7 +201,6 @@ const game = {
     submitPlayerCreation,
     placeShip,
     submitShipPlacements,
-    submitAttack,
     restart,
 
     getShipCoordinates: Board.getNearestInBoundsShipCoordinates,

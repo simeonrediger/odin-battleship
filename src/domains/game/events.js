@@ -20,6 +20,16 @@
  * @property {string} winnerName - Name of the winning player.
  */
 
+/**
+ * @typedef {Object} BoardAttackedDetail
+ * @property {boolean} isPlayer1Turn - true ↔ It is player 1's turn.
+ * @property {number} x - The x component of the attacked coordinate.
+ * @property {number} y - The y component of the attacked coordinate.
+ * @property {boolean} shipHit - true ↔ A ship was hit by the attack.
+ * @property {Object} sunkShipCoordinates - An array of [x, y] coordinates
+ *      occupied by a sunk ship. false ↔ The attack did not sink a ship.
+ */
+
 // Event names
 
 /**
@@ -49,3 +59,9 @@ export const ENTERED_ROUND = 'ENTERED_ROUND';
  * @see {@link GameWonDetail}
  */
 export const GAME_WON = 'GAME_WON';
+
+/**
+ * @description Emitted when a player attacks another's board.
+ * @see {@link BoardAttackedDetail}
+ */
+export const BOARD_ATTACKED = 'BOARD_ATTACKED';
