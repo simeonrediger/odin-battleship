@@ -7,6 +7,7 @@ import { adoptValuesOfCommonKeys, validateElements } from '@/shared/utils.js';
 import BoardView from '../board/board-view.js';
 import eventBus from '../game/event-bus.js';
 import * as events from './events.js';
+import gameSelectors from './game-selectors.js';
 import shipPlacementsMenu from './ship-placements-menu.js';
 
 let container;
@@ -14,9 +15,6 @@ let announcer;
 let playerAreas;
 let shipPlacementsMenuContainer;
 let continueButton;
-
-let currentPlayer;
-let currentOpponent;
 
 const player1 = {
     area: undefined,
@@ -38,7 +36,6 @@ const player2 = {
 
 const callbacks = {
     onContinueClick: undefined,
-    isPlayer1Turn: undefined,
     onSubmitAttack: undefined,
 };
 
@@ -110,7 +107,6 @@ function bindEvents() {
     playerAreas.addEventListener('click', handlePlayerAreasClick);
 
     eventBus.on(events.ENTERED_PLAYER_CREATION, showPlayerCreation);
-    eventBus.on(events.PLAYER_CHANGED, updateCurrentPlayer);
     eventBus.on(events.ENTERED_SHIP_PLACEMENTS, showShipPlacements);
     eventBus.on(events.SHIP_PLACED, handleShipPlaced);
     eventBus.on(events.ALL_SHIPS_PLACED, enableContinueButton);
@@ -132,7 +128,7 @@ function handleContinueClick() {
             );
             break;
         case gameView.submitShipPlacements:
-            player = callbacks.isPlayer1Turn ? player1 : player2;
+            player = gameSelectors.isPlayer1Turn ? player1 : player2;
             hide(player.board, shipPlacementsMenuContainer);
             gameView.submitShipPlacements();
             break;
@@ -155,7 +151,7 @@ function handlePlayerAreasClick(event) {
 }
 
 function handleShipsToPlaceClick(id, direction, length) {
-    const player = callbacks.isPlayer1Turn() ? player1 : player2;
+    const player = gameSelectors.isPlayer1Turn ? player1 : player2;
     player.boardView.renderShipPreviewToCenter(id, direction, length);
 }
 
@@ -173,23 +169,14 @@ function showPlayerCreation() {
     show(player1.creationMenu, player2.creationMenu);
 }
 
-function updateCurrentPlayer({ isPlayer1Turn }) {
-    currentPlayer = isPlayer1Turn ? player1 : player2;
-    currentOpponent = isPlayer1Turn ? player2 : player1;
-}
-
-function showShipPlacements({
-    playerName,
-    opponentName,
-    isPlayer1Turn,
-    shipsData,
-}) {
+function showShipPlacements({ playerName, opponentName, shipsData }) {
     hide(player1.creationMenu, player2.creationMenu);
 
     announcer.textContent = `
         ${playerName}, place your fleet... ${opponentName}, don't look!
     `.trim();
 
+    const isPlayer1Turn = gameSelectors.isPlayer1Turn;
     const player = isPlayer1Turn ? player1 : player2;
     const opponent = isPlayer1Turn ? player2 : player1;
     opponent.area.insertBefore(shipPlacementsMenuContainer, opponent.board);
@@ -203,15 +190,17 @@ function showShipPlacements({
 }
 
 function handleShipPlaced({ coordinates }) {
-    currentPlayer.boardView.renderShip(coordinates);
+    const player = gameSelectors.isPlayer1Turn ? player1 : player2;
+    player.boardView.renderShip(coordinates);
 }
 
 function enableContinueButton() {
     continueButton.disabled = false;
 }
 
-function showRound({ isPlayer1Turn, playerName }) {
+function showRound({ playerName }) {
     announcer.textContent = `${playerName}'s turn`;
+    const isPlayer1Turn = gameSelectors.isPlayer1Turn;
     const player = isPlayer1Turn ? player1 : player2;
     const opponent = isPlayer1Turn ? player2 : player1;
     player.board.removeAttribute('data-active');
@@ -224,14 +213,8 @@ function showRound({ isPlayer1Turn, playerName }) {
     show(player.board, opponent.board);
 }
 
-function handleBoardAttacked({
-    isPlayer1Turn,
-    x,
-    y,
-    shipHit,
-    sunkShipCoordinates,
-}) {
-    const opponent = isPlayer1Turn ? player2 : player1;
+function handleBoardAttacked({ x, y, shipHit, sunkShipCoordinates }) {
+    const opponent = gameSelectors.isPlayer1Turn ? player2 : player1;
     opponent.boardView.renderAttack({ x, y, shipHit, sunkShipCoordinates });
 }
 

@@ -1,15 +1,9 @@
 // Event payloads
 
 /**
- * @typedef {Object} PlayerChangedDetail
- * @property {boolean} isPlayer1Turn - true ↔ It is player 1's turn.
- */
-
-/**
  * @typedef {Object} EnteredShipPlacementsDetail
  * @property {string} playerName - Name of the current player.
  * @property {string} opponentName - Name of the current opponent.
- * @property {boolean} isPlayer1Turn - true ↔ It is player 1's turn.
  * @property {Array<Object>} shipsData - Array of objects containing data for
  *      the ships to be placed, including each ship's ID, length, and direction.
  */
@@ -31,13 +25,11 @@
 
 /**
  * @typedef {Object} EnteredRoundDetail
- * @property {boolean} isPlayer1Turn - true ↔ It is player 1's turn.
  * @property {string} playerName - Name of the current player.
  */
 
 /**
  * @typedef {Object} BoardAttackedDetail
- * @property {boolean} isPlayer1Turn - true ↔ It is player 1's turn.
  * @property {number} x - The x component of the attacked coordinate.
  * @property {number} y - The y component of the attacked coordinate.
  * @property {boolean} shipHit - true ↔ A ship was hit by the attack.
@@ -57,12 +49,6 @@
  * @description Emitted upon entering the player creation phase.
  */
 export const ENTERED_PLAYER_CREATION = 'ENTERED_PLAYER_CREATION';
-
-/**
- * @description Emitted when the current player is changed.
- * @see {@link PlayerChangedDetail}
- */
-export const PLAYER_CHANGED = 'PLAYER_CHANGED';
 
 /**
  * @description Emitted upon entering a ship placements phase.

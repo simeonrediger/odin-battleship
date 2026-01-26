@@ -85,7 +85,6 @@ function submitAttack(x, y) {
     const shipHit = current.opponent.board.hit(x, y);
 
     eventBus.emit(events.BOARD_ATTACKED, {
-        isPlayer1Turn: current.player === player1,
         x,
         y,
         shipHit,
@@ -137,7 +136,6 @@ function enterShipPlacements() {
     eventBus.emit(events.ENTERED_SHIP_PLACEMENTS, {
         playerName: current.player.name,
         opponentName: current.opponent.name,
-        isPlayer1Turn: current.player === player1,
         shipsData: shipsToPlace.map(ship => ({
             id: ship.id,
             length: ship.length,
@@ -154,7 +152,6 @@ function enterRound() {
     }
 
     eventBus.emit(events.ENTERED_ROUND, {
-        isPlayer1Turn: current.player === player1,
         playerName: current.player.name,
     });
 }
@@ -167,10 +164,6 @@ function declareWinner(winner) {
 function setPlayer(player) {
     current.player = player;
     current.opponent = player === player1 ? player2 : player1;
-
-    eventBus.emit(events.PLAYER_CHANGED, {
-        isPlayer1Turn: current.player === player1,
-    });
 }
 
 function createPlayer(isHuman, name) {
