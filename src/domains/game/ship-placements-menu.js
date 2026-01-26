@@ -11,6 +11,7 @@ const directionClasses = Object.freeze({
 });
 
 let container;
+let shipsToPlace;
 
 const handlers = {
     onShipClick: undefined,
@@ -25,16 +26,19 @@ function init(containerElement, handlersObj) {
 function cacheElements(containerElement) {
     container = containerElement;
     validateElements({ container });
+
+    shipsToPlace = container.querySelector("[data-role='ships-to-place']");
+    validateElements({ shipsToPlace });
 }
 
 function bindEvents() {
-    container.addEventListener('click', handleClick);
+    shipsToPlace.addEventListener('click', handleClick);
 }
 
 function renderShips(shipsData, shipNodeSize) {
-    container.innerHTML = '';
+    shipsToPlace.innerHTML = '';
     const ships = shipsData.map(shipData => renderShip(shipData, shipNodeSize));
-    container.append(...ships);
+    shipsToPlace.append(...ships);
 }
 
 function handleClick(event) {
@@ -44,7 +48,7 @@ function handleClick(event) {
         return;
     }
 
-    container
+    shipsToPlace
         .querySelectorAll('.placing')
         .forEach(ship => ship.classList.remove('placing'));
 
@@ -74,7 +78,7 @@ function renderShip(shipData, shipNodeSize) {
 }
 
 function removeShip(shipId) {
-    const ship = container.querySelector(`[data-id='${shipId}']`);
+    const ship = shipsToPlace.querySelector(`[data-id='${shipId}']`);
     ship.remove();
 }
 

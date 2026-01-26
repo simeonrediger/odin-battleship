@@ -106,7 +106,7 @@ function initViews(boardSize, shipPlacementsMenuContainer) {
     );
 
     shipPlacementsMenu.init(shipPlacementsMenuContainer, {
-        onShipClick: handleShipPlacementsMenuClick,
+        onShipClick: handleShipsToPlaceClick,
     });
 }
 
@@ -150,7 +150,7 @@ function handlePlayerAreasClick(event) {
     }
 }
 
-function handleShipPlacementsMenuClick(id, direction, length) {
+function handleShipsToPlaceClick(id, direction, length) {
     const player = callbacks.isPlayer1Turn() ? player1 : player2;
     player.boardView.renderShipPreviewToCenter(id, direction, length);
 }
