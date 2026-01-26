@@ -39,7 +39,6 @@ const player2 = {
 const callbacks = {
     onContinueClick: undefined,
     isPlayer1Turn: undefined,
-    shipValid: undefined,
     onSubmitAttack: undefined,
 };
 
@@ -98,12 +97,7 @@ function cacheElements(containerElement) {
 
 function initViews(boardSize, shipPlacementsMenuContainer) {
     [player1, player2].forEach(
-        player =>
-            (player.boardView = new BoardView(
-                player.board,
-                boardSize,
-                callbacks.shipValid,
-            )),
+        player => (player.boardView = new BoardView(player.board, boardSize)),
     );
 
     shipPlacementsMenu.init(shipPlacementsMenuContainer, {

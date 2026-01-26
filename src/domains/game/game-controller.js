@@ -7,7 +7,6 @@ function start(root) {
 
     gameView.init(gameContainer, game.boardSize, {
         isPlayer1Turn: () => game.isPlayer1Turn,
-        shipValid: game.shipValid,
         onSubmitAttack: game.submitAttack,
     });
 

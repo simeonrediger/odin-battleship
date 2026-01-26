@@ -8,7 +8,6 @@ import Ship from '../ship/ship.js';
 export default class ShipPreview {
     #getCell;
     #gridQuerySelectorAll;
-    #valid;
 
     #active;
     #id;
@@ -17,10 +16,9 @@ export default class ShipPreview {
     #direction;
     #length;
 
-    constructor(getCell, gridQuerySelectorAll, valid) {
+    constructor(getCell, gridQuerySelectorAll) {
         this.#getCell = getCell;
         this.#gridQuerySelectorAll = gridQuerySelectorAll;
-        this.#valid = valid;
         this.#bindEvents();
     }
 
@@ -37,7 +35,7 @@ export default class ShipPreview {
         );
 
         [x, y] = coordinates[0];
-        const valid = this.#valid(id, x, y, direction);
+        const valid = gameSelectors.shipValid(id, x, y, direction);
         this.#remove();
 
         for (const [x, y] of coordinates) {
@@ -137,7 +135,14 @@ export default class ShipPreview {
     }
 
     #submit() {
-        if (!this.#valid(this.#id, this.#x, this.#y, this.#direction)) {
+        if (
+            !gameSelectors.shipValid(
+                this.#id,
+                this.#x,
+                this.#y,
+                this.#direction,
+            )
+        ) {
             return;
         }
 
