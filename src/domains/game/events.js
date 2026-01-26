@@ -13,15 +13,15 @@
 
 /**
  * @description Emitted upon entering the player creation phase.
- * @event entered-player-creation
+ * @event ENTERED_PLAYER_CREATION
  * @type {string}
  */
-export const ENTERED_PLAYER_CREATION = 'entered-player-creation';
+export const ENTERED_PLAYER_CREATION = 'ENTERED_PLAYER_CREATION';
 
 /**
  * @description Emitted upon entering a ship placements phase.
- * @event entered-ship-placements
+ * @event ENTERED_SHIP_PLACEMENTS
  * @type {string}
  * @see {@link EnteredShipPlacementsDetail}
  */
-export const ENTERED_SHIP_PLACEMENTS = 'entered-ship-placements';
+export const ENTERED_SHIP_PLACEMENTS = 'ENTERED_SHIP_PLACEMENTS';
