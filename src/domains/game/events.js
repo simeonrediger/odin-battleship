@@ -1,10 +1,6 @@
 // Event payloads
 
 /**
- * @typedef {Object} EnteredPlayerCreationDetail
- */
-
-/**
  * @typedef {Object} EnteredShipPlacementsDetail
  * @property {string} playerName - Name of the current player.
  * @property {string} opponentName - Name of the current opponent.
@@ -19,7 +15,6 @@
  * @description Emitted upon entering the player creation phase.
  * @event entered-player-creation
  * @type {string}
- * @see {@link EnteredPlayerCreationDetail}
  */
 export const ENTERED_PLAYER_CREATION = 'entered-player-creation';
 
