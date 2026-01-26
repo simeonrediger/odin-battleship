@@ -25,6 +25,8 @@ const current = {
     opponent: undefined,
 };
 
+let eventBus;
+
 const handlers = {
     onEnterPlayerCreation: undefined,
     onPlayerChange: undefined,
@@ -35,7 +37,8 @@ const handlers = {
     onAttack: undefined,
 };
 
-function init(handlersObj) {
+function init(eventBusObj, handlersObj) {
+    eventBus = eventBusObj;
     validatePhase(phases.GAME_INACTIVE);
     adoptValuesOfCommonKeys(handlers, handlersObj);
 }

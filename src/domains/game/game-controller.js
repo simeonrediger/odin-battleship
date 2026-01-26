@@ -1,8 +1,9 @@
+import eventBus from './event-bus.js';
 import game from './game.js';
 import gameView from './game-view.js';
 
 function start(root) {
-    game.init({
+    game.init(eventBus, {
         onEnterPlayerCreation: handleEnterPlayerCreation,
         onEnterShipPlacements: handleEnterShipPlacements,
         onAllShipsPlaced: gameView.enableContinueButton,
@@ -13,7 +14,7 @@ function start(root) {
 
     const gameContainer = root.querySelector("[data-role='game-container']");
 
-    gameView.init(gameContainer, game.boardSize, {
+    gameView.init(gameContainer, game.boardSize, eventBus, {
         getShipCoordinates: game.getShipCoordinates,
         isPlayer1Turn: () => game.isPlayer1Turn,
         shipValid: game.shipValid,
