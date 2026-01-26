@@ -26,6 +26,14 @@ const current = {
     opponent: undefined,
 };
 
+function init() {
+    bindEvents();
+}
+
+function bindEvents() {
+    eventBus.on(events.SHIP_PLACEMENT_REQUESTED, handleShipPlacementRequest);
+}
+
 function start() {
     validatePhase(phases.GAME_INACTIVE);
     enterPlayerCreation();
@@ -44,23 +52,15 @@ function submitPlayerCreation(
     enterShipPlacements();
 }
 
-function placeShip(shipId, x, y, direction) {
+function handleShipPlacementRequest({ id, x, y, direction }) {
     validatePhase(phases.SHIP_PLACEMENTS_1, phases.SHIP_PLACEMENTS_2);
-    const ship = shipsToPlace.find(ship => ship.id === shipId);
-    const placedShipData = current.player.board.placeShip(
-        ship,
-        x,
-        y,
-        direction,
-    );
-
+    const ship = shipsToPlace.find(ship => ship.id === id);
+    current.player.board.placeShip(ship, x, y, direction);
     shipsToPlace = shipsToPlace.filter(remainingShip => remainingShip !== ship);
 
     if (shipsToPlace.length === 0) {
         eventBus.emit(events.ALL_SHIPS_PLACED);
     }
-
-    return placedShipData;
 }
 
 function submitShipPlacements() {
@@ -191,9 +191,9 @@ function validatePhase(...validPhases) {
 }
 
 const game = {
+    init,
     start,
     submitPlayerCreation,
-    placeShip,
     submitShipPlacements,
     restart,
 

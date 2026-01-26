@@ -15,6 +15,21 @@
  */
 
 /**
+ * @typedef {Object} ShipPlacementRequestedDetail
+ * @property {string} id - The ID of the ship.
+ * @property {number} x - The x component of the placement coordinate.
+ * @property {number} y - The y component of the placement coordinate.
+ * @property {string} direction - The direction of the ship's placement.
+ */
+
+/**
+ * @typedef {Object} ShipPlacedDetail
+ * @property {string} id - The ID of the ship.
+ * @property {Array<Array<number>>} coordinates - The coordinates occupied by
+ *      the ship.
+ */
+
+/**
  * @typedef {Object} EnteredRoundDetail
  * @property {boolean} isPlayer1Turn - true ↔ It is player 1's turn.
  * @property {string} playerName - Name of the current player.
@@ -54,6 +69,18 @@ export const PLAYER_CHANGED = 'PLAYER_CHANGED';
  * @see {@link EnteredShipPlacementsDetail}
  */
 export const ENTERED_SHIP_PLACEMENTS = 'ENTERED_SHIP_PLACEMENTS';
+
+/**
+ * @description Emitted when a ship placement is requested.
+ * @see {@link ShipPlacementRequestedDetail}
+ */
+export const SHIP_PLACEMENT_REQUESTED = 'SHIP_PLACEMENT_REQUESTED';
+
+/**
+ * @description Emitted when a ship is placed.
+ * @see {@link ShipPlacedDetail}
+ */
+export const SHIP_PLACED = 'SHIP_PLACED';
 
 /**
  * @description Emitted once all ships have been placed during ship placements.

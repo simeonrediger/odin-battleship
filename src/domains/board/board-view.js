@@ -14,26 +14,17 @@ export default class BoardView {
     #gridSize;
     #cellSize;
     #shipPreview;
-    #onShipPreviewSubmit;
 
-    constructor(
-        container,
-        gridSize,
-        getShipCoordinates,
-        shipValid,
-        onShipPreviewSubmit,
-    ) {
+    constructor(container, gridSize, getShipCoordinates, shipValid) {
         this.#cacheElements(container);
         this.#gridSize = gridSize;
         this.#cellSize = this.#getCellSize(container, gridSize);
-        this.#onShipPreviewSubmit = onShipPreviewSubmit;
 
         this.#shipPreview = new ShipPreview(
             getShipCoordinates,
             this.#getCell.bind(this),
             selector => this.#grid.querySelectorAll(selector),
             shipValid,
-            this.#handleShipPreviewSubmit.bind(this),
         );
     }
 
@@ -49,6 +40,13 @@ export default class BoardView {
     renderShipPreviewToCenter(id, direction, length) {
         const [x, y] = this.#getCenteredCoordinatesForShip(direction, length);
         this.#shipPreview.render(id, x, y, direction, length);
+    }
+
+    renderShip(coordinates) {
+        for (const [x, y] of coordinates) {
+            const cell = this.#getCell(x, y);
+            cell.classList.add('ship-node');
+        }
     }
 
     renderAttack({ x, y, shipHit, sunkShipCoordinates }) {
@@ -127,14 +125,5 @@ export default class BoardView {
 
         [x, y] = [x, y].map(n => Math.floor(n ?? (this.#gridSize - 1) / 2));
         return [x, y];
-    }
-
-    #handleShipPreviewSubmit(id, x, y, direction) {
-        const { coordinates } = this.#onShipPreviewSubmit(id, x, y, direction);
-
-        for (const [x, y] of coordinates) {
-            const cell = this.#getCell(x, y);
-            cell.classList.add('ship-node');
-        }
     }
 }

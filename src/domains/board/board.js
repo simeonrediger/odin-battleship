@@ -1,4 +1,6 @@
 import { create2dArray } from '@/shared/utils.js';
+import eventBus from '../game/event-bus.js';
+import * as events from '../game/events.js';
 import Ship from '../ship/ship.js';
 
 export default class Board {
@@ -143,15 +145,10 @@ export default class Board {
 
         this.#ships.push(ship);
 
-        const placedShipData = {
-            x,
-            y,
-            direction,
-            length: ship.length,
+        eventBus.emit(events.SHIP_PLACED, {
+            id: ship.id,
             coordinates: shipCoordinates,
-        };
-
-        return placedShipData;
+        });
     }
 
     coordinateHit(x, y) {

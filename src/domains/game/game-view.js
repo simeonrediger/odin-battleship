@@ -41,7 +41,6 @@ const callbacks = {
     getShipCoordinates: undefined,
     isPlayer1Turn: undefined,
     shipValid: undefined,
-    onShipPreviewSubmit: undefined,
     onSubmitAttack: undefined,
 };
 
@@ -106,7 +105,6 @@ function initViews(boardSize, shipPlacementsMenuContainer) {
                 boardSize,
                 callbacks.getShipCoordinates,
                 callbacks.shipValid,
-                handleShipPreviewSubmit,
             )),
     );
 
@@ -122,6 +120,7 @@ function bindEvents() {
     eventBus.on(events.ENTERED_PLAYER_CREATION, showPlayerCreation);
     eventBus.on(events.PLAYER_CHANGED, updateCurrentPlayer);
     eventBus.on(events.ENTERED_SHIP_PLACEMENTS, showShipPlacements);
+    eventBus.on(events.SHIP_PLACED, handleShipPlaced);
     eventBus.on(events.ALL_SHIPS_PLACED, enableContinueButton);
     eventBus.on(events.ENTERED_ROUND, showRound);
     eventBus.on(events.BOARD_ATTACKED, handleBoardAttacked);
@@ -168,12 +167,6 @@ function handleShipsToPlaceClick(id, direction, length) {
     player.boardView.renderShipPreviewToCenter(id, direction, length);
 }
 
-function handleShipPreviewSubmit(id, x, y, direction) {
-    const placedShipData = callbacks.onShipPreviewSubmit(id, x, y, direction);
-    shipPlacementsMenu.removeShip(id);
-    return placedShipData;
-}
-
 function handleAttackClick(cell) {
     const x = +cell.dataset.x;
     const y = +cell.dataset.y;
@@ -215,6 +208,10 @@ function showShipPlacements({
     continueButton.disabled = true;
     callbacks.onContinueClick = gameView.submitShipPlacements;
     show(player.board, shipPlacementsMenuContainer);
+}
+
+function handleShipPlaced({ coordinates }) {
+    currentPlayer.boardView.renderShip(coordinates);
 }
 
 function enableContinueButton() {

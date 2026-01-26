@@ -1,5 +1,7 @@
 import '../ship/ship.css';
 
+import eventBus from '../game/event-bus.js';
+import * as events from '../game/events.js';
 import Ship from '../ship/ship.js';
 import { adoptValuesOfCommonKeys, validateElements } from '@/shared/utils.js';
 
@@ -33,6 +35,7 @@ function cacheElements(containerElement) {
 
 function bindEvents() {
     shipsToPlace.addEventListener('click', handleClick);
+    eventBus.on(events.SHIP_PLACED, removeShip);
 }
 
 function renderShips(shipsData, shipNodeSize) {
@@ -77,15 +80,14 @@ function renderShip(shipData, shipNodeSize) {
     return ship;
 }
 
-function removeShip(shipId) {
-    const ship = shipsToPlace.querySelector(`[data-id='${shipId}']`);
+function removeShip({ id }) {
+    const ship = shipsToPlace.querySelector(`[data-id='${id}']`);
     ship.remove();
 }
 
 const shipPlacementsMenu = {
     init,
     renderShips,
-    removeShip,
 };
 
 export default shipPlacementsMenu;

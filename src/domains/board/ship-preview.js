@@ -1,5 +1,7 @@
 import '../ship/ship.css';
 
+import eventBus from '../game/event-bus.js';
+import * as events from '../game/events.js';
 import Ship from '../ship/ship.js';
 
 export default class ShipPreview {
@@ -7,7 +9,6 @@ export default class ShipPreview {
     #getCell;
     #gridQuerySelectorAll;
     #valid;
-    #onSubmit;
 
     #active;
     #id;
@@ -16,18 +17,11 @@ export default class ShipPreview {
     #direction;
     #length;
 
-    constructor(
-        getShipCoordinates,
-        getCell,
-        gridQuerySelectorAll,
-        valid,
-        onSubmit,
-    ) {
+    constructor(getShipCoordinates, getCell, gridQuerySelectorAll, valid) {
         this.#getShipCoordinates = getShipCoordinates;
         this.#getCell = getCell;
         this.#gridQuerySelectorAll = gridQuerySelectorAll;
         this.#valid = valid;
-        this.#onSubmit = onSubmit;
         this.#bindEvents();
     }
 
@@ -144,7 +138,13 @@ export default class ShipPreview {
 
         this.#active = false;
         this.#remove();
-        this.#onSubmit(this.#id, this.#x, this.#y, this.#direction);
+
+        eventBus.emit(events.SHIP_PLACEMENT_REQUESTED, {
+            id: this.#id,
+            x: this.#x,
+            y: this.#y,
+            direction: this.#direction,
+        });
     }
 
     #setValues(id, x, y, direction, length) {
