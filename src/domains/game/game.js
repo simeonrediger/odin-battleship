@@ -69,6 +69,7 @@ function placeShip(shipId, x, y, direction) {
         y,
         direction,
     );
+
     shipsToPlace = shipsToPlace.filter(remainingShip => remainingShip !== ship);
 
     if (shipsToPlace.length === 0) {
