@@ -9,6 +9,12 @@
  *      to be placed, including each ship's ID, length, and direction.
  */
 
+/**
+ * @typedef {Object} EnteredRoundDetail
+ * @property {boolean} isPlayer1Turn - true ↔ It is player 1's turn.
+ * @property {string} playerName - Name of the current player.
+ */
+
 // Event names
 
 /**
@@ -26,3 +32,9 @@ export const ENTERED_SHIP_PLACEMENTS = 'ENTERED_SHIP_PLACEMENTS';
  * @description Emitted once all ships have been placed during ship placements.
  */
 export const ALL_SHIPS_PLACED = 'ALL_SHIPS_PLACED';
+
+/**
+ * @description Emitted upon entering a player's attack phase.
+ * @see {@link EnteredRoundDetail}
+ */
+export const ENTERED_ROUND = 'ENTERED_ROUND';

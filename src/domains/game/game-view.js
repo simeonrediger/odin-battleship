@@ -121,6 +121,7 @@ function bindEvents() {
     eventBus.on(events.ENTERED_PLAYER_CREATION, showPlayerCreation);
     eventBus.on(events.ENTERED_SHIP_PLACEMENTS, showShipPlacements);
     eventBus.on(events.ALL_SHIPS_PLACED, enableContinueButton);
+    eventBus.on(events.ENTERED_ROUND, showRound);
 }
 
 function handleContinueClick() {
@@ -211,7 +212,7 @@ function enableContinueButton() {
     continueButton.disabled = false;
 }
 
-function showRound(isPlayer1Turn, playerName) {
+function showRound({ isPlayer1Turn, playerName }) {
     announcer.textContent = `${playerName}'s turn`;
     const player = isPlayer1Turn ? player1 : player2;
     const opponent = isPlayer1Turn ? player2 : player1;
@@ -272,7 +273,6 @@ function hide(...elements) {
 
 const gameView = {
     init,
-    showRound,
     renderAttack,
     handleWin,
 

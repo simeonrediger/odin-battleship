@@ -30,7 +30,6 @@ let eventBus;
 
 const handlers = {
     onPlayerChange: undefined,
-    onEnterRound: undefined,
     onDeclareWinner: undefined,
     onAttack: undefined,
 };
@@ -165,7 +164,10 @@ function enterRound() {
         current.phase = phases.PLAYER_2_ATTACK;
     }
 
-    handlers.onEnterRound(current.player === player1, current.player.name);
+    eventBus.emit(events.ENTERED_ROUND, {
+        isPlayer1Turn: current.player === player1,
+        playerName: current.player.name,
+    });
 }
 
 function declareWinner(winner) {
