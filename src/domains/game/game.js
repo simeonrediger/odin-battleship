@@ -27,10 +27,6 @@ const current = {
 
 let eventBus;
 
-const handlers = {
-    onPlayerChange: undefined,
-};
-
 function init(eventBusObj) {
     eventBus = eventBusObj;
 }
