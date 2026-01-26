@@ -14,6 +14,9 @@ let playerAreas;
 let shipPlacementsMenuContainer;
 let continueButton;
 
+let currentPlayer;
+let currentOpponent;
+
 const player1 = {
     area: undefined,
     board: undefined,
@@ -119,6 +122,7 @@ function bindEvents() {
     playerAreas.addEventListener('click', handlePlayerAreasClick);
 
     eventBus.on(events.ENTERED_PLAYER_CREATION, showPlayerCreation);
+    eventBus.on(events.PLAYER_CHANGED, updateCurrentPlayer);
     eventBus.on(events.ENTERED_SHIP_PLACEMENTS, showShipPlacements);
     eventBus.on(events.ALL_SHIPS_PLACED, enableContinueButton);
     eventBus.on(events.ENTERED_ROUND, showRound);
@@ -184,6 +188,11 @@ function showPlayerCreation() {
     continueButton.disabled = false;
     callbacks.onContinueClick = gameView.submitPlayerCreation;
     show(player1.creationMenu, player2.creationMenu);
+}
+
+function updateCurrentPlayer({ isPlayer1Turn }) {
+    currentPlayer = isPlayer1Turn ? player1 : player2;
+    currentOpponent = isPlayer1Turn ? player2 : player1;
 }
 
 function showShipPlacements({

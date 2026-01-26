@@ -1,6 +1,11 @@
 // Event payloads
 
 /**
+ * @typedef {Object} PlayerChangedDetail
+ * @property {boolean} isPlayer1Turn - true ↔ It is player 1's turn.
+ */
+
+/**
  * @typedef {Object} EnteredShipPlacementsDetail
  * @property {string} playerName - Name of the current player.
  * @property {string} opponentName - Name of the current opponent.
@@ -37,6 +42,12 @@
  * @description Emitted upon entering the player creation phase.
  */
 export const ENTERED_PLAYER_CREATION = 'ENTERED_PLAYER_CREATION';
+
+/**
+ * @description Emitted when the current player is changed.
+ * @see {@link PlayerChangedDetail}
+ */
+export const PLAYER_CHANGED = 'PLAYER_CHANGED';
 
 /**
  * @description Emitted upon entering a ship placements phase.

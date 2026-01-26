@@ -172,6 +172,10 @@ function declareWinner(winner) {
 function setPlayer(player) {
     current.player = player;
     current.opponent = player === player1 ? player2 : player1;
+
+    eventBus.emit(events.PLAYER_CHANGED, {
+        isPlayer1Turn: current.player === player1,
+    });
 }
 
 function createPlayer(isHuman, name) {
