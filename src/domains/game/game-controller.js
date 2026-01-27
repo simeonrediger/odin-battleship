@@ -8,7 +8,6 @@ function start(root) {
     gameView.submitPlayerCreation = submitPlayerCreation;
     gameView.submitShipPlacements = game.submitShipPlacements;
     gameView.restartGame = game.restart;
-
     game.start();
 }
 
