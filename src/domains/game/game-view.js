@@ -215,6 +215,11 @@ function handleBoardAttacked({ x, y, shipHit, sunkShipCoordinates }) {
 
 function handleWin({ winnerName }) {
     announcer.textContent = `${winnerName} wins!`;
+
+    [player1, player2].forEach(player =>
+        player.board.removeAttribute('data-active'),
+    );
+
     continueButton.textContent = 'Restart';
     onContinueClick = handleRestartClick;
     continueButton.disabled = false;
