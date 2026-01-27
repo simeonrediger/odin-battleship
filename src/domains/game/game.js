@@ -32,6 +32,7 @@ function init() {
 
 function bindEvents() {
     eventBus.on(events.SHIP_PLACEMENT_REQUESTED, handleShipPlacementRequest);
+    eventBus.on(events.BOARD_ATTACK_REQUESTED, submitAttack);
 }
 
 function start() {
@@ -75,7 +76,7 @@ function submitShipPlacements() {
     }
 }
 
-function submitAttack(x, y) {
+function submitAttack({ x, y }) {
     validatePhase(phases.PLAYER_1_ATTACK, phases.PLAYER_2_ATTACK);
 
     if (current.opponent.board.coordinateHit(x, y)) {

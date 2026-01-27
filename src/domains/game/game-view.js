@@ -36,7 +36,6 @@ const player2 = {
 
 const callbacks = {
     onContinueClick: undefined,
-    onSubmitAttack: undefined,
 };
 
 function init(containerElement, boardSize, callbacksObj) {
@@ -158,7 +157,7 @@ function handleShipsToPlaceClick(id, direction, length) {
 function handleAttackClick(cell) {
     const x = +cell.dataset.x;
     const y = +cell.dataset.y;
-    callbacks.onSubmitAttack(x, y);
+    eventBus.emit(events.BOARD_ATTACK_REQUESTED, { x, y });
 }
 
 function showPlayerCreation() {

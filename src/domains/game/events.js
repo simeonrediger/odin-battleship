@@ -29,6 +29,12 @@
  */
 
 /**
+ * @typedef {Object} BoardAttackRequestedDetail
+ * @property {number} x - The x component of the coordinate to attack.
+ * @property {number} y - The y component of the coordinate to attack.
+ */
+
+/**
  * @typedef {Object} BoardAttackedDetail
  * @property {number} x - The x component of the attacked coordinate.
  * @property {number} y - The y component of the attacked coordinate.
@@ -78,6 +84,12 @@ export const ALL_SHIPS_PLACED = 'ALL_SHIPS_PLACED';
  * @see {@link EnteredRoundDetail}
  */
 export const ENTERED_ROUND = 'ENTERED_ROUND';
+
+/**
+ * @description Emitted when an attack is requested on a board.
+ * @see {@link BoardAttackRequestedDetail}
+ */
+export const BOARD_ATTACK_REQUESTED = 'BOARD_ATTACK_REQUESTED';
 
 /**
  * @description Emitted when a player attacks another's board.

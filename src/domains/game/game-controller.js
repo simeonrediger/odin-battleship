@@ -4,11 +4,7 @@ import gameView from './game-view.js';
 function start(root) {
     game.init();
     const gameContainer = root.querySelector("[data-role='game-container']");
-
-    gameView.init(gameContainer, game.boardSize, {
-        onSubmitAttack: game.submitAttack,
-    });
-
+    gameView.init(gameContainer, game.boardSize, {});
     gameView.submitPlayerCreation = submitPlayerCreation;
     gameView.submitShipPlacements = game.submitShipPlacements;
     gameView.restartGame = game.restart;
