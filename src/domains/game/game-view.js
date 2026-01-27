@@ -3,7 +3,7 @@ import './styles/button.css';
 import './styles/input.css';
 import './styles/layout.css';
 
-import { adoptValuesOfCommonKeys, validateElements } from '@/shared/utils.js';
+import { validateElements } from '@/shared/utils.js';
 import BoardView from '../board/board-view.js';
 import eventBus from '../game/event-bus.js';
 import * as events from './events.js';
@@ -15,6 +15,8 @@ let announcer;
 let playerAreas;
 let shipPlacementsMenuContainer;
 let continueButton;
+
+let onContinueClick;
 
 const player1 = {
     area: undefined,
@@ -34,14 +36,8 @@ const player2 = {
     nameInput: undefined,
 };
 
-const callbacks = {
-    onContinueClick: undefined,
-};
-
-function init(containerElement, boardSize, callbacksObj) {
+function init(containerElement, boardSize) {
     cacheElements(containerElement);
-    adoptValuesOfCommonKeys(callbacks, callbacksObj);
-    Object.keys(callbacks).forEach(key => (callbacks[key] = callbacksObj[key]));
     bindEvents();
     initViews(boardSize, shipPlacementsMenuContainer);
 }
@@ -117,7 +113,7 @@ function bindEvents() {
 function handleContinueClick() {
     let player;
 
-    switch (callbacks.onContinueClick) {
+    switch (onContinueClick) {
         case gameView.submitPlayerCreation:
             gameView.submitPlayerCreation(
                 player1.typeInput.value,
@@ -164,7 +160,7 @@ function showPlayerCreation() {
     announcer.textContent = "Who's playing?";
     continueButton.textContent = 'Play';
     continueButton.disabled = false;
-    callbacks.onContinueClick = gameView.submitPlayerCreation;
+    onContinueClick = gameView.submitPlayerCreation;
     show(player1.creationMenu, player2.creationMenu);
 }
 
@@ -184,7 +180,7 @@ function showShipPlacements({ playerName, opponentName, shipsData }) {
     shipPlacementsMenu.renderShips(shipsData, player.boardView.cellSize);
     continueButton.textContent = 'Ready';
     continueButton.disabled = true;
-    callbacks.onContinueClick = gameView.submitShipPlacements;
+    onContinueClick = gameView.submitShipPlacements;
     show(player.board, shipPlacementsMenuContainer);
 }
 
@@ -220,7 +216,7 @@ function handleBoardAttacked({ x, y, shipHit, sunkShipCoordinates }) {
 function handleWin({ winnerName }) {
     announcer.textContent = `${winnerName} wins!`;
     continueButton.textContent = 'Restart';
-    callbacks.onContinueClick = handleRestartClick;
+    onContinueClick = handleRestartClick;
     continueButton.disabled = false;
 }
 
