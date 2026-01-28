@@ -18,7 +18,6 @@ let player1;
 let player2;
 
 const shipLengths = Object.freeze([5, 4, 3, 3, 2]);
-let shipsToPlace;
 
 const current = {
     phase: phases.GAME_INACTIVE,
@@ -185,7 +184,7 @@ function setPlayer(player) {
 }
 
 function createPlayer(isHuman, name) {
-    return new Player(name, isHuman, new Board());
+    return new Player(name, isHuman, new Board(), createShips(shipLengths));
 }
 
 function createShips(shipLengths) {

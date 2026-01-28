@@ -1,17 +1,20 @@
 import Board from './board/board.js';
+import Ship from './ship/ship.js';
 
 export default class Player {
     #id;
     #name;
     #isHuman;
     #board;
+    #shipsToPlace;
 
-    constructor(name, isHuman, board) {
-        this.#validateArgs(name, isHuman, board);
+    constructor(name, isHuman, board, shipsToPlace) {
+        this.#validateArgs(name, isHuman, board, shipsToPlace);
         this.#id = crypto.randomUUID();
         this.#name = name;
         this.#isHuman = isHuman;
         this.#board = board;
+        this.#shipsToPlace = shipsToPlace;
     }
 
     get id() {
@@ -47,6 +50,16 @@ export default class Player {
 
         if (!(board instanceof Board)) {
             throw new TypeError('board must be an instance of Board');
+        }
+
+        if (!Array.isArray(shipsToPlace)) {
+            throw new TypeError('shipsToPlace must be an Array');
+        }
+
+        if (shipsToPlace.some(element => !(element instanceof Ship))) {
+            throw new TypeError(
+                'shipsToPlace elements must be instances of Ship',
+            );
         }
     }
 }
