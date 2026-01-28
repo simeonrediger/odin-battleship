@@ -32,7 +32,9 @@ function init() {
 
 function bindEvents() {
     eventBus.on(events.SHIP_PLACEMENT_REQUESTED, handleShipPlacementRequest);
+    eventBus.on(events.SHIP_PLACEMENTS_SUBMITTED, submitShipPlacements);
     eventBus.on(events.BOARD_ATTACK_REQUESTED, submitAttack);
+    eventBus.on(events.GAME_RESTART_REQUESTED, restart);
 }
 
 function start() {
@@ -66,6 +68,10 @@ function handleShipPlacementRequest({ id, x, y, direction }) {
 
 function submitShipPlacements() {
     validatePhase(phases.SHIP_PLACEMENTS_1, phases.SHIP_PLACEMENTS_2);
+
+    eventBus.emit(events.SHIP_PLACEMENTS_COMPLETED, {
+        wasPlayer1Turn: game.isPlayer1Turn,
+    });
 
     if (current.phase === phases.SHIP_PLACEMENTS_1) {
         setPlayer(player2);
@@ -118,6 +124,7 @@ function restart() {
     validatePhase(phases.GAME_OVER);
     current.phase = phases.GAME_INACTIVE;
     start();
+    eventBus.emit(events.GAME_RESTART_COMPLETED);
 }
 
 function enterPlayerCreation() {
@@ -188,8 +195,6 @@ const game = {
     init,
     start,
     submitPlayerCreation,
-    submitShipPlacements,
-    restart,
 
     getShipCoordinates: Board.getNearestInBoundsShipCoordinates,
 

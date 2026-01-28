@@ -16,7 +16,13 @@ let playerAreas;
 let shipPlacementsMenuContainer;
 let continueButton;
 
-let onContinueClick;
+let continueAction;
+
+const actions = {
+    SUBMIT_PLAYER_CREATION: 'SUBMIT_PLAYER_CREATION',
+    SUBMIT_SHIP_PLACEMENTS: 'SUBMIT_SHIP_PLACEMENTS',
+    REQUEST_GAME_RESTART: 'REQUEST_GAME_RESTART',
+};
 
 const player1 = {
     area: undefined,
@@ -105,31 +111,31 @@ function bindEvents() {
     eventBus.on(events.ENTERED_SHIP_PLACEMENTS, showShipPlacements);
     eventBus.on(events.SHIP_PLACED, handleShipPlaced);
     eventBus.on(events.ALL_SHIPS_PLACED, enableContinueButton);
+    eventBus.on(events.SHIP_PLACEMENTS_COMPLETED, cleanUpShipPlacements);
     eventBus.on(events.ENTERED_ROUND, showRound);
     eventBus.on(events.BOARD_ATTACKED, handleBoardAttacked);
     eventBus.on(events.GAME_WON, handleWin);
+    eventBus.on(events.GAME_RESTART_COMPLETED, reset);
 }
 
 function handleContinueClick() {
-    let player;
-
-    switch (onContinueClick) {
-        case gameView.submitPlayerCreation:
-            gameView.submitPlayerCreation(
-                player1.typeInput.value,
-                player1.nameInput.value,
-                player2.typeInput.value,
-                player2.nameInput.value,
-            );
+    switch (continueAction) {
+        case actions.SUBMIT_PLAYER_CREATION:
+            eventBus.emit(events.PLAYERS_SUBMITTED, {
+                player1Type: player1.typeInput.value,
+                player1Name: player1.nameInput.value,
+                player2Type: player2.typeInput.value,
+                player2Name: player2.nameInput.value,
+            });
             break;
-        case gameView.submitShipPlacements:
-            player = gameSelectors.isPlayer1Turn ? player1 : player2;
-            hide(player.board, shipPlacementsMenuContainer);
-            gameView.submitShipPlacements();
+        case actions.SUBMIT_SHIP_PLACEMENTS:
+            eventBus.emit(events.SHIP_PLACEMENTS_SUBMITTED);
             break;
-        case handleRestartClick:
-            handleRestartClick();
+        case actions.REQUEST_GAME_RESTART:
+            eventBus.emit(events.GAME_RESTART_REQUESTED);
             break;
+        default:
+            throw new TypeError(`Invalid action: ${continueAction}`);
     }
 }
 
@@ -160,7 +166,7 @@ function showPlayerCreation() {
     announcer.textContent = "Who's playing?";
     continueButton.textContent = 'Play';
     continueButton.disabled = false;
-    onContinueClick = gameView.submitPlayerCreation;
+    continueAction = actions.SUBMIT_PLAYER_CREATION;
     show(player1.creationMenu, player2.creationMenu);
 }
 
@@ -180,7 +186,7 @@ function showShipPlacements({ playerName, opponentName, shipsData }) {
     shipPlacementsMenu.renderShips(shipsData, player.boardView.cellSize);
     continueButton.textContent = 'Ready';
     continueButton.disabled = true;
-    onContinueClick = gameView.submitShipPlacements;
+    continueAction = actions.SUBMIT_SHIP_PLACEMENTS;
     show(player.board, shipPlacementsMenuContainer);
 }
 
@@ -191,6 +197,11 @@ function handleShipPlaced({ coordinates }) {
 
 function enableContinueButton() {
     continueButton.disabled = false;
+}
+
+function cleanUpShipPlacements({ wasPlayer1Turn }) {
+    const player = wasPlayer1Turn ? player1 : player2;
+    hide(player.board, shipPlacementsMenuContainer);
 }
 
 function showRound({ playerName }) {
@@ -221,11 +232,11 @@ function handleWin({ winnerName }) {
     );
 
     continueButton.textContent = 'Restart';
-    onContinueClick = handleRestartClick;
+    continueAction = actions.REQUEST_GAME_RESTART;
     continueButton.disabled = false;
 }
 
-function handleRestartClick() {
+function reset() {
     hide(player1.board, player2.board);
 
     [player1, player2].forEach(player => {
@@ -236,8 +247,6 @@ function handleRestartClick() {
         player.board.removeAttribute('data-active');
         player.boardView.reset();
     });
-
-    gameView.restartGame();
 }
 
 function hideShips() {
@@ -256,10 +265,6 @@ function hide(...elements) {
 
 const gameView = {
     init,
-
-    submitPlayerCreation: undefined,
-    submitShipPlacements: undefined,
-    restartGame: undefined,
 };
 
 export default gameView;

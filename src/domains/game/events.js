@@ -1,6 +1,14 @@
 // Event payloads
 
 /**
+ * @typedef {Object} PlayersSubmittedDetail
+ * @property {string} player1Type - Player type of player 1.
+ * @property {string} player1Name - Name of player 1.
+ * @property {string} player2Type - Player type of player 2.
+ * @property {string} player2Name - Name of player 2.
+ */
+
+/**
  * @typedef {Object} EnteredShipPlacementsDetail
  * @property {string} playerName - Name of the current player.
  * @property {string} opponentName - Name of the current opponent.
@@ -21,6 +29,12 @@
  * @property {string} id - The ID of the ship.
  * @property {Array<Array<number>>} coordinates - The coordinates occupied by
  *      the ship.
+ */
+
+/**
+ * @typedef {Object} ShipPlacementsCompletedDetail
+ * @property {boolean} wasPlayer1Turn - true ↔ The ship placements were
+ *      completed by player 1.
  */
 
 /**
@@ -57,6 +71,12 @@
 export const ENTERED_PLAYER_CREATION = 'ENTERED_PLAYER_CREATION';
 
 /**
+ * @description Emitted when players are submitted.
+ * @see {@link PlayerSubmittedDetail}
+ */
+export const PLAYERS_SUBMITTED = 'PLAYERS_SUBMITTED';
+
+/**
  * @description Emitted upon entering a ship placements phase.
  * @see {@link EnteredShipPlacementsDetail}
  */
@@ -78,6 +98,18 @@ export const SHIP_PLACED = 'SHIP_PLACED';
  * @description Emitted once all ships have been placed during ship placements.
  */
 export const ALL_SHIPS_PLACED = 'ALL_SHIPS_PLACED';
+
+/**
+ * @description Emitted when ship placements are submitted.
+ * @see {@link ShipPlacementsSubmittedDetail}
+ */
+export const SHIP_PLACEMENTS_SUBMITTED = 'SHIP_PLACEMENTS_SUBMITTED';
+
+/**
+ * @description Emitted when ship placements are completed.
+ * @see {@link ShipPlacementsSubmittedDetail}
+ */
+export const SHIP_PLACEMENTS_COMPLETED = 'SHIP_PLACEMENTS_COMPLETED';
 
 /**
  * @description Emitted upon entering a player's attack phase.
@@ -102,3 +134,14 @@ export const BOARD_ATTACKED = 'BOARD_ATTACKED';
  * @see {@link GameWonDetail}
  */
 export const GAME_WON = 'GAME_WON';
+
+/**
+ * @description Emitted when a game restart is requested.
+ * @see {@link GameRestartRequestedDetail}
+ */
+export const GAME_RESTART_REQUESTED = 'GAME_RESTART_REQUESTED';
+
+/**
+ * @description Emitted when a game restart is completed.
+ */
+export const GAME_RESTART_COMPLETED = 'GAME_RESTART_COMPLETED';
