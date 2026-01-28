@@ -207,14 +207,6 @@ const game = {
         return Board.size;
     },
 
-    get currentPlayerName() {
-        return current.player.name;
-    },
-
-    get currentOpponentName() {
-        return current.opponent.name;
-    },
-
     get isPlayer1Turn() {
         return current.player === player1;
     },
