@@ -161,7 +161,8 @@ function declareWinner(winner) {
 }
 
 function shipValid(id, x, y, direction) {
-    const length = shipsToPlace.find(ship => ship.id === id).length;
+    const shipsData = current.player.shipsToPlaceData;
+    const length = shipsData.find(ship => ship.id === id).length;
     return current.player.board.shipValid({ x, y, direction, length });
 }
 
