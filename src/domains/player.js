@@ -1,4 +1,6 @@
 import Board from './board/board.js';
+import eventBus from './game/event-bus.js';
+import * as events from './game/events.js';
 import Ship from './ship/ship.js';
 
 export default class Player {
@@ -37,7 +39,33 @@ export default class Player {
         return this.#board.allShipsSunk;
     }
 
-    #validateArgs(name, isHuman, board) {
+    placeShip(
+        id,
+        x,
+        y,
+        direction,
+        {
+            board = this.#board,
+            onAllShipsPlaced = this.#handleAllShipsPlaced,
+        } = {},
+    ) {
+        const ship = this.#shipsToPlace.find(ship => ship.id === id);
+        board.placeShip(ship, x, y, direction);
+
+        this.#shipsToPlace = this.#shipsToPlace.filter(
+            remainingShip => remainingShip !== ship,
+        );
+
+        if (this.#shipsToPlace.length === 0) {
+            onAllShipsPlaced();
+        }
+    }
+
+    #handleAllShipsPlaced() {
+        eventBus.emit(events.ALL_SHIPS_PLACED);
+    }
+
+    #validateArgs(name, isHuman, board, shipsToPlace) {
         if (typeof name !== 'string') {
             throw new TypeError(`Name must be a string. Got ${typeof name}`);
         }

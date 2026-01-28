@@ -57,13 +57,7 @@ function submitPlayerCreation({
 
 function handleShipPlacementRequest({ id, x, y, direction }) {
     validatePhase(phases.SHIP_PLACEMENTS_1, phases.SHIP_PLACEMENTS_2);
-    const ship = shipsToPlace.find(ship => ship.id === id);
-    current.player.board.placeShip(ship, x, y, direction);
-    shipsToPlace = shipsToPlace.filter(remainingShip => remainingShip !== ship);
-
-    if (shipsToPlace.length === 0) {
-        eventBus.emit(events.ALL_SHIPS_PLACED);
-    }
+    current.player.placeShip(id, x, y, direction);
 }
 
 function submitShipPlacements() {
