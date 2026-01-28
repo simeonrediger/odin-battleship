@@ -1,7 +1,8 @@
+import Board from '../board/board.js';
 import game from './game.js';
 
 const gameSelectors = {
-    getShipCoordinates: game.getShipCoordinates,
+    getShipCoordinates: Board.getNearestInBoundsShipCoordinates,
     shipValid: game.shipValid,
 
     get isPlayer1Turn() {
