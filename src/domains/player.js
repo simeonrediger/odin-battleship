@@ -39,6 +39,13 @@ export default class Player {
         return this.#board.allShipsSunk;
     }
 
+    get shipsToPlaceData() {
+        return this.#shipsToPlace.map(ship => ({
+            id: ship.id,
+            length: ship.length,
+        }));
+    }
+
     placeShip(
         id,
         x,

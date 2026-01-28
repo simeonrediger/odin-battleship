@@ -133,16 +133,13 @@ function enterShipPlacements() {
         current.phase = phases.SHIP_PLACEMENTS_2;
     }
 
-    shipsToPlace = createShips(shipLengths);
+    const shipsData = current.player.shipsToPlaceData;
+    shipsData.forEach(shipData => (shipData.direction = Ship.directions.RIGHT));
 
     eventBus.emit(events.ENTERED_SHIP_PLACEMENTS, {
         playerName: current.player.name,
         opponentName: current.opponent.name,
-        shipsData: shipsToPlace.map(ship => ({
-            id: ship.id,
-            length: ship.length,
-            direction: Ship.directions.RIGHT,
-        })),
+        shipsData,
     });
 }
 
