@@ -170,6 +170,11 @@ function declareWinner(winner) {
     eventBus.emit(events.GAME_WON, { winnerName: winner.name });
 }
 
+function shipValid(id, x, y, direction) {
+    const length = shipsToPlace.find(ship => ship.id === id).length;
+    return current.player.board.shipValid({ x, y, direction, length });
+}
+
 function setPlayer(player) {
     current.player = player;
     current.opponent = player === player1 ? player2 : player1;
@@ -195,11 +200,7 @@ function validatePhase(...validPhases) {
 const game = {
     init,
     start,
-
-    shipValid(id, x, y, direction) {
-        const length = shipsToPlace.find(ship => ship.id === id).length;
-        return current.player.board.shipValid({ x, y, direction, length });
-    },
+    shipValid,
 
     get isPlayer1Turn() {
         return current.player === player1;
