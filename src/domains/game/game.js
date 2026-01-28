@@ -189,7 +189,7 @@ function createPlayer(isHuman, name) {
 }
 
 function createShips(shipLengths) {
-    return shipLengths.map(length => new Ship(length, Ship.directions.RIGHT));
+    return shipLengths.map(length => new Ship(length));
 }
 
 function validatePhase(...validPhases) {
