@@ -27,7 +27,7 @@ describe('placeShip()', () => {
         ).not.toThrow();
 
         expect(() =>
-            board.place(new Ship(2), 2, 3, Ship.directions.DOWN),
+            board.placeShip(new Ship(2), 2, 3, Ship.directions.DOWN),
         ).toThrow();
     });
 });
