@@ -157,17 +157,32 @@ export default class Board {
         const cell = this.#getCell(x, y);
 
         if (cell.attacked) {
-            throw new Error('Coordinate has already been attacked');
+            return { alreadyHit: true };
         }
 
         cell.attacked = true;
         const shipHit = Boolean(cell.occupant);
+        let sunkShipCoordinates;
 
         if (shipHit) {
-            cell.occupant.hit();
+            const ship = cell.occupant;
+            ship.hit();
+
+            if (ship.sunk) {
+                sunkShipCoordinates = this.#getCoordinatesByShip(ship);
+            }
         }
 
-        return shipHit;
+        eventBus.emit(events.BOARD_ATTACKED, {
+            x,
+            y,
+            shipHit,
+            sunkShipCoordinates,
+        });
+
+        return {
+            shipHit,
+        };
     }
 
     shipOverlaps(x, y, direction, length) {

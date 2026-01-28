@@ -33,10 +33,17 @@ describe('placeShip()', () => {
 });
 
 describe('hit()', () => {
-    test('accepts attack only if coordinate has not been attacked', () => {
+    test('returns truthy alreadyHit only if the hit is a duplicate', () => {
         const board = new Board();
-        expect(() => board.hit(0, 0)).not.toThrow();
-        expect(() => board.hit(0, 0)).toThrow();
+        expect(board.hit(0, 0).alreadyHit).toBeFalsy();
+        expect(board.hit(0, 0).alreadyHit).toBeTruthy();
+    });
+
+    test('returns truthy shipHit only if a ship is hit', () => {
+        const board = new Board();
+        board.placeShip(new Ship(2), 0, 0, Ship.directions.RIGHT);
+        expect(board.hit(0, 1).shipHit).toBeFalsy();
+        expect(board.hit(0, 0).shipHit).toBeTruthy();
     });
 
     test('calls ship.hit() only if coordinate has ship', () => {

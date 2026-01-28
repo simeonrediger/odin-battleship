@@ -33,7 +33,7 @@ function bindEvents() {
     eventBus.on(events.PLAYERS_SUBMITTED, submitPlayerCreation);
     eventBus.on(events.SHIP_PLACEMENT_REQUESTED, handleShipPlacementRequest);
     eventBus.on(events.SHIP_PLACEMENTS_SUBMITTED, submitShipPlacements);
-    eventBus.on(events.BOARD_ATTACK_REQUESTED, submitAttack);
+    eventBus.on(events.BOARD_ATTACK_REQUESTED, handleBoardAttackRequest);
     eventBus.on(events.GAME_RESTART_REQUESTED, restart);
 }
 
@@ -76,24 +76,9 @@ function submitShipPlacements() {
     }
 }
 
-function submitAttack({ x, y }) {
+function handleBoardAttackRequest({ x, y }) {
     validatePhase(phases.PLAYER_1_ATTACK, phases.PLAYER_2_ATTACK);
-
-    if (current.opponent.board.coordinateHit(x, y)) {
-        return;
-    }
-
-    const shipHit = current.opponent.board.hit(x, y);
-
-    eventBus.emit(events.BOARD_ATTACKED, {
-        x,
-        y,
-        shipHit,
-        sunkShipCoordinates: current.opponent.board.getSunkShipCoordinates(
-            x,
-            y,
-        ),
-    });
+    const { shipHit } = current.opponent.receiveAttack(x, y);
 
     if (shipHit) {
         if (current.opponent.defeated) {

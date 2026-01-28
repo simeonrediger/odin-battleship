@@ -73,6 +73,10 @@ export default class Player {
         }
     }
 
+    receiveAttack(x, y) {
+        return this.#board.hit(x, y);
+    }
+
     #handleAllShipsPlaced() {
         eventBus.emit(events.ALL_SHIPS_PLACED);
     }
