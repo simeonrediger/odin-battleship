@@ -46,6 +46,11 @@ export default class Player {
         }));
     }
 
+    shipValid(id, x, y, direction) {
+        const length = this.#shipsToPlace.find(ship => ship.id === id).length;
+        return this.#board.shipValid({ x, y, direction, length });
+    }
+
     placeShip(
         id,
         x,
