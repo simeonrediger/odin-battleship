@@ -31,6 +31,7 @@ function init() {
 }
 
 function bindEvents() {
+    eventBus.on(events.PLAYERS_SUBMITTED, submitPlayerCreation);
     eventBus.on(events.SHIP_PLACEMENT_REQUESTED, handleShipPlacementRequest);
     eventBus.on(events.SHIP_PLACEMENTS_SUBMITTED, submitShipPlacements);
     eventBus.on(events.BOARD_ATTACK_REQUESTED, submitAttack);
@@ -42,15 +43,15 @@ function start() {
     enterPlayerCreation();
 }
 
-function submitPlayerCreation(
+function submitPlayerCreation({
     player1IsHuman,
     player1Name,
     player2IsHuman,
     player2Name,
-) {
+}) {
     validatePhase(phases.PLAYER_CREATION);
-    player1 = createPlayer(player1IsHuman, player1Name);
-    player2 = createPlayer(player2IsHuman, player2Name);
+    player1 = createPlayer(player1IsHuman, player1Name || 'Player 1');
+    player2 = createPlayer(player2IsHuman, player2Name || 'Player 2');
     setPlayer(player1);
     enterShipPlacements();
 }
@@ -194,7 +195,6 @@ function validatePhase(...validPhases) {
 const game = {
     init,
     start,
-    submitPlayerCreation,
 
     getShipCoordinates: Board.getNearestInBoundsShipCoordinates,
 

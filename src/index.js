@@ -4,5 +4,4 @@ import './shared/styles/layout.css';
 
 import gameController from './domains/game/game-controller.js';
 
-gameController.init();
 gameController.start(document);

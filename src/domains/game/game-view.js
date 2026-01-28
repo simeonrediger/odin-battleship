@@ -121,12 +121,7 @@ function bindEvents() {
 function handleContinueClick() {
     switch (continueAction) {
         case actions.SUBMIT_PLAYER_CREATION:
-            eventBus.emit(events.PLAYERS_SUBMITTED, {
-                player1Type: player1.typeInput.value,
-                player1Name: player1.nameInput.value,
-                player2Type: player2.typeInput.value,
-                player2Name: player2.nameInput.value,
-            });
+            eventBus.emit(events.PLAYERS_SUBMITTED, getPlayerInputData());
             break;
         case actions.SUBMIT_SHIP_PLACEMENTS:
             eventBus.emit(events.SHIP_PLACEMENTS_SUBMITTED);
@@ -137,6 +132,15 @@ function handleContinueClick() {
         default:
             throw new TypeError(`Invalid action: ${continueAction}`);
     }
+}
+
+function getPlayerInputData() {
+    return {
+        player1IsHuman: player1.typeInput.value === 'human',
+        player1Name: player1.nameInput.value.trim(),
+        player2IsHuman: player2.typeInput.value === 'human',
+        player2Name: player2.nameInput.value.trim(),
+    };
 }
 
 function handlePlayerAreasClick(event) {
