@@ -21,7 +21,7 @@ export default class Board {
         return coordinates;
     }
 
-    static getNearestInBoundsAnchorCoordinate(x, y, direction, length) {
+    static getNearestInBoundsShipCoordinates(x, y, direction, length) {
         const original = { x, y };
         const outOfBoundsDelta = { x: 0, y: 0 };
 
@@ -41,21 +41,18 @@ export default class Board {
             [x, y] = Board.#getAdjacentCoordinate(x, y, direction);
         }
 
-        return [
-            original.x - outOfBoundsDelta.x,
-            original.y - outOfBoundsDelta.y,
-        ];
-    }
+        const adjusted = {
+            x: original.x - outOfBoundsDelta.x,
+            y: original.y - outOfBoundsDelta.y,
+        };
 
-    static getNearestInBoundsShipCoordinates(x, y, direction, length) {
-        [x, y] = Board.getNearestInBoundsAnchorCoordinate(
-            x,
-            y,
+        const coordinates = Board.getShipCoordinates(
+            adjusted.x,
+            adjusted.y,
             direction,
             length,
         );
 
-        const coordinates = Board.getShipCoordinates(x, y, direction, length);
         return coordinates;
     }
 
