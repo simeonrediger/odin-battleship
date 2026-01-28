@@ -201,10 +201,6 @@ const game = {
         return current.player.board.shipValid({ x, y, direction, length });
     },
 
-    get boardSize() {
-        return Board.size;
-    },
-
     get isPlayer1Turn() {
         return current.player === player1;
     },
