@@ -7,7 +7,7 @@ const gameSelectors = {
     shipValid: game.shipValid,
 
     get isPlayer1Turn() {
-        return game.isPlayer1Turn;
+        return game.isPlayer1Turn();
     },
 };
 

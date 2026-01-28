@@ -71,7 +71,7 @@ function submitShipPlacements() {
     validatePhase(phases.SHIP_PLACEMENTS_1, phases.SHIP_PLACEMENTS_2);
 
     eventBus.emit(events.SHIP_PLACEMENTS_COMPLETED, {
-        wasPlayer1Turn: game.isPlayer1Turn,
+        wasPlayer1Turn: isPlayer1Turn(),
     });
 
     if (current.phase === phases.SHIP_PLACEMENTS_1) {
@@ -175,6 +175,10 @@ function shipValid(id, x, y, direction) {
     return current.player.board.shipValid({ x, y, direction, length });
 }
 
+function isPlayer1Turn() {
+    return current.player === player1;
+}
+
 function setPlayer(player) {
     current.player = player;
     current.opponent = player === player1 ? player2 : player1;
@@ -201,10 +205,7 @@ const game = {
     init,
     start,
     shipValid,
-
-    get isPlayer1Turn() {
-        return current.player === player1;
-    },
+    isPlayer1Turn,
 };
 
 export default game;
