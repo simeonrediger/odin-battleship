@@ -82,9 +82,9 @@ export default class Player {
         }
     }
 
-    handleEnterRound() {
+    handleRound(getSmartAttackCoordinates) {
         if (!this.#isHuman) {
-            this.#automateRound();
+            this.#sendRandomSmartAttack(getSmartAttackCoordinates);
         }
     }
 
@@ -119,15 +119,13 @@ export default class Player {
         this.placeShip(ship.id, x, y, direction);
     }
 
-    #automateRound() {
-        while (this.active) {
-            this.#sendRandomAttack();
-        }
-    }
+    #sendRandomSmartAttack(getSmartAttackCoordinates) {
+        const smartAttackCoordinates = getSmartAttackCoordinates();
+        const randomIndex = Math.floor(
+            Math.random() * smartAttackCoordinates.length,
+        );
 
-    #sendRandomAttack() {
-        const x = Math.floor(Math.random() * Board.size);
-        const y = Math.floor(Math.random() * Board.size);
+        const [x, y] = smartAttackCoordinates[randomIndex];
         eventBus.emit(events.BOARD_ATTACK_REQUESTED, { x, y });
     }
 

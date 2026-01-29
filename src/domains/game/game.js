@@ -110,10 +110,20 @@ function handleBoardAttackRequest({ x, y }) {
             unsetPlayers();
             return;
         }
+
+        cuePlayerForRound();
     } else {
         switchAttacker();
         enterRound();
     }
+}
+
+function cuePlayerForRound() {
+    current.player.handleRound(
+        current.opponent.board.getSmartAttackCoordinates.bind(
+            current.opponent.board,
+        ),
+    );
 }
 
 function switchAttacker() {
@@ -135,7 +145,7 @@ function enterRound() {
         playerName: current.player.name,
     });
 
-    current.player.handleEnterRound();
+    cuePlayerForRound();
 }
 
 function declareWinner(winner) {
