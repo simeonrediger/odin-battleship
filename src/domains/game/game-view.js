@@ -105,7 +105,7 @@ function initViews(boardSize, shipPlacementsMenuContainer) {
 
 function bindEvents() {
     continueButton.addEventListener('click', handleContinueClick);
-    playerAreas.addEventListener('click', handlePlayerAreasClick);
+    playerAreas.addEventListener('mousedown', handlePlayerAreasMouseDown);
 
     eventBus.on(events.ENTERED_PLAYER_CREATION, showPlayerCreation);
     eventBus.on(events.ENTERED_SHIP_PLACEMENTS, showShipPlacements);
@@ -143,7 +143,7 @@ function getPlayerInputData() {
     };
 }
 
-function handlePlayerAreasClick(event) {
+function handlePlayerAreasMouseDown(event) {
     const activeBoard = event.target.closest(
         "[data-active][data-role$='board']",
     );
@@ -151,7 +151,7 @@ function handlePlayerAreasClick(event) {
     const cell = BoardView.getClosestCell(event.target);
 
     if (activeBoard && cell) {
-        handleAttackClick(cell);
+        handleCellAttack(cell);
     }
 }
 
@@ -160,7 +160,7 @@ function handleShipsToPlaceClick(id, direction, length) {
     player.boardView.renderShipPreviewToCenter(id, direction, length);
 }
 
-function handleAttackClick(cell) {
+function handleCellAttack(cell) {
     const x = +cell.dataset.x;
     const y = +cell.dataset.y;
     eventBus.emit(events.BOARD_ATTACK_REQUESTED, { x, y });
