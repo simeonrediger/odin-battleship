@@ -27,6 +27,7 @@ html {
 
   --color-board-bg: var(--blue);
   --color-board-border: var(--paler-blue);
+  --color-active-area-border: var(--light-green);
   --color-ship-bg: var(--light-gray-3);
   --color-ship-outline: var(--white);
   --color-ship-placing: var(--pale-blue);

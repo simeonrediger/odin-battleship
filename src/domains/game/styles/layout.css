@@ -25,6 +25,10 @@
   width: 32rem;
 }
 
+.player-area:has([data-active]) {
+  outline: 2px solid var(--color-active-area-border);
+}
+
 .player-creation {
   height: 100%;
 
