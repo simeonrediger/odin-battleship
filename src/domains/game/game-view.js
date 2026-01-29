@@ -231,9 +231,10 @@ function handleBoardAttacked({ x, y, shipHit, sunkShipCoordinates }) {
 function handleWin({ winnerName }) {
     announcer.textContent = `${winnerName} wins!`;
 
-    [player1, player2].forEach(player =>
-        player.board.removeAttribute('data-active'),
-    );
+    [player1, player2].forEach(player => {
+        player.board.removeAttribute('data-active');
+        player.board.classList.remove('undiscovered-ship-nodes-hidden');
+    });
 
     continueButton.textContent = 'Restart';
     continueAction = actions.REQUEST_GAME_RESTART;
