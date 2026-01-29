@@ -46,6 +46,7 @@
  * @typedef {Object} BoardAttackRequestedDetail
  * @property {number} x - The x component of the coordinate to attack.
  * @property {number} y - The y component of the coordinate to attack.
+ * @property {boolean} automated - true ↔ The attack is automated.
  */
 
 /**

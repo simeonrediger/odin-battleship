@@ -128,7 +128,7 @@ export default class Player {
         );
 
         const [x, y] = smartAttackCoordinates[randomIndex];
-        eventBus.emit(events.BOARD_ATTACK_REQUESTED, { x, y });
+        eventBus.emit(events.BOARD_ATTACK_REQUESTED, { x, y, automated: true });
     }
 
     #validateArgs(name, isHuman, board, shipsToPlace) {

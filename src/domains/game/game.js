@@ -101,8 +101,13 @@ function submitShipPlacements() {
     }
 }
 
-async function handleBoardAttackRequest({ x, y }) {
+async function handleBoardAttackRequest({ x, y, automated }) {
     validatePhase(phases.PLAYER_1_ATTACK, phases.PLAYER_2_ATTACK);
+
+    if (!current.player.isHuman && !automated) {
+        return;
+    }
+
     const { shipHit } = current.opponent.receiveAttack(x, y);
 
     if (shipHit) {
