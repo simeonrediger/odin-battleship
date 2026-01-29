@@ -176,79 +176,6 @@ export default class Board {
         );
     }
 
-    #getCoordinatesToExtendLongestSegment(unsunkDiscoveredShipCoordinates) {
-        const segments = [];
-        const directions = [Ship.directions.RIGHT, Ship.directions.UP];
-
-        // Randomize the prioritized axis of the follow-up attack
-        if (Math.random() > 0.5) {
-            directions.reverse();
-        }
-
-        for (const direction of directions) {
-            for (let [x, y] of unsunkDiscoveredShipCoordinates) {
-                const segment = { direction, coordinates: [] };
-                let isConsecutive;
-
-                do {
-                    segment.coordinates.push([x, y]);
-                    [x, y] = Board.#getAdjacentCoordinate(x, y, direction);
-                    isConsecutive = this.#coordinatesArrayHasCoordinates(
-                        unsunkDiscoveredShipCoordinates,
-                        [x, y],
-                    );
-                } while (isConsecutive);
-
-                segments.push(segment);
-            }
-        }
-
-        segments.sort((a, b) => b.coordinates.length - a.coordinates.length);
-        const followUpAttackCoordinates = [];
-
-        for (const segment of segments) {
-            let [x, y] = segment.coordinates[0];
-            const first = { x, y };
-            [x, y] = segment.coordinates[segment.coordinates.length - 1];
-            const last = { x, y };
-
-            const oppositeDirection =
-                segment.direction === Ship.directions.RIGHT
-                    ? Ship.directions.LEFT
-                    : Ship.directions.DOWN;
-
-            const prevCoordinates = Board.#getAdjacentCoordinate(
-                first.x,
-                first.y,
-                oppositeDirection,
-            );
-
-            const nextCoordinates = Board.#getAdjacentCoordinate(
-                last.x,
-                last.y,
-                segment.direction,
-            );
-
-            [prevCoordinates, nextCoordinates].forEach(([x, y]) => {
-                const cell = this.#getCell(x, y);
-
-                if (cell && !cell.attacked) {
-                    followUpAttackCoordinates.push([x, y]);
-                }
-            });
-
-            if (followUpAttackCoordinates.length > 0) {
-                return followUpAttackCoordinates;
-            }
-        }
-
-        throw new Error('No viable follow-up attack coordinates remaining');
-    }
-
-    #coordinatesArrayHasCoordinates(unsunkShipCoordinates, [x1, y1]) {
-        return unsunkShipCoordinates.some(([x2, y2]) => x1 === x2 && y1 === y2);
-    }
-
     coordinateHit(x, y) {
         const cell = this.#getCell(x, y);
         return cell.attacked;
@@ -332,5 +259,78 @@ export default class Board {
         const row = Board.#size - 1 - y;
         const column = x;
         return this.#grid[row]?.[column];
+    }
+
+    #coordinatesArrayHasCoordinates(unsunkShipCoordinates, [x1, y1]) {
+        return unsunkShipCoordinates.some(([x2, y2]) => x1 === x2 && y1 === y2);
+    }
+
+    #getCoordinatesToExtendLongestSegment(unsunkDiscoveredShipCoordinates) {
+        const segments = [];
+        const directions = [Ship.directions.RIGHT, Ship.directions.UP];
+
+        // Randomize the prioritized axis of the follow-up attack
+        if (Math.random() > 0.5) {
+            directions.reverse();
+        }
+
+        for (const direction of directions) {
+            for (let [x, y] of unsunkDiscoveredShipCoordinates) {
+                const segment = { direction, coordinates: [] };
+                let isConsecutive;
+
+                do {
+                    segment.coordinates.push([x, y]);
+                    [x, y] = Board.#getAdjacentCoordinate(x, y, direction);
+                    isConsecutive = this.#coordinatesArrayHasCoordinates(
+                        unsunkDiscoveredShipCoordinates,
+                        [x, y],
+                    );
+                } while (isConsecutive);
+
+                segments.push(segment);
+            }
+        }
+
+        segments.sort((a, b) => b.coordinates.length - a.coordinates.length);
+        const followUpAttackCoordinates = [];
+
+        for (const segment of segments) {
+            let [x, y] = segment.coordinates[0];
+            const first = { x, y };
+            [x, y] = segment.coordinates[segment.coordinates.length - 1];
+            const last = { x, y };
+
+            const oppositeDirection =
+                segment.direction === Ship.directions.RIGHT
+                    ? Ship.directions.LEFT
+                    : Ship.directions.DOWN;
+
+            const prevCoordinates = Board.#getAdjacentCoordinate(
+                first.x,
+                first.y,
+                oppositeDirection,
+            );
+
+            const nextCoordinates = Board.#getAdjacentCoordinate(
+                last.x,
+                last.y,
+                segment.direction,
+            );
+
+            [prevCoordinates, nextCoordinates].forEach(([x, y]) => {
+                const cell = this.#getCell(x, y);
+
+                if (cell && !cell.attacked) {
+                    followUpAttackCoordinates.push([x, y]);
+                }
+            });
+
+            if (followUpAttackCoordinates.length > 0) {
+                return followUpAttackCoordinates;
+            }
+        }
+
+        throw new Error('No viable follow-up attack coordinates remaining');
     }
 }
