@@ -66,7 +66,6 @@ function renderShip(shipData, shipNodeSize) {
     ship.dataset.id = shipData.id;
     ship.dataset.length = shipData.length;
     ship.dataset.direction = shipData.direction;
-    ship.draggable = true;
     ship.classList.add('ship', directionClasses[shipData.direction]);
 
     for (let i = 0; i < shipData.length; i++) {
