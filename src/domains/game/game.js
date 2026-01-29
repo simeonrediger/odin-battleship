@@ -107,6 +107,7 @@ function handleBoardAttackRequest({ x, y }) {
     if (shipHit) {
         if (current.opponent.defeated) {
             declareWinner(current.player);
+            unsetPlayers();
             return;
         }
     } else {
@@ -133,6 +134,8 @@ function enterRound() {
     eventBus.emit(events.ENTERED_ROUND, {
         playerName: current.player.name,
     });
+
+    current.player.handleEnterRound();
 }
 
 function declareWinner(winner) {
@@ -156,8 +159,20 @@ function isPlayer1Turn() {
 }
 
 function setPlayer(player) {
+    if (current.player) {
+        current.player.active = false;
+    }
+
     current.player = player;
     current.opponent = player === player1 ? player2 : player1;
+
+    current.player.active = true;
+}
+
+function unsetPlayers() {
+    current.player.active = false;
+    current.player = null;
+    current.opponent = null;
 }
 
 function createPlayer(isHuman, name) {

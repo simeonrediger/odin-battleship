@@ -4,6 +4,8 @@ import * as events from './game/events.js';
 import Ship from './ship/ship.js';
 
 export default class Player {
+    active = false;
+
     #id;
     #name;
     #isHuman;
@@ -80,6 +82,12 @@ export default class Player {
         }
     }
 
+    handleEnterRound() {
+        if (!this.#isHuman) {
+            this.#automateRound();
+        }
+    }
+
     receiveAttack(x, y) {
         return this.#board.hit(x, y);
     }
@@ -109,6 +117,18 @@ export default class Player {
         const randomIndex = Math.floor(Math.random() * validPlacements.length);
         const { x, y, direction } = validPlacements[randomIndex];
         this.placeShip(ship.id, x, y, direction);
+    }
+
+    #automateRound() {
+        while (this.active) {
+            this.#sendRandomAttack();
+        }
+    }
+
+    #sendRandomAttack() {
+        const x = Math.floor(Math.random() * Board.size);
+        const y = Math.floor(Math.random() * Board.size);
+        eventBus.emit(events.BOARD_ATTACK_REQUESTED, { x, y });
     }
 
     #validateArgs(name, isHuman, board, shipsToPlace) {
