@@ -7,7 +7,7 @@
 }
 
 .board.inactive {
-  filter: brightness(50%);
+  filter: grayscale(50%);
 }
 
 .grid {
