@@ -104,6 +104,7 @@ function initViews(boardSize, shipPlacementsMenuContainer) {
 }
 
 function bindEvents() {
+    document.addEventListener('keydown', disableSpaceToScroll);
     continueButton.addEventListener('click', handleContinueClick);
     playerAreas.addEventListener('mousedown', handlePlayerAreasMouseDown);
 
@@ -117,6 +118,12 @@ function bindEvents() {
     eventBus.on(events.TURN_ENDED, deactivateActiveBoard);
     eventBus.on(events.GAME_WON, handleWin);
     eventBus.on(events.GAME_RESTART_COMPLETED, reset);
+}
+
+function disableSpaceToScroll(event) {
+    if (event.key === ' ') {
+        event.preventDefault();
+    }
 }
 
 function handleContinueClick() {
