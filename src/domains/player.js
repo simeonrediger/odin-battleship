@@ -46,6 +46,13 @@ export default class Player {
         }));
     }
 
+    handleEnterShipPlacements() {
+        if (!this.#isHuman) {
+            this.#placeShipsRandomly();
+            eventBus.emit(events.SHIP_PLACEMENTS_SUBMITTED);
+        }
+    }
+
     shipValid(id, x, y, direction) {
         const length = this.#shipsToPlace.find(ship => ship.id === id).length;
         return this.#board.shipValid({ x, y, direction, length });
@@ -79,6 +86,29 @@ export default class Player {
 
     #handleAllShipsPlaced() {
         eventBus.emit(events.ALL_SHIPS_PLACED);
+    }
+
+    #placeShipsRandomly() {
+        this.#shipsToPlace.forEach(ship => this.#placeShipRandomly(ship));
+    }
+
+    #placeShipRandomly(ship) {
+        const validPlacements = [];
+        const length = ship.length;
+
+        for (const direction of [Ship.directions.UP, Ship.directions.RIGHT]) {
+            for (let x = 0; x < Board.size; x++) {
+                for (let y = 0; y < Board.size; y++) {
+                    if (this.#board.shipValid({ x, y, direction, length })) {
+                        validPlacements.push({ x, y, direction });
+                    }
+                }
+            }
+        }
+
+        const randomIndex = Math.floor(Math.random() * validPlacements.length);
+        const { x, y, direction } = validPlacements[randomIndex];
+        this.placeShip(ship.id, x, y, direction);
     }
 
     #validateArgs(name, isHuman, board, shipsToPlace) {

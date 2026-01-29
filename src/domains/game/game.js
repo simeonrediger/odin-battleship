@@ -126,6 +126,8 @@ function enterShipPlacements() {
         opponentName: current.opponent.name,
         shipsData,
     });
+
+    current.player.handleEnterShipPlacements();
 }
 
 function enterRound() {
