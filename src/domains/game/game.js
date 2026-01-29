@@ -42,6 +42,11 @@ function start() {
     enterPlayerCreation();
 }
 
+function enterPlayerCreation() {
+    current.phase = phases.PLAYER_CREATION;
+    eventBus.emit(events.ENTERED_PLAYER_CREATION);
+}
+
 function submitPlayerCreation({
     player1IsHuman,
     player1Name,
@@ -53,6 +58,25 @@ function submitPlayerCreation({
     player2 = createPlayer(player2IsHuman, player2Name || 'Player 2');
     setPlayer(player1);
     enterShipPlacements();
+}
+
+function enterShipPlacements() {
+    if (current.phase !== phases.SHIP_PLACEMENTS_1) {
+        current.phase = phases.SHIP_PLACEMENTS_1;
+    } else {
+        current.phase = phases.SHIP_PLACEMENTS_2;
+    }
+
+    const shipsData = current.player.shipsToPlaceData;
+    shipsData.forEach(shipData => (shipData.direction = Ship.directions.RIGHT));
+
+    eventBus.emit(events.ENTERED_SHIP_PLACEMENTS, {
+        playerName: current.player.name,
+        opponentName: current.opponent.name,
+        shipsData,
+    });
+
+    current.player.handleEnterShipPlacements();
 }
 
 function handleShipPlacementRequest({ id, x, y, direction }) {
@@ -99,37 +123,6 @@ function switchAttacker() {
     }
 }
 
-function restart() {
-    validatePhase(phases.GAME_OVER);
-    current.phase = phases.GAME_INACTIVE;
-    start();
-    eventBus.emit(events.GAME_RESTART_COMPLETED);
-}
-
-function enterPlayerCreation() {
-    current.phase = phases.PLAYER_CREATION;
-    eventBus.emit(events.ENTERED_PLAYER_CREATION);
-}
-
-function enterShipPlacements() {
-    if (current.phase !== phases.SHIP_PLACEMENTS_1) {
-        current.phase = phases.SHIP_PLACEMENTS_1;
-    } else {
-        current.phase = phases.SHIP_PLACEMENTS_2;
-    }
-
-    const shipsData = current.player.shipsToPlaceData;
-    shipsData.forEach(shipData => (shipData.direction = Ship.directions.RIGHT));
-
-    eventBus.emit(events.ENTERED_SHIP_PLACEMENTS, {
-        playerName: current.player.name,
-        opponentName: current.opponent.name,
-        shipsData,
-    });
-
-    current.player.handleEnterShipPlacements();
-}
-
 function enterRound() {
     if (current.phase !== phases.PLAYER_1_ATTACK) {
         current.phase = phases.PLAYER_1_ATTACK;
@@ -145,6 +138,13 @@ function enterRound() {
 function declareWinner(winner) {
     current.phase = phases.GAME_OVER;
     eventBus.emit(events.GAME_WON, { winnerName: winner.name });
+}
+
+function restart() {
+    validatePhase(phases.GAME_OVER);
+    current.phase = phases.GAME_INACTIVE;
+    start();
+    eventBus.emit(events.GAME_RESTART_COMPLETED);
 }
 
 function shipValid(id, x, y, direction) {
