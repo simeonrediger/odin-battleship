@@ -19,6 +19,7 @@
 
 .coordinate {
   outline: 1px solid var(--color-board-border);
+  user-select: none;
 }
 
 .coordinate.discovered:not(.hit) {
