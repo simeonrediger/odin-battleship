@@ -104,7 +104,7 @@ export default class Player {
         const validPlacements = [];
         const length = ship.length;
 
-        for (const direction of [Ship.directions.UP, Ship.directions.RIGHT]) {
+        for (const direction of [Ship.directions.RIGHT, Ship.directions.UP]) {
             for (let x = 0; x < Board.size; x++) {
                 for (let y = 0; y < Board.size; y++) {
                     if (this.#board.shipValid({ x, y, direction, length })) {
