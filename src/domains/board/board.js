@@ -94,21 +94,11 @@ export default class Board {
         return [x, y];
     }
 
-    #id;
     #grid;
     #ships = [];
 
     constructor() {
-        this.#id = crypto.randomUUID();
         this.#createGrid(Board.#size);
-    }
-
-    get id() {
-        return this.#id;
-    }
-
-    get shipCount() {
-        return this.#ships.length;
     }
 
     get allShipsSunk() {
@@ -176,11 +166,6 @@ export default class Board {
         );
     }
 
-    coordinateHit(x, y) {
-        const cell = this.#getCell(x, y);
-        return cell.attacked;
-    }
-
     hit(x, y) {
         const cell = this.#getCell(x, y);
 
@@ -227,11 +212,6 @@ export default class Board {
             Board.shipInBounds(x, y, direction, length) &&
             !this.shipOverlaps(x, y, direction, length)
         );
-    }
-
-    getSunkShipCoordinates(x, y) {
-        const ship = this.#getCell(x, y).occupant;
-        return ship && ship.sunk ? this.#getCoordinatesByShip(ship) : false;
     }
 
     #coordinateOccupied(x, y) {

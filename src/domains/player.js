@@ -7,7 +7,6 @@ import { sleep } from '@/shared/utils.js';
 export default class Player {
     active = false;
 
-    #id;
     #name;
     #isHuman;
     #board;
@@ -15,15 +14,10 @@ export default class Player {
 
     constructor(name, isHuman, board, shipsToPlace) {
         this.#validateArgs(name, isHuman, board, shipsToPlace);
-        this.#id = crypto.randomUUID();
         this.#name = name;
         this.#isHuman = isHuman;
         this.#board = board;
         this.#shipsToPlace = shipsToPlace;
-    }
-
-    get id() {
-        return this.#id;
     }
 
     get name() {
