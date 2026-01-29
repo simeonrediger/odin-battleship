@@ -180,9 +180,7 @@ export default class Board {
             sunkShipCoordinates,
         });
 
-        return {
-            shipHit,
-        };
+        return { shipHit };
     }
 
     shipOverlaps(x, y, direction, length) {
