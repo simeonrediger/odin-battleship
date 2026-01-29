@@ -130,6 +130,11 @@ export const BOARD_ATTACK_REQUESTED = 'BOARD_ATTACK_REQUESTED';
 export const BOARD_ATTACKED = 'BOARD_ATTACKED';
 
 /**
+ * @description Emitted when a player's turn has ended.
+ */
+export const TURN_ENDED = 'TURN_ENDED';
+
+/**
  * @description Emitted once a player has won the game.
  * @see {@link GameWonDetail}
  */

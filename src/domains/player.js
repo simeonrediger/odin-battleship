@@ -2,6 +2,7 @@ import Board from './board/board.js';
 import eventBus from './game/event-bus.js';
 import * as events from './game/events.js';
 import Ship from './ship/ship.js';
+import { sleep } from '@/shared/utils.js';
 
 export default class Player {
     active = false;
@@ -119,7 +120,8 @@ export default class Player {
         this.placeShip(ship.id, x, y, direction);
     }
 
-    #sendRandomSmartAttack(getSmartAttackCoordinates) {
+    async #sendRandomSmartAttack(getSmartAttackCoordinates) {
+        await sleep(1000);
         const smartAttackCoordinates = getSmartAttackCoordinates();
         const randomIndex = Math.floor(
             Math.random() * smartAttackCoordinates.length,

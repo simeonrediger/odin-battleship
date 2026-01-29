@@ -39,6 +39,10 @@ export function getElementWidth(element, includePadding = true) {
     return width;
 }
 
+export function sleep(durationInMs) {
+    return new Promise(resolve => setTimeout(resolve, durationInMs));
+}
+
 export function validateElements(elements, ElementClass = Element) {
     Object.entries(elements).forEach(([elementName, element]) => {
         if (!(element instanceof ElementClass)) {

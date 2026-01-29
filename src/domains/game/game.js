@@ -3,6 +3,7 @@ import eventBus from './event-bus.js';
 import * as events from './events.js';
 import Player from '../player.js';
 import Ship from '../ship/ship.js';
+import { sleep } from '@/shared/utils.js';
 
 const phases = Object.freeze({
     GAME_INACTIVE: 'GAME_INACTIVE',
@@ -100,7 +101,7 @@ function submitShipPlacements() {
     }
 }
 
-function handleBoardAttackRequest({ x, y }) {
+async function handleBoardAttackRequest({ x, y }) {
     validatePhase(phases.PLAYER_1_ATTACK, phases.PLAYER_2_ATTACK);
     const { shipHit } = current.opponent.receiveAttack(x, y);
 
@@ -113,6 +114,8 @@ function handleBoardAttackRequest({ x, y }) {
 
         cuePlayerForRound();
     } else {
+        eventBus.emit(events.TURN_ENDED);
+        await sleep(1000);
         switchAttacker();
         enterRound();
     }

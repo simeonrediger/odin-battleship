@@ -114,6 +114,7 @@ function bindEvents() {
     eventBus.on(events.SHIP_PLACEMENTS_COMPLETED, cleanUpShipPlacements);
     eventBus.on(events.ENTERED_ROUND, showRound);
     eventBus.on(events.BOARD_ATTACKED, handleBoardAttacked);
+    eventBus.on(events.TURN_ENDED, deactivateActiveBoard);
     eventBus.on(events.GAME_WON, handleWin);
     eventBus.on(events.GAME_RESTART_COMPLETED, reset);
 }
@@ -213,7 +214,6 @@ function showRound({ playerName }) {
     const isPlayer1Turn = gameSelectors.isPlayer1Turn;
     const player = isPlayer1Turn ? player1 : player2;
     const opponent = isPlayer1Turn ? player2 : player1;
-    player.board.removeAttribute('data-active');
     player.board.classList.add('inactive');
     opponent.board.classList.remove('inactive');
     opponent.board.setAttribute('data-active', '');
@@ -226,6 +226,14 @@ function showRound({ playerName }) {
 function handleBoardAttacked({ x, y, shipHit, sunkShipCoordinates }) {
     const opponent = gameSelectors.isPlayer1Turn ? player2 : player1;
     opponent.boardView.renderAttack({ x, y, shipHit, sunkShipCoordinates });
+}
+
+function deactivateActiveBoard() {
+    const activeBoard = container.querySelector(
+        "[data-active][data-role$='board']",
+    );
+
+    activeBoard.removeAttribute('data-active');
 }
 
 function handleWin({ winnerName }) {
